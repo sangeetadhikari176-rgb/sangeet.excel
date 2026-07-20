@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sangeet Adhikari | Excel Data Cleaning Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04090f;--bg2:#070e1a;--card:#0a1628;--card2:#0d1e38;--border:rgba(12,242,255,0.15);--cyan:#0cf2ff;--cyan2:#00b4d8;--violet:#7b61ff;--gold:#ffb800;--green:#00d97e;--red:#ff4d6d;--text:#c8e6f5;--muted:#3a6a8a;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(12,242,255,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(4,9,15,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:62px}
+.logo{font-family:'Orbitron',sans-serif;font-size:20px;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;text-decoration:none}
+.nav-links{display:flex;gap:22px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--cyan)}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:100px 60px 60px;overflow:hidden}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(123,97,255,.12) 0%,transparent 70%);pointer-events:none}
+.hero-glow2{position:absolute;top:40%;left:10%;width:400px;height:400px;background:radial-gradient(ellipse,rgba(12,242,255,.07) 0%,transparent 70%);pointer-events:none}
+.fcell{position:absolute;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 12px;border:1px solid;pointer-events:none;animation:floatUD 5s ease-in-out infinite}
+.fc1{right:8%;top:18%;background:rgba(12,242,255,.07);border-color:rgba(12,242,255,.3);color:var(--cyan);animation-delay:0s}
+.fc2{right:18%;top:38%;background:rgba(255,184,0,.07);border-color:rgba(255,184,0,.3);color:var(--gold);animation-delay:1.2s}
+.fc3{right:5%;top:55%;background:rgba(0,217,126,.07);border-color:rgba(0,217,126,.3);color:var(--green);animation-delay:2.5s}
+.fc4{right:28%;top:70%;background:rgba(255,77,109,.07);border-color:rgba(255,77,109,.3);color:var(--red);animation-delay:.6s}
+.fc5{right:38%;top:22%;background:rgba(123,97,255,.07);border-color:rgba(123,97,255,.3);color:var(--violet);animation-delay:3s}
+.fc6{right:12%;top:80%;background:rgba(12,242,255,.07);border-color:rgba(12,242,255,.2);color:var(--cyan2);animation-delay:1.8s}
+@keyframes floatUD{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.hero-content{max-width:680px;position:relative;z-index:2}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(12,242,255,.08);border:1px solid rgba(12,242,255,.25);border-radius:30px;padding:6px 18px;margin-bottom:32px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--cyan);text-transform:uppercase}
+.hero-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--cyan);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.3)}}
+.hero-name{font-family:'Orbitron',sans-serif;font-size:clamp(52px,7vw,96px);line-height:.95;color:var(--white);letter-spacing:1px;margin-bottom:6px}
+.hero-name .gradient-name{display:block;background:linear-gradient(135deg,var(--cyan) 0%,var(--violet) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-role{font-size:18px;font-weight:400;color:var(--muted);margin:18px 0 10px;letter-spacing:.5px}
+.hero-role strong{color:var(--gold);font-weight:700}
+.hero-sub{font-size:14px;color:#2e5a7a;line-height:1.8;max-width:500px;margin-bottom:42px}
+.hero-stats{display:flex;gap:36px;margin-bottom:42px}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 22px;text-align:center;min-width:90px}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:32px;color:var(--cyan);line-height:1}
+.stat-val span{color:var(--gold);font-size:20px}
+.stat-lbl{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-cyan{background:var(--cyan);color:#04090f;padding:13px 30px;border:none;border-radius:5px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .3s}
+.btn-cyan:hover{background:#7affff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(12,242,255,.4)}
+.btn-outline{background:transparent;color:var(--cyan);padding:13px 30px;border:1px solid rgba(12,242,255,.35);border-radius:5px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .3s}
+.btn-outline:hover{background:rgba(12,242,255,.08);transform:translateY(-2px)}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:96px 60px}
+section:nth-child(even){background:var(--bg2)}
+.stag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:10px;display:block}
+.stag::before{content:'◆ ';color:var(--violet)}
+.stitle{font-family:'Orbitron',sans-serif;font-size:clamp(36px,4vw,60px);color:var(--white);letter-spacing:1px;margin-bottom:10px;line-height:1.05}
+.stitle .c{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sdivider{width:50px;height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));margin:18px 0 36px}
+.sdesc{font-size:14px;color:var(--muted);line-height:1.9;max-width:580px;margin-bottom:50px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.atext{font-size:14px;line-height:1.95;color:#4a7a9b;margin-bottom:16px}
+.atext strong{color:var(--text)}
+.info-tbl{width:100%;border-collapse:collapse;margin-top:28px}
+.info-tbl tr{border-bottom:1px solid rgba(12,242,255,.07)}
+.info-tbl td{padding:11px 8px;font-size:13px}
+.info-tbl td:first-child{color:var(--cyan);font-weight:700;letter-spacing:.5px;width:38%;font-size:11px;text-transform:uppercase}
+.info-tbl td:last-child{color:var(--text)}
+.badge-avail{display:inline-block;background:rgba(0,217,126,.12);border:1px solid rgba(0,217,126,.3);color:var(--green);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+
+/* MINIMALIST WINDOW CONTROLS (replaces macOS dots) */
+.xldemo{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.xlbar{background:linear-gradient(135deg,#061420,#0a1e30);padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;border-bottom:1px solid rgba(12,242,255,.1)}
+.win-ctrls{display:flex;gap:5px;align-items:center}
+.wc{width:28px;height:18px;border:1px solid rgba(12,242,255,.18);border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:default;transition:all .25s;background:rgba(12,242,255,.04)}
+.wc:hover{border-color:var(--cyan);background:rgba(12,242,255,.12)}
+.wc svg{width:10px;height:10px;stroke:rgba(12,242,255,.4);fill:none;stroke-width:1.8;stroke-linecap:round}
+.wc:hover svg{stroke:var(--cyan)}
+.xlbar-fname{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(12,242,255,.6);margin-left:6px}
+.xl-tabs{display:flex;background:#070f1a;border-bottom:1px solid rgba(12,242,255,.08)}
+.xl-tab{padding:7px 14px;font-size:11px;color:#2e5a7a;font-family:'JetBrains Mono',monospace;cursor:pointer;border-right:1px solid rgba(12,242,255,.06)}
+.xl-tab.active{color:var(--cyan);background:rgba(12,242,255,.06)}
+.xl-head{display:grid;grid-template-columns:36px repeat(3,1fr);background:#060f1a;border-bottom:1px solid rgba(12,242,255,.08)}
+.xl-hc{padding:7px 8px;font-size:10px;font-weight:700;color:#2e5a7a;text-align:center;border-right:1px solid rgba(12,242,255,.05);font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.xl-row{display:grid;grid-template-columns:36px repeat(3,1fr);border-bottom:1px solid rgba(12,242,255,.03)}
+.xl-row:hover{background:rgba(12,242,255,.03)}
+.xl-c{padding:7px 9px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text);border-right:1px solid rgba(12,242,255,.03);text-align:center}
+.xl-c.num{color:var(--muted);background:rgba(12,242,255,.02);font-weight:600}
+.red-c{color:var(--red)!important}.grn-c{color:var(--green)!important}.yel-c{color:var(--gold)!important}.blu-c{color:var(--cyan)!important}
+.fbar{background:#040c14;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);border-top:1px solid rgba(12,242,255,.08)}
+.fbar em{color:var(--gold);font-style:normal}
+.xl-tab:hover{color:var(--cyan)}
+.xl-note{font-size:10px;text-align:center;padding:6px 8px;font-family:'JetBrains Mono',monospace;border-bottom:1px solid rgba(12,242,255,.04)}
+.bad-note{color:var(--red);background:rgba(255,77,109,.05);font-style:italic}
+.good-note{color:var(--green);background:rgba(0,217,126,.05);font-style:italic}
+.dup-note{color:var(--gold);background:rgba(255,184,0,.05)}
+.xl-download{margin-left:auto;display:flex;align-items:center;gap:5px;background:rgba(12,242,255,.08);border:1px solid rgba(12,242,255,.28);color:var(--cyan);font-size:10px;font-weight:700;letter-spacing:.5px;padding:5px 10px;border-radius:5px;text-decoration:none;transition:all .25s;font-family:'JetBrains Mono',monospace;white-space:nowrap;cursor:pointer}
+.xl-download:hover{background:rgba(12,242,255,.18);transform:translateY(-1px)}
+.xl-download svg{width:12px;height:12px;stroke:var(--cyan);fill:none;stroke-width:2;flex-shrink:0}
+
+/* SERVICES — clickable cards */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:30px 26px;transition:all .3s;position:relative;overflow:hidden;cursor:pointer}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.svc-card:hover{border-color:rgba(12,242,255,.45);transform:translateY(-6px);box-shadow:0 16px 44px rgba(12,242,255,.12)}
+.svc-card:hover::before{transform:scaleX(1)}
+.svc-ico{font-size:34px;margin-bottom:16px}
+.svc-name{font-size:17px;font-weight:700;color:var(--white);margin-bottom:10px}
+.svc-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:18px}
+.svc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.tag{font-size:10px;padding:3px 9px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-weight:600}
+.tc{background:rgba(12,242,255,.08);color:var(--cyan);border:1px solid rgba(12,242,255,.2)}
+.tv{background:rgba(123,97,255,.08);color:var(--violet);border:1px solid rgba(123,97,255,.2)}
+.tg{background:rgba(0,217,126,.08);color:var(--green);border:1px solid rgba(0,217,126,.2)}
+.ty{background:rgba(255,184,0,.08);color:var(--gold);border:1px solid rgba(255,184,0,.2)}
+.svc-hint{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(12,242,255,.5);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:12px;padding-top:12px;border-top:1px solid rgba(12,242,255,.08)}
+.svc-hint svg{width:14px;height:14px;stroke:rgba(12,242,255,.5);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.svc-card:hover .svc-hint{color:var(--cyan)}
+.svc-card:hover .svc-hint svg{stroke:var(--cyan)}
+
+/* BEFORE AFTER */
+.ba-wrap{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:center}
+.ba-side{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.ba-head{padding:12px 16px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.ba-before .ba-head{background:rgba(255,77,109,.1);color:var(--red);border-bottom:1px solid rgba(255,77,109,.15)}
+.ba-after .ba-head{background:rgba(0,217,126,.1);color:var(--green);border-bottom:1px solid rgba(0,217,126,.15)}
+.ba-tbl{width:100%;border-collapse:collapse}
+.ba-tbl th{padding:8px 12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(255,255,255,.02);color:var(--muted);border-bottom:1px solid var(--border)}
+.ba-tbl td{padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);border-bottom:1px solid rgba(255,255,255,.03)}
+.ba-mid{display:flex;align-items:center;justify-content:center}
+.arrow-box{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:16px;color:#04090f;font-weight:900;box-shadow:0 0 20px rgba(12,242,255,.3)}
+
+/* BEFORE-AFTER BIG */
+.ba-summary{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:36px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 28px}
+.ba-sum-item{text-align:center}
+.ba-sum-num{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900;line-height:1;display:block}
+.ba-sum-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.ba-sum-arrow{font-size:24px;color:var(--gold);font-weight:900}
+.ba-sum-sep{width:1px;height:50px;background:rgba(255,255,255,.08);margin:0 8px}
+.ba-big-wrap{display:grid;grid-template-columns:1fr 52px 1fr;gap:0;align-items:start;margin-bottom:32px}
+.ba-big-panel{background:var(--card);border-radius:12px;overflow:hidden}
+.ba-big-before{border:1px solid rgba(255,77,109,.25)}
+.ba-big-after{border:1px solid rgba(0,217,126,.25)}
+.ba-big-head{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:10px}
+.ba-big-before .ba-big-head{background:rgba(255,77,109,.06)}
+.ba-big-after .ba-big-head{background:rgba(0,217,126,.06)}
+.ba-big-icon{font-size:22px;flex-shrink:0}
+.ba-big-title{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+.dirty-title{color:var(--red)}.clean-title{color:var(--green)}
+.ba-big-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.ba-count-badge{margin-left:auto;font-size:10px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;white-space:nowrap}
+.bad-badge{background:rgba(255,77,109,.12);color:var(--red);border:1px solid rgba(255,77,109,.3)}
+.good-badge{background:rgba(0,217,126,.12);color:var(--green);border:1px solid rgba(0,217,126,.3)}
+.ba-scroll-wrap{overflow-x:auto;max-height:480px;overflow-y:auto}
+.ba-scroll-wrap::-webkit-scrollbar{width:4px;height:4px}
+.ba-scroll-wrap::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px}
+.ba-big-tbl{width:100%;border-collapse:collapse;min-width:480px}
+.ba-big-tbl thead tr{position:sticky;top:0;z-index:2}
+.ba-big-before .ba-big-tbl thead th{background:#130a0e;color:var(--red);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:9px 12px;border-bottom:1px solid rgba(255,77,109,.15);white-space:nowrap;text-align:left}
+.ba-big-after .ba-big-tbl thead th{background:#071410;color:var(--green);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:9px 12px;border-bottom:1px solid rgba(0,217,126,.15);white-space:nowrap;text-align:left}
+.ba-big-tbl tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .2s}
+.ba-big-tbl tbody tr:hover{background:rgba(255,255,255,.03)}
+.ba-big-tbl td{padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:left;white-space:nowrap}
+.rn{color:var(--muted) !important;background:rgba(0,0,0,.2);font-weight:700;font-size:10px;width:28px;text-align:center !important}
+.dc{color:var(--red)}
+.cc{color:var(--green)}
+.wc{color:var(--gold) !important}
+.dup-row{background:rgba(0,217,126,.03) !important}
+.ba-issues-row,.ba-fixed-row{display:flex;flex-wrap:wrap;gap:7px;padding:12px 16px;border-top:1px solid rgba(255,255,255,.05)}
+.ba-issue-tag{font-size:10px;padding:4px 10px;border-radius:4px;background:rgba(255,77,109,.08);color:var(--red);border:1px solid rgba(255,77,109,.2);font-weight:700;font-family:'JetBrains Mono',monospace}
+.ba-fixed-tag{font-size:10px;padding:4px 10px;border-radius:4px;background:rgba(0,217,126,.08);color:var(--green);border:1px solid rgba(0,217,126,.2);font-weight:700;font-family:'JetBrains Mono',monospace}
+.ba-center-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6px;margin-top:60px}
+.ba-arrow-circle{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:16px;color:#04090f;font-weight:900;box-shadow:0 0 20px rgba(12,242,255,.3);margin-bottom:8px}
+.ba-arrow-label{font-size:9px;color:var(--cyan);font-weight:800;letter-spacing:2px;text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed}
+.ba-result-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.ba-result-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;transition:all .3s}
+.ba-result-card:hover{transform:translateY(-4px);border-color:rgba(12,242,255,.3)}
+.ba-res-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;line-height:1;margin-bottom:6px}
+.ba-res-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:600}
+
+/* FUNCTIONS */
+.fn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.fn-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.fn-card:hover{border-color:rgba(12,242,255,.3)}
+.fn-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.fn-code{background:#020710;border-radius:6px;padding:13px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);margin-bottom:12px;border:1px solid rgba(12,242,255,.1);overflow-x:auto;white-space:nowrap}
+.fn-code .fn{color:var(--gold)}.fn-code .arg{color:var(--violet)}.fn-code .str{color:var(--red)}
+.fn-desc{font-size:13px;color:var(--muted);line-height:1.8}
+.fn-result{margin-top:12px;padding:10px 14px;background:rgba(0,217,126,.06);border:1px solid rgba(0,217,126,.15);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green)}
+
+/* WHY CHOOSE ME */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px 24px;transition:all .3s;display:flex;flex-direction:column;align-items:flex-start}
+.why-card:hover{border-color:rgba(123,97,255,.4);transform:translateY(-4px);box-shadow:0 12px 36px rgba(123,97,255,.1)}
+.why-ico{font-size:32px;margin-bottom:14px}
+.why-name{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px}
+.why-desc{font-size:13px;color:var(--muted);line-height:1.8}
+
+/* PROCESS */
+.proc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:20px}
+.proc-grid::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--violet),var(--cyan),transparent);z-index:0}
+.proc-step{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;padding:0 10px}
+.proc-dot{width:72px;height:72px;border-radius:50%;background:var(--card);border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px;box-shadow:0 0 20px rgba(12,242,255,.2);transition:all .3s}
+.proc-dot:hover{background:rgba(12,242,255,.1);transform:scale(1.08)}
+.proc-num{font-size:9px;color:var(--cyan);letter-spacing:2px;font-weight:700;margin-bottom:6px;text-transform:uppercase}
+.proc-title{font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px}
+.proc-desc{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* GLOBAL REACH */
+.globe-intro{font-size:15px;color:var(--muted);line-height:1.9;max-width:700px;margin-bottom:52px}
+.globe-intro strong{color:var(--text)}
+.globe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:52px}
+.globe-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:32px 24px;text-align:center;transition:all .35s;position:relative;overflow:hidden}
+.globe-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);transform:scaleX(0);transition:transform .4s}
+.globe-card:hover{border-color:rgba(12,242,255,.4);transform:translateY(-7px);box-shadow:0 18px 50px rgba(12,242,255,.1)}
+.globe-card:hover::after{transform:scaleX(1)}
+.globe-flag{font-size:48px;margin-bottom:14px;display:block}
+.globe-country{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--white);font-weight:700;margin-bottom:10px;letter-spacing:1px}
+.globe-services{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:14px}
+.globe-tag{font-size:10px;padding:3px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-weight:600;background:rgba(12,242,255,.08);color:var(--cyan);border:1px solid rgba(12,242,255,.18)}
+.globe-desc{font-size:12px;color:var(--muted);line-height:1.7}
+.globe-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
+.globe-stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;text-align:center}
+.globe-stat-num{font-family:'Orbitron',sans-serif;font-size:34px;line-height:1}
+.globe-stat-lbl{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px}
+
+/* PRICING TWO CARDS */
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:900px;margin:0 auto}
+.price-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:40px 36px;text-align:center;position:relative;overflow:hidden;transition:all .3s}
+.price-card.featured{border-color:var(--cyan);box-shadow:0 0 50px rgba(12,242,255,.1)}
+.price-card.custom-pkg{border-color:var(--violet)}
+.price-card:hover.featured{box-shadow:0 0 70px rgba(12,242,255,.18)}
+.price-card:hover.custom-pkg{box-shadow:0 0 70px rgba(123,97,255,.18)}
+.price-card::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:300px;height:300px;pointer-events:none}
+.price-card.featured::before{background:radial-gradient(ellipse,rgba(12,242,255,.08) 0%,transparent 70%)}
+.price-card.custom-pkg::before{background:radial-gradient(ellipse,rgba(123,97,255,.08) 0%,transparent 70%)}
+.price-badge{display:inline-block;font-size:10px;font-weight:900;padding:5px 16px;border-radius:20px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.pb-cyan{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#04090f}
+.pb-violet{background:linear-gradient(135deg,var(--violet),#a855f7);color:#fff}
+.price-name{font-family:'Orbitron',sans-serif;font-size:24px;color:var(--white);margin-bottom:16px}
+.price-amt{font-family:'Orbitron',sans-serif;font-size:64px;line-height:1}
+.price-amt.cyan-price{background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.price-amt.violet-price{background:linear-gradient(135deg,var(--violet),#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.price-amt small{font-size:18px}
+.price-sub{font-size:12px;color:var(--muted);margin:10px 0 24px}
+.price-features{list-style:none;text-align:left;margin-bottom:28px}
+.price-features li{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text)}
+.price-features li::before{content:'✓';font-weight:900;font-size:13px;flex-shrink:0}
+.featured .price-features li::before{color:var(--green)}
+.custom-pkg .price-features li::before{color:var(--violet)}
+.price-cta{display:block;width:100%;text-align:center;padding:14px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;cursor:pointer;border:none}
+.cta-cyan{background:var(--cyan);color:#04090f}
+.cta-cyan:hover{background:#7affff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(12,242,255,.4)}
+.cta-violet{background:transparent;color:var(--violet);border:1.5px solid var(--violet)}
+.cta-violet:hover{background:rgba(123,97,255,.12);transform:translateY(-2px)}
+
+/* ALSO CAN DO */
+.also-can{margin:20px 0 22px;background:rgba(12,242,255,.04);border:1px solid rgba(12,242,255,.15);border-radius:10px;padding:16px 18px}
+.also-can-title{font-size:11px;font-weight:800;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.also-can-list{display:flex;flex-wrap:wrap;gap:7px}
+.also-tag{font-size:11px;padding:4px 10px;border-radius:5px;background:rgba(12,242,255,.06);border:1px solid rgba(12,242,255,.2);color:var(--cyan);font-weight:600;font-family:'JetBrains Mono',monospace;transition:all .2s}
+.also-tag:hover{background:rgba(12,242,255,.14);transform:translateY(-1px)}
+
+/* PRICE TWO BUTTONS */
+.price-btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.cta-fiverr{background:linear-gradient(135deg,#1dbf73,#19a463);color:#fff;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:13px 10px;border-radius:6px;text-decoration:none;text-align:center;transition:all .3s;display:block}
+.cta-fiverr:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,191,115,.4)}
+.cta-email{background:transparent;color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:13px 10px;border-radius:6px;text-decoration:none;text-align:center;border:1.5px solid rgba(12,242,255,.35);transition:all .3s;display:block}
+.cta-email:hover{background:rgba(12,242,255,.1);transform:translateY(-2px)}
+
+/* CLIENTS */
+.clients-grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.client-chip{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 24px;display:flex;align-items:center;gap:12px;transition:all .3s}
+.client-chip:hover{border-color:rgba(12,242,255,.4);transform:translateY(-3px);box-shadow:0 8px 24px rgba(12,242,255,.1)}
+.client-ico{font-size:26px}.client-name{font-size:14px;font-weight:700;color:var(--white)}.client-note{font-size:11px;color:var(--muted)}
+
+/* CONTACT — Formspree */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-items{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.ci{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;transition:all .3s}
+.ci:hover{border-color:rgba(12,242,255,.35);transform:translateX(6px)}
+.ci-ico{font-size:22px;flex-shrink:0}
+.ci-lbl{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-weight:700}
+.ci-val{font-size:14px;color:var(--white);font-weight:600;margin-top:2px}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--card);border:1px solid rgba(12,242,255,.14);border-radius:6px;padding:13px 15px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;transition:all .3s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(12,242,255,.08)}
+.form-select{cursor:pointer}.form-select option{background:#0a1628;color:var(--text)}
+.form-textarea{height:120px;resize:vertical}
+.form-success{display:none;background:rgba(0,217,126,.1);border:1px solid rgba(0,217,126,.3);border-radius:8px;padding:14px 18px;color:var(--green);font-size:14px;text-align:center;margin-top:12px}
+
+/* FOOTER */
+footer{position:relative;z-index:1;background:#020609;border-top:1px solid var(--border);padding:36px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:'Orbitron',sans-serif;font-size:18px;letter-spacing:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-copy{font-size:12px;color:#1a3a4a}.footer-copy strong{color:var(--cyan)}
+.social-row{display:flex;gap:12px}
+.soc{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:all .3s}
+.soc:hover{background:var(--cyan);border-color:var(--cyan);transform:translateY(-3px)}
+
+/* ============================================================
+   SERVICE MODAL SYSTEM
+   ============================================================ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);align-items:flex-start;justify-content:center;padding:30px 20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal-box{background:#070e1a;border:1px solid rgba(12,242,255,.25);border-radius:16px;width:100%;max-width:860px;position:relative;padding:36px;margin:auto}
+.modal-close-btn{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;line-height:1}
+.modal-close-btn:hover{background:var(--red);border-color:var(--red);color:#fff}
+.modal-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:8px}
+.modal-tag::before{content:'◆ ';color:var(--violet)}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:24px;color:var(--white);margin-bottom:6px}
+.modal-subtitle{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.7}
+.proj-ex{background:#060f1c;border:1px solid rgba(12,242,255,.1);border-radius:10px;margin-bottom:18px;overflow:hidden}
+.proj-ex-hd{padding:12px 18px;background:rgba(12,242,255,.04);border-bottom:1px solid rgba(12,242,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.proj-ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:2px}
+.proj-ex-name{font-size:14px;font-weight:700;color:var(--white)}
+.proj-rows-badge{font-size:10px;padding:3px 10px;border-radius:12px;background:rgba(255,184,0,.1);color:var(--gold);border:1px solid rgba(255,184,0,.25);font-weight:700;font-family:'JetBrains Mono',monospace}
+.proj-ba{display:grid;grid-template-columns:1fr 32px 1fr;align-items:center;padding:14px}
+.proj-side{background:#040b16;border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
+.proj-side-lbl{padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.proj-before .proj-side-lbl{color:var(--red);background:rgba(255,77,109,.07);border-bottom:1px solid rgba(255,77,109,.1)}
+.proj-after .proj-side-lbl{color:var(--green);background:rgba(0,217,126,.07);border-bottom:1px solid rgba(0,217,126,.1)}
+.proj-tbl{width:100%;border-collapse:collapse}
+.proj-tbl td{padding:6px 11px;font-family:'JetBrains Mono',monospace;font-size:11px;border-bottom:1px solid rgba(255,255,255,.03)}
+.proj-tbl .th-c{color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.mini-arrow{display:flex;align-items:center;justify-content:center}
+.mini-arr-btn{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:11px;color:#04090f;font-weight:900}
+.proj-result{padding:10px 14px;font-size:11px;color:var(--muted);background:rgba(0,217,126,.04);border-top:1px solid rgba(0,217,126,.08);display:flex;align-items:center;gap:8px}
+.proj-result strong{color:var(--green)}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  nav{padding:0 20px}.nav-links{display:none}
+  section{padding:60px 16px}
+  .hero{padding:90px 16px 50px}
+  .hero-name{font-size:clamp(38px,10vw,72px);letter-spacing:0px}
+  .hero-role{font-size:15px}
+  .hero-sub{font-size:13px}
+  .hero-stats{gap:10px;flex-wrap:wrap}
+  .stat-box{padding:10px 12px;min-width:64px}
+  .stat-val{font-size:24px}
+  .stat-lbl{font-size:9px}
+  .hero-btns{flex-direction:column;gap:10px}
+  .btn-cyan,.btn-outline{width:100%;text-align:center;padding:12px 20px}
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr 1fr;gap:14px}
+  .svc-card{padding:20px 16px}
+  .svc-name{font-size:14px}
+  .svc-desc{font-size:12px}
+  .fn-grid,.why-grid{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:1fr 1fr;gap:20px}
+  .proc-grid::before{display:none}
+  .price-grid{grid-template-columns:1fr}
+  .globe-stats-row{grid-template-columns:1fr 1fr}
+  .ba-big-wrap{grid-template-columns:1fr;gap:0}
+  .ba-center-arrow{flex-direction:row;margin:12px 0;justify-content:center}
+  .ba-arrow-circle{margin-bottom:0;margin-right:8px}
+  .ba-arrow-label{writing-mode:horizontal-tb}
+  .ba-result-grid{grid-template-columns:repeat(3,1fr)}
+  .ba-summary{gap:12px;padding:14px 16px}
+  .ba-sum-num{font-size:24px}
+  .stitle{font-size:clamp(28px,7vw,48px)}
+  .sdesc{font-size:13px;margin-bottom:30px}
+  footer{flex-direction:column;align-items:flex-start;padding:24px 16px;gap:14px}
+  .price-btn-row{grid-template-columns:1fr}
+  .also-can-list{gap:5px}
+  .also-tag{font-size:10px}
+}
+@media(max-width:600px){
+  .svc-grid,.fn-grid,.why-grid,.proc-grid,.globe-grid,.globe-stats-row{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}
+  .hero-name{font-size:clamp(32px,12vw,58px)}
+  .hero-role{font-size:14px}
+  .hero-stats{gap:8px}
+  .stat-box{padding:8px 10px;min-width:58px}
+  .stat-val{font-size:20px}
+  .ba-result-grid{grid-template-columns:1fr 1fr}
+  .ba-summary{flex-direction:column;align-items:flex-start;gap:10px}
+  .ba-sum-sep{display:none}
+  section{padding:50px 14px}
+  .stitle{font-size:clamp(26px,9vw,42px)}
+  .modal-box{padding:16px}
+  .proj-ba{grid-template-columns:1fr}
+  .mini-arrow{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">SANGEET.XLS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#functions">Functions</a></li>
+    <li><a href="#before-after">Before &amp; After</a></li>
+    
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="fcell fc1">=TRIM(A2)</div>
+  <div class="fcell fc2">=PROPER(B3)</div>
+  <div class="fcell fc3">=CLEAN(C4)</div>
+  <div class="fcell fc4">#N/A &rarr; Fixed!</div>
+  <div class="fcell fc5">=SUBSTITUTE()</div>
+  <div class="fcell fc6">Duplicate &rarr; Removed</div>
+  <div class="hero-content">
+    <div class="hero-pill">Available on Fiverr &middot; Night Shift</div>
+    <h1 class="hero-name">SANGEET<span class="gradient-name">ADHIKARI</span></h1>
+    <p class="hero-role"><strong>Excel Data Cleaning &amp; Data Entry Specialist</strong></p>
+    <p class="hero-sub">I help businesses and individuals worldwide organize, clean, and format their messy spreadsheet data with accuracy, speed, and attention to detail.</p>
+    <div class="hero-stats">
+      <div class="stat-box"><div class="stat-val">100<span>%</span></div><div class="stat-lbl">Accuracy</div></div>
+      <div class="stat-box"><div class="stat-val">24<span>h</span></div><div class="stat-lbl">Delivery</div></div>
+      <div class="stat-box"><div class="stat-val">&lt;1<span>h</span></div><div class="stat-lbl">Response</div></div>
+      <div class="stat-box"><div class="stat-val">$15</div><div class="stat-lbl">Starting</div></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#services" class="btn-cyan">See My Services</a>
+      <a href="https://www.fiverr.com/s/EgGZkeq" target="_blank" class="btn-outline">Hire Me on Fiverr</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <span class="stag">About Me</span>
+  <h2 class="stitle">Who <span class="c">Am I?</span></h2>
+  <div class="sdivider"></div>
+  <div class="about-grid">
+    <div>
+      <p class="atext">Hello! I'm <strong>Sangeet Adhikari</strong>, an <strong>Excel Data Cleaning and Data Entry Specialist</strong> from Gonda, Uttar Pradesh. I help individuals and businesses organize, clean, and format their spreadsheets with accuracy and attention to detail.</p>
+      <p class="atext">My services include <strong>Excel Data Cleaning, PDF to Excel conversion, duplicate removal, blank row removal, text to columns, split data, merge cells, extra space removal, conditional formatting,</strong> and spreadsheet formatting.</p>
+      <p class="atext">I focus on <strong>quality work, clear communication,</strong> and <strong>on-time delivery.</strong> I respond within 1 hour and am available every night serving clients worldwide.</p>
+      <table class="info-tbl">
+        <tr><td>&#128100; Name</td><td>Sangeet Adhikari</td></tr>
+        <tr><td>&#128205; Location</td><td>Gonda District, Uttar Pradesh</td></tr>
+        <tr><td>&#128231; Email</td><td>sangeetadhikari178@gmail.com</td></tr>
+        <tr><td>&#128188; Platform</td><td>Fiverr</td></tr>
+        <tr><td>&#127760; Languages</td><td>Hindi (Fluent) &middot; Bengali (Fluent) &middot; English (Conversational)</td></tr>
+        <tr><td>&#128187; Software</td><td>Microsoft Excel 365 &middot; Windows 11</td></tr>
+        <tr><td>&#128336; Availability</td><td>2 Hours Daily &middot; Night Preferred</td></tr>
+        <tr><td>&#9889; Response</td><td><span class="badge-avail">Within 1 Hour &#10003;</span></td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="xldemo">
+        <div class="xlbar">
+          <div class="win-ctrls">
+            <div class="wc">
+              <svg viewBox="0 0 10 10"><line x1="2" y1="5" x2="8" y2="5"/></svg>
+            </div>
+            <div class="wc">
+              <svg viewBox="0 0 10 10"><rect x="2" y="2" width="6" height="6"/></svg>
+            </div>
+            <div class="wc">
+              <svg viewBox="0 0 10 10"><line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg>
+            </div>
+          </div>
+          <span class="xlbar-fname">Excel_Data_Cleaning_Practice.xlsx</span>
+          <button type="button" class="xl-download" onclick="xlDownloadFile()" title="Download the real practice file used in this demo">
+            <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download File
+          </button>
+        </div>
+        <div class="xl-tabs">
+          <div class="xl-tab active" id="xlTabRaw" onclick="xlSwitchTab('raw')">Raw Data</div>
+          <div class="xl-tab" id="xlTabClean" onclick="xlSwitchTab('clean')">Cleaned &#10003;</div>
+        </div>
+        <div class="xl-head">
+          <div class="xl-hc"></div><div class="xl-hc">A &ndash; Name</div><div class="xl-hc">B &ndash; Email</div><div class="xl-hc">C &ndash; Dept</div>
+        </div>
+
+        <div id="xlBodyRaw">
+          <div class="xl-row"><div class="xl-c num">1</div><div class="xl-c red-c">&nbsp;&nbsp;Priya Singh</div><div class="xl-c red-c">PRIYA@GMAIL.COM</div><div class="xl-c red-c">HR</div></div>
+          <div class="xl-row"><div class="xl-c num">2</div><div class="xl-c">Rohit Gupta</div><div class="xl-c">rohit@gmail.com</div><div class="xl-c">Sales</div></div>
+          <div class="xl-row"><div class="xl-c num">3</div><div class="xl-c red-c">Rohit Gupta</div><div class="xl-c red-c">rohit@gmail.com</div><div class="xl-c red-c">Sales</div></div>
+          <div class="xl-row"><div class="xl-c num">4</div><div class="xl-c red-c">&mdash; blank &mdash;</div><div class="xl-c red-c">sonia@gmail.com</div><div class="xl-c red-c">HR</div></div>
+          <div class="xl-row"><div class="xl-c num">5</div><div class="xl-c">Vikas Mishra</div><div class="xl-c red-c">vikasgmail.com</div><div class="xl-c">IT</div></div>
+          <div class="xl-row"><div class="xl-c num">6</div><div class="xl-c red-c">Pooja&nbsp;&nbsp;Jain</div><div class="xl-c">pooja@gmail.com</div><div class="xl-c">Marketing</div></div>
+          <div class="xl-note bad-note">&#9888; 6 rows &middot; duplicate row &middot; blank name &middot; broken email &middot; extra spaces &middot; case mismatch</div>
+        </div>
+
+        <div id="xlBodyClean" style="display:none">
+          <div class="xl-row"><div class="xl-c num">1</div><div class="xl-c grn-c">Priya Singh</div><div class="xl-c grn-c">priya@gmail.com</div><div class="xl-c grn-c">HR</div></div>
+          <div class="xl-row"><div class="xl-c num">2</div><div class="xl-c grn-c">Rohit Gupta</div><div class="xl-c grn-c">rohit@gmail.com</div><div class="xl-c grn-c">Sales</div></div>
+          <div class="xl-note dup-note">&larr; duplicate row removed (Rohit Gupta)</div>
+          <div class="xl-row"><div class="xl-c num">3</div><div class="xl-c grn-c">Unknown</div><div class="xl-c grn-c">sonia@gmail.com</div><div class="xl-c grn-c">HR</div></div>
+          <div class="xl-row"><div class="xl-c num">4</div><div class="xl-c grn-c">Vikas Mishra</div><div class="xl-c grn-c">vikas@gmail.com</div><div class="xl-c grn-c">IT</div></div>
+          <div class="xl-row"><div class="xl-c num">5</div><div class="xl-c grn-c">Pooja Jain</div><div class="xl-c grn-c">pooja@gmail.com</div><div class="xl-c grn-c">Marketing</div></div>
+          <div class="xl-note good-note">&#10003; 5 rows &middot; 0 errors &middot; duplicate removed &middot; spacing &amp; case fixed &middot; email corrected</div>
+        </div>
+
+        <div class="fbar" id="xlFbarRaw"><em>fx</em>&nbsp; =TRIM(A2) &rarr; 5 issues still need fixing &#9888;</div>
+        <div class="fbar" id="xlFbarClean" style="display:none"><em>fx</em>&nbsp; =PROPER(TRIM(A2)) &rarr; "Priya Singh" &#10003;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (CLICKABLE WITH MODALS) -->
+<section id="services">
+  <span class="stag">What I Do</span>
+  <h2 class="stitle">My <span class="c">Services</span></h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">Click any service card to see real project examples with Before &amp; After data comparisons.</p>
+  <div class="svc-grid">
+
+    <div class="svc-card" onclick="openModal('modal-cleaning')">
+      <div class="svc-ico">&#129529;</div>
+      <div class="svc-name">Excel Data Cleaning</div>
+      <div class="svc-desc">Remove duplicates, fix formatting, standardize text, handle blank rows and extra spaces &mdash; making your spreadsheet perfectly clean and consistent.</div>
+      <div class="svc-tags"><span class="tag tc">Duplicate Removal</span><span class="tag tv">Blank Rows</span><span class="tag tg">Text Fix</span><span class="tag ty">Formatting</span></div>
+      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
+    </div>
+
+    <div class="svc-card" onclick="openModal('modal-entry')">
+      <div class="svc-ico">&#128221;</div>
+      <div class="svc-name">Data Entry</div>
+      <div class="svc-desc">Fast and accurate manual data entry into Excel. Organized row-by-row input with consistent formatting, proper alignment, and zero mistakes.</div>
+      <div class="svc-tags"><span class="tag tc">Copy-Paste</span><span class="tag tv">Manual Entry</span><span class="tag tg">Fast Delivery</span><span class="tag ty">Accurate</span></div>
+      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
+    </div>
+
+    <div class="svc-card" onclick="openModal('modal-pdf')">
+      <div class="svc-ico">&#128196;</div>
+      <div class="svc-name">PDF to Excel</div>
+      <div class="svc-desc">Convert PDF files &mdash; tables, lists, invoices, reports &mdash; into clean, editable Excel spreadsheets with proper column structure and formatting.</div>
+      <div class="svc-tags"><span class="tag tc">Tables</span><span class="tag tv">Invoices</span><span class="tag tg">Reports</span><span class="tag ty">Editable</span></div>
+      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
+    </div>
+
+    <div class="svc-card" onclick="openModal('modal-split')">
+      <div class="svc-ico">&#9986;</div>
+      <div class="svc-name">Text to Columns &amp; Split Data</div>
+      <div class="svc-desc">Split combined data into separate columns &mdash; First Name/Last Name, City/State, Date/Time &mdash; using Excel's tools and formula techniques.</div>
+      <div class="svc-tags"><span class="tag tc">Split Name</span><span class="tag tv">Delimiter</span><span class="tag tg">Structured</span><span class="tag ty">Organized</span></div>
+      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
+    </div>
+
+    <div class="svc-card" onclick="openModal('modal-format')">
+      <div class="svc-ico">&#127912;</div>
+      <div class="svc-name">Conditional Formatting</div>
+      <div class="svc-desc">Highlight duplicates, blank cells, negative values, and important data with color-coded rules so your spreadsheet is visually clear and easy to read.</div>
+      <div class="svc-tags"><span class="tag tc">Highlight Rules</span><span class="tag tv">Color Codes</span><span class="tag tg">Visual Clear</span><span class="tag ty">Alerts</span></div>
+      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
+    </div>
+
+    <div class="svc-card" onclick="openModal('modal-merge')">
+      <div class="svc-ico">&#128279;</div>
+      <div class="svc-name">Merge Cells &amp; Formatting</div>
+      <div class="svc-desc">Professional spreadsheet formatting &mdash; merge cells, align data, set consistent fonts, borders, column widths, and row heights for a polished look.</div>
+      <div class="svc-tags"><span class="tag tc">Merge</span><span class="tag tv">Align</span><span class="tag tg">Borders</span><span class="tag ty">Professional</span></div>
+      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FUNCTIONS -->
+<section id="functions">
+  <span class="stag">Formula Skills</span>
+  <h2 class="stitle">Excel <span class="c">Functions</span> I Use</h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">These are the core Excel functions I use daily to clean and transform messy data into structured, usable spreadsheets.</p>
+  <div class="fn-grid">
+    <div class="fn-card">
+      <div class="fn-title">&#128292; TRIM &mdash; Extra Space Removal</div>
+      <div class="fn-code">=<span class="fn">TRIM</span>(<span class="arg">A2</span>)</div>
+      <div class="fn-desc">Removes all extra spaces from text &mdash; leading, trailing, and double spaces between words. Essential when data comes from copy-paste or web sources.</div>
+      <div class="fn-result">Before: "&nbsp;&nbsp;Sangeet&nbsp;&nbsp;Adhikari&nbsp;&nbsp;" &rarr; After: "Sangeet Adhikari" &#10003;</div>
+    </div>
+    <div class="fn-card">
+      <div class="fn-title">&#129527; CLEAN &mdash; Hidden Character Removal</div>
+      <div class="fn-code">=<span class="fn">CLEAN</span>(<span class="arg">A2</span>)</div>
+      <div class="fn-desc">Removes non-printable characters &mdash; line breaks, tab characters &mdash; that come hidden in data exported from databases or websites.</div>
+      <div class="fn-result">Before: "Sangeet&#10;Adhikari" &rarr; After: "Sangeet Adhikari" &#10003;</div>
+    </div>
+    <div class="fn-card">
+      <div class="fn-title">&#128260; SUBSTITUTE &mdash; Text Replacement</div>
+      <div class="fn-code">=<span class="fn">SUBSTITUTE</span>(<span class="arg">A2</span>,<span class="str">"-"</span>,<span class="str">""</span>)</div>
+      <div class="fn-desc">Replaces specific text inside a cell &mdash; fix typos, replace old codes with new ones, or remove unwanted characters like dashes or slashes.</div>
+      <div class="fn-result">"9876-543210" &rarr; "9876543210" &#10003;</div>
+    </div>
+    <div class="fn-card">
+      <div class="fn-title">&#128288; PROPER &mdash; Text Case Fix</div>
+      <div class="fn-code">=<span class="fn">PROPER</span>(<span class="fn">TRIM</span>(<span class="arg">A2</span>))</div>
+      <div class="fn-desc">Converts text to proper title case. Used with TRIM for double cleaning power. Perfect for name columns.</div>
+      <div class="fn-result">"SANGEET adhikari" &rarr; "Sangeet Adhikari" &#10003;</div>
+    </div>
+    <div class="fn-card">
+      <div class="fn-title">&#128269; Find &amp; Replace</div>
+      <div class="fn-code">Ctrl + H &rarr; <span class="fn">Find</span>: <span class="str">"old"</span> &rarr; <span class="fn">Replace</span>: <span class="str">"new"</span></div>
+      <div class="fn-desc">Bulk-replaces text across thousands of rows in seconds. Useful for correcting misspellings, standardizing category names, and fixing common errors fast.</div>
+      <div class="fn-result">"delhi" &rarr; "Delhi" across all 5,000 rows in 2 seconds &#10003;</div>
+    </div>
+    <div class="fn-card">
+      <div class="fn-title">&#10060; Remove Duplicates</div>
+      <div class="fn-code">Data &rarr; <span class="fn">Remove Duplicates</span> &rarr; Select Columns</div>
+      <div class="fn-desc">Removes duplicate rows from Excel in one click. Can target specific columns so only true duplicates are removed, keeping unique records safe.</div>
+      <div class="fn-result">10,000 rows &rarr; 847 duplicates removed &rarr; 9,153 unique records &#10003;</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE AFTER -->
+<section id="before-after">
+  <span class="stag">Real Work Example</span>
+  <h2 class="stitle">Before <span class="c">&amp; After</span></h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">See the real transformation — 20 rows of messy, inconsistent data on the left cleaned into professional, structured data on the right. This is exactly what I do for every client.</p>
+
+  <!-- Summary badges -->
+  <div class="ba-summary">
+    <div class="ba-sum-item"><span class="ba-sum-num" style="color:var(--red)">20</span><span class="ba-sum-lbl">Dirty Rows</span></div>
+    <div class="ba-sum-arrow">&#8594;</div>
+    <div class="ba-sum-item"><span class="ba-sum-num" style="color:var(--green)">15</span><span class="ba-sum-lbl">Clean Rows</span></div>
+    <div class="ba-sum-sep"></div>
+    <div class="ba-sum-item"><span class="ba-sum-num" style="color:var(--gold)">5</span><span class="ba-sum-lbl">Duplicates Removed</span></div>
+    <div class="ba-sum-item"><span class="ba-sum-num" style="color:var(--violet)">12</span><span class="ba-sum-lbl">Errors Fixed</span></div>
+    <div class="ba-sum-item"><span class="ba-sum-num" style="color:var(--cyan)">100%</span><span class="ba-sum-lbl">Accuracy</span></div>
+  </div>
+
+  <div class="ba-big-wrap">
+    <!-- BEFORE PANEL -->
+    <div class="ba-big-panel ba-big-before">
+      <div class="ba-big-head">
+        <span class="ba-big-icon">&#10060;</span>
+        <div>
+          <div class="ba-big-title dirty-title">BEFORE — Raw Messy Data</div>
+          <div class="ba-big-sub">customer_raw.xlsx — 20 rows, multiple issues</div>
+        </div>
+        <span class="ba-count-badge bad-badge">20 ERRORS</span>
+      </div>
+      <div class="ba-scroll-wrap">
+        <table class="ba-big-tbl">
+          <thead>
+            <tr>
+              <th>#</th><th>Customer Name</th><th>Email</th><th>Phone</th><th>City</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="rn">1</td><td class="dc">&nbsp;&nbsp;RAHUL SHARMA&nbsp;&nbsp;</td><td class="dc">rahul@gmai</td><td class="dc">9876543210</td><td class="dc">delhi</td><td class="dc">ACTIVE</td></tr>
+            <tr><td class="rn">2</td><td class="dc">rahul sharma</td><td class="dc">RAHUL@GMAIL.COM</td><td class="dc">9876543210</td><td class="dc">Delhi</td><td class="dc">active</td></tr>
+            <tr><td class="rn">3</td><td class="dc">PRIYA&nbsp;&nbsp;SINGH</td><td class="dc">priya@yahoocom</td><td class="dc">98765-43210</td><td class="dc">mumbai</td><td class="dc">Actve</td></tr>
+            <tr><td class="rn">4</td><td class="dc">&nbsp;priya singh&nbsp;</td><td class="dc">PRIYA@YAHOO.COM</td><td class="dc">98765 43210</td><td class="dc">MUMBAI</td><td class="dc">ACTIVE</td></tr>
+            <tr><td class="rn">5</td><td class="dc">amit KUMAR</td><td class="dc">amit@</td><td class="dc">7654321098</td><td class="dc">kanpur</td><td class="dc">inActive</td></tr>
+            <tr><td class="rn">6</td><td class="dc">SUNITA devi</td><td class="dc">sunita.devi@outlook</td><td class="dc">8888-8888-88</td><td class="dc">lucknow</td><td class="dc">PENDING</td></tr>
+            <tr><td class="rn">7</td><td class="dc">&nbsp;&nbsp;VIKRAM rao</td><td class="dc">vikramrao@</td><td class="dc">N/A</td><td class="dc">varanasi</td><td class="dc">Active</td></tr>
+            <tr><td class="rn">8</td><td class="dc">neha GUPTA</td><td class="dc">Neha@Gmail.COM</td><td class="dc">9090909090</td><td class="dc">agra</td><td class="dc">active</td></tr>
+            <tr><td class="rn">9</td><td class="dc">ROHIT&nbsp;verma</td><td class="dc">rohit.verma@gmai</td><td class="dc">7777777777</td><td class="dc">JAIPUR</td><td class="dc">INACTIVE</td></tr>
+            <tr><td class="rn">10</td><td class="dc">Rohit Verma</td><td class="dc">rohit.verma@gmail.com</td><td class="dc">7777777777</td><td class="dc">Jaipur</td><td class="dc">Inactive</td></tr>
+            <tr><td class="rn">11</td><td class="dc">&nbsp;POOJA sharma</td><td class="dc">pooja@</td><td class="dc">6666555544</td><td class="dc">bhopal</td><td class="dc">actve</td></tr>
+            <tr><td class="rn">12</td><td class="dc">ARUN&nbsp;&nbsp;KUMAR</td><td class="dc">arun.kumar@rediff</td><td class="dc">5555-444-333</td><td class="dc">patna</td><td class="dc">ACTIVE</td></tr>
+            <tr><td class="rn">13</td><td class="dc">kavita YADAV</td><td class="dc">KavitaYadav@GMAIL</td><td class="dc">4444333322</td><td class="dc">NAGPUR</td><td class="dc">pending</td></tr>
+            <tr><td class="rn">14</td><td class="dc">DEEPAK&nbsp;singh</td><td class="dc">deepak@outlook</td><td class="dc">3333222211</td><td class="dc">surat</td><td class="dc">Active</td></tr>
+            <tr><td class="rn">15</td><td class="dc">deepak singh</td><td class="dc">deepak@outlook.com</td><td class="dc">3333222211</td><td class="dc">Surat</td><td class="dc">active</td></tr>
+            <tr><td class="rn">16</td><td class="dc">&nbsp;MEENA patel&nbsp;</td><td class="dc">meena.patel@</td><td class="dc">2222111100</td><td class="dc">ahmedabad</td><td class="dc">ACTIVE</td></tr>
+            <tr><td class="rn">17</td><td class="dc">SURESH&nbsp;BABU</td><td class="dc">suresh@gmai</td><td class="dc">1111000099</td><td class="dc">chennai</td><td class="dc">Actve</td></tr>
+            <tr><td class="rn">18</td><td class="dc">anita ROY</td><td class="dc">AnitaRoy@YAHOO</td><td class="dc">9999888877</td><td class="dc">KOLKATA</td><td class="dc">active</td></tr>
+            <tr><td class="rn">19</td><td class="dc">MANOJ&nbsp;tiwari</td><td class="dc">manoj@</td><td class="dc">8888777766</td><td class="dc">indore</td><td class="dc">PENDING</td></tr>
+            <tr><td class="rn">20</td><td class="dc">RAVI&nbsp;&nbsp;shankar</td><td class="dc">ravishankar@gmai</td><td class="dc">7777666655</td><td class="dc">pune</td><td class="dc">INACTIVE</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ba-issues-row">
+        <span class="ba-issue-tag">&#9888; Extra Spaces</span>
+        <span class="ba-issue-tag">&#9888; Wrong Case</span>
+        <span class="ba-issue-tag">&#9888; Broken Emails</span>
+        <span class="ba-issue-tag">&#9888; 5 Duplicates</span>
+        <span class="ba-issue-tag">&#9888; Phone Format</span>
+        <span class="ba-issue-tag">&#9888; Status Typos</span>
+      </div>
+    </div>
+
+    <!-- CENTER ARROW -->
+    <div class="ba-center-arrow">
+      <div class="ba-arrow-circle">&#8594;</div>
+      <div class="ba-arrow-label">CLEANED</div>
+    </div>
+
+    <!-- AFTER PANEL -->
+    <div class="ba-big-panel ba-big-after">
+      <div class="ba-big-head">
+        <span class="ba-big-icon">&#9989;</span>
+        <div>
+          <div class="ba-big-title clean-title">AFTER — Clean Professional Data</div>
+          <div class="ba-big-sub">customer_clean.xlsx — 15 rows, zero errors</div>
+        </div>
+        <span class="ba-count-badge good-badge">15 CLEAN</span>
+      </div>
+      <div class="ba-scroll-wrap">
+        <table class="ba-big-tbl">
+          <thead>
+            <tr>
+              <th>#</th><th>Customer Name</th><th>Email</th><th>Phone</th><th>City</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="rn">1</td><td class="cc">Rahul Sharma</td><td class="cc">rahul@gmail.com</td><td class="cc">9876543210</td><td class="cc">Delhi</td><td class="cc">Active</td></tr>
+            <tr><td class="rn dup-row" colspan="6" style="text-align:center;font-style:italic;font-size:10px;color:#1a4a3a;padding:4px">&#8592; Row 2 removed — duplicate of Row 1</td></tr>
+            <tr><td class="rn">2</td><td class="cc">Priya Singh</td><td class="cc">priya@yahoo.com</td><td class="cc">9876543210</td><td class="cc">Mumbai</td><td class="cc">Active</td></tr>
+            <tr><td class="rn dup-row" colspan="6" style="text-align:center;font-style:italic;font-size:10px;color:#1a4a3a;padding:4px">&#8592; Row 4 removed — duplicate of Row 3</td></tr>
+            <tr><td class="rn">3</td><td class="cc">Amit Kumar</td><td class="cc wc">amit@gmail.com</td><td class="cc">7654321098</td><td class="cc">Kanpur</td><td class="cc">Inactive</td></tr>
+            <tr><td class="rn">4</td><td class="cc">Sunita Devi</td><td class="cc">sunita.devi@outlook.com</td><td class="cc">8888888888</td><td class="cc">Lucknow</td><td class="cc">Pending</td></tr>
+            <tr><td class="rn">5</td><td class="cc">Vikram Rao</td><td class="cc wc">vikramrao@gmail.com</td><td class="cc wc">N/A — Blank</td><td class="cc">Varanasi</td><td class="cc">Active</td></tr>
+            <tr><td class="rn">6</td><td class="cc">Neha Gupta</td><td class="cc">neha@gmail.com</td><td class="cc">9090909090</td><td class="cc">Agra</td><td class="cc">Active</td></tr>
+            <tr><td class="rn">7</td><td class="cc">Rohit Verma</td><td class="cc">rohit.verma@gmail.com</td><td class="cc">7777777777</td><td class="cc">Jaipur</td><td class="cc">Inactive</td></tr>
+            <tr><td class="rn dup-row" colspan="6" style="text-align:center;font-style:italic;font-size:10px;color:#1a4a3a;padding:4px">&#8592; Row 10 removed — duplicate of Row 9</td></tr>
+            <tr><td class="rn">8</td><td class="cc">Pooja Sharma</td><td class="cc wc">pooja@gmail.com</td><td class="cc">6666555544</td><td class="cc">Bhopal</td><td class="cc wc">Active</td></tr>
+            <tr><td class="rn">9</td><td class="cc">Arun Kumar</td><td class="cc">arun.kumar@rediff.com</td><td class="cc">5555444333</td><td class="cc">Patna</td><td class="cc">Active</td></tr>
+            <tr><td class="rn">10</td><td class="cc">Kavita Yadav</td><td class="cc">kavitayadav@gmail.com</td><td class="cc">4444333322</td><td class="cc">Nagpur</td><td class="cc">Pending</td></tr>
+            <tr><td class="rn">11</td><td class="cc">Deepak Singh</td><td class="cc">deepak@outlook.com</td><td class="cc">3333222211</td><td class="cc">Surat</td><td class="cc">Active</td></tr>
+            <tr><td class="rn dup-row" colspan="6" style="text-align:center;font-style:italic;font-size:10px;color:#1a4a3a;padding:4px">&#8592; Row 15 removed — duplicate of Row 14</td></tr>
+            <tr><td class="rn">12</td><td class="cc">Meena Patel</td><td class="cc wc">meena.patel@gmail.com</td><td class="cc">2222111100</td><td class="cc">Ahmedabad</td><td class="cc">Active</td></tr>
+            <tr><td class="rn">13</td><td class="cc">Suresh Babu</td><td class="cc wc">suresh@gmail.com</td><td class="cc">1111000099</td><td class="cc">Chennai</td><td class="cc wc">Active</td></tr>
+            <tr><td class="rn">14</td><td class="cc">Anita Roy</td><td class="cc">anita.roy@yahoo.com</td><td class="cc">9999888877</td><td class="cc">Kolkata</td><td class="cc">Active</td></tr>
+            <tr><td class="rn">15</td><td class="cc">Manoj Tiwari</td><td class="cc wc">manoj@gmail.com</td><td class="cc">8888777766</td><td class="cc">Indore</td><td class="cc">Pending</td></tr>
+            <tr><td class="rn">16 <span style="display:none">placeholder</span></td><td class="cc">Ravi Shankar</td><td class="cc wc">ravishankar@gmail.com</td><td class="cc">7777666655</td><td class="cc">Pune</td><td class="cc">Inactive</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ba-fixed-row">
+        <span class="ba-fixed-tag">&#10003; Spaces Removed</span>
+        <span class="ba-fixed-tag">&#10003; Case Fixed</span>
+        <span class="ba-fixed-tag">&#10003; Emails Fixed</span>
+        <span class="ba-fixed-tag">&#10003; 5 Dups Removed</span>
+        <span class="ba-fixed-tag">&#10003; Phone Cleaned</span>
+        <span class="ba-fixed-tag">&#10003; Status Uniform</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom result stats -->
+  <div class="ba-result-grid">
+    <div class="ba-result-card"><div class="ba-res-num" style="color:var(--red)">20</div><div class="ba-res-lbl">Original Rows</div></div>
+    <div class="ba-result-card"><div class="ba-res-num" style="color:var(--gold)">5</div><div class="ba-res-lbl">Duplicates Removed</div></div>
+    <div class="ba-result-card"><div class="ba-res-num" style="color:var(--violet)">12</div><div class="ba-res-lbl">Errors Fixed</div></div>
+    <div class="ba-result-card"><div class="ba-res-num" style="color:var(--green)">15</div><div class="ba-res-lbl">Clean Final Rows</div></div>
+    <div class="ba-result-card"><div class="ba-res-num" style="color:var(--cyan)">100%</div><div class="ba-res-lbl">Data Accuracy</div></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <span class="stag">My Workflow</span>
+  <h2 class="stitle">How I <span class="c">Work</span></h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">Every project follows a clear, professional process to ensure quality results and on-time delivery.</p>
+  <div class="proc-grid">
+    <div class="proc-step"><div class="proc-dot">&#128229;</div><div class="proc-num">Step 01</div><div class="proc-title">Receive File</div><div class="proc-desc">You share your Excel or PDF file via Fiverr with a description of what needs to be done.</div></div>
+    <div class="proc-step"><div class="proc-dot">&#128269;</div><div class="proc-num">Step 02</div><div class="proc-title">Data Audit</div><div class="proc-desc">I review your file completely &mdash; check all issues like duplicates, blanks, formatting problems, and inconsistencies.</div></div>
+    <div class="proc-step"><div class="proc-dot">&#129529;</div><div class="proc-num">Step 03</div><div class="proc-title">Clean Data</div><div class="proc-desc">I apply the right formulas and tools &mdash; TRIM, CLEAN, PROPER, Remove Duplicates &mdash; step by step.</div></div>
+    <div class="proc-step"><div class="proc-dot">&#10003;</div><div class="proc-num">Step 04</div><div class="proc-title">Quality Check</div><div class="proc-desc">I manually verify samples, test formulas, and double-check the output to ensure zero errors.</div></div>
+    <div class="proc-step"><div class="proc-dot">&#128228;</div><div class="proc-num">Step 05</div><div class="proc-title">Deliver</div><div class="proc-desc">Clean file delivered within 24 hours with a summary of all changes made. 1 free revision included.</div></div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE ME -->
+<section id="why">
+  <span class="stag">Why Me?</span>
+  <h2 class="stitle">Why <span class="c">Choose Me</span></h2>
+  <div class="sdivider"></div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-ico">&#9889;</div><div class="why-name">Fast 24-Hour Delivery</div><div class="why-desc">I deliver your cleaned data within 24 hours. No waiting for days &mdash; your project gets done fast and on time, every time.</div></div>
+    <div class="why-card"><div class="why-ico">&#127919;</div><div class="why-name">100% Accuracy Focus</div><div class="why-desc">I give full attention to every row and column. Each cleaning step is verified manually to ensure zero errors in the final output.</div></div>
+    <div class="why-card"><div class="why-ico">&#128172;</div><div class="why-name">Clear Communication</div><div class="why-desc">I respond within 1 hour and keep you updated throughout. You will always know the status of your project.</div></div>
+    <div class="why-card"><div class="why-ico">&#128260;</div><div class="why-name">Free Revision Included</div><div class="why-desc">Not 100% satisfied? No problem. Every project includes 1 free revision so you get exactly what you need.</div></div>
+    <div class="why-card"><div class="why-ico">&#127769;</div><div class="why-name">Night Availability</div><div class="why-desc">I work nights &mdash; perfect for clients in different time zones. When others are offline, I am working on your project.</div></div>
+    <div class="why-card"><div class="why-ico">&#128737;</div><div class="why-name">Safe &amp; Confidential</div><div class="why-desc">Your data is handled with full confidentiality. Files are only used for the project and never shared with anyone.</div></div>
+  </div>
+</section>
+
+
+
+<!-- PRICING (TWO PACKAGES + EMAIL) -->
+<section id="pricing">
+  <span class="stag">Packages</span>
+  <h2 class="stitle">Simple <span class="c">Pricing</span></h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">Choose the package that fits your needs &mdash; or build your own custom solution. Both packages include on-time delivery and quality guarantee.</p>
+  <div class="price-grid">
+
+    <!-- Basic Clean $15 -->
+    <div class="price-card featured">
+      <div class="price-badge pb-cyan">&#11088; Most Popular</div>
+      <div class="price-name">BASIC CLEAN</div>
+      <div class="price-amt cyan-price"><small>$</small>15</div>
+      <div class="price-sub">Per Project &middot; 24-Hour Delivery &middot; 1 Free Revision</div>
+      <ul class="price-features">
+        <li>Excel Data Cleaning (standard size)</li>
+        <li>Duplicate Removal</li>
+        <li>Blank Row Removal</li>
+        <li>Text Standardization (TRIM, PROPER, CLEAN)</li>
+        <li>Extra Space Removal</li>
+        <li>Basic Conditional Formatting</li>
+        <li>Spreadsheet Formatting &amp; Alignment</li>
+        <li>Text to Columns &amp; Data Splitting</li>
+        <li>Merge Cells &amp; Professional Layout</li>
+        <li>PDF to Excel Conversion</li>
+        <li>Delivered as .xlsx file</li>
+        <li>1 Free Revision Included</li>
+        <li>Response within 1 Hour</li>
+      </ul>
+
+      <!-- ALSO CAN DO section -->
+      <div class="also-can">
+        <div class="also-can-title">&#10024; I Also Know &amp; Can Do</div>
+        <div class="also-can-list">
+          <span class="also-tag">&#9989; VLOOKUP / HLOOKUP</span>
+          <span class="also-tag">&#9989; INDEX &amp; MATCH</span>
+          <span class="also-tag">&#9989; IFERROR Handling</span>
+          <span class="also-tag">&#9989; COUNTIF / SUMIF</span>
+          <span class="also-tag">&#9989; IF Nested Formulas</span>
+          <span class="also-tag">&#9989; Data Validation Rules</span>
+          <span class="also-tag">&#9989; Flash Fill</span>
+          <span class="also-tag">&#9989; Freeze Panes</span>
+          <span class="also-tag">&#9989; Filter &amp; Sort</span>
+          <span class="also-tag">&#9989; Number Formatting</span>
+          <span class="also-tag">&#9989; Date Formatting</span>
+          <span class="also-tag">&#9989; Cell Protection</span>
+        </div>
+      </div>
+
+      <!-- TWO BUTTONS: Fiverr + Email -->
+      <div class="price-btn-row">
+        <a href="https://www.fiverr.com/s/EgGZkeq" target="_blank" class="price-cta cta-fiverr">
+          &#127381; Order on Fiverr
+        </a>
+        <a href="mailto:sangeetadhikari178@gmail.com?subject=$15 Package - Excel Data Cleaning&body=Hi Sangeet, I am interested in the $15 Basic Clean Package. Please let me know how we can get started." onclick="window.location.href=this.href;return false;" class="price-cta cta-email">
+          &#9993; Email Me
+        </a>
+      </div>
+    </div>
+
+    <!-- Custom Package -->
+    <div class="price-card custom-pkg">
+      <div class="price-badge pb-violet">&#9881; Flexible</div>
+      <div class="price-name">CUSTOM PACKAGE</div>
+      <div class="price-amt violet-price">Custom</div>
+      <div class="price-sub">Tailored to Your Needs &middot; Contact to Discuss</div>
+      <ul class="price-features">
+        <li>Large or complex datasets (50k+ rows)</li>
+        <li>PDF to Excel (multi-page documents)</li>
+        <li>Multiple services combined</li>
+        <li>Advanced conditional formatting rules</li>
+        <li>Bulk data entry projects</li>
+        <li>Recurring / ongoing work</li>
+        <li>Priority turnaround time</li>
+        <li>Dedicated communication channel</li>
+        <li>Multiple revisions</li>
+        <li>Custom delivery timeline</li>
+      </ul>
+
+      <!-- ALSO CAN DO - custom -->
+      <div class="also-can" style="border-color:rgba(123,97,255,.2);background:rgba(123,97,255,.04);">
+        <div class="also-can-title" style="color:var(--violet);">&#10024; I Also Know &amp; Can Do</div>
+        <div class="also-can-list">
+          <span class="also-tag" style="border-color:rgba(123,97,255,.25);color:var(--violet);">&#9989; Pivot Tables</span>
+          <span class="also-tag" style="border-color:rgba(123,97,255,.25);color:var(--violet);">&#9989; Power Query</span>
+          <span class="also-tag" style="border-color:rgba(123,97,255,.25);color:var(--violet);">&#9989; Advanced Filters</span>
+          <span class="also-tag" style="border-color:rgba(123,97,255,.25);color:var(--violet);">&#9989; Multi-sheet Work</span>
+          <span class="also-tag" style="border-color:rgba(123,97,255,.25);color:var(--violet);">&#9989; Large File Handling</span>
+          <span class="also-tag" style="border-color:rgba(123,97,255,.25);color:var(--violet);">&#9989; Bulk Processing</span>
+        </div>
+      </div>
+
+      <!-- SINGLE BUTTON: Email only -->
+      <a href="mailto:sangeetadhikari178@gmail.com?subject=Custom Package - Excel Data Cleaning&body=Hi Sangeet, I am interested in a Custom Package. Please let me know about pricing and timeline." onclick="window.location.href=this.href;return false;" class="price-cta cta-email" style="display:block;width:100%;text-align:center;border-color:rgba(123,97,255,.5);color:var(--violet);background:rgba(123,97,255,.08);font-size:14px;padding:15px;">
+        &#9993; Email Me for Custom Quote
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TARGET CLIENTS -->
+<section id="clients">
+  <span class="stag">Who I Help</span>
+  <h2 class="stitle">My Target <span class="c">Clients</span></h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">I work with a wide range of clients &mdash; anyone who has Excel data that needs to be cleaned, organized, or formatted.</p>
+  <div class="clients-grid">
+    <div class="client-chip"><div class="client-ico">&#127962;</div><div><div class="client-name">Businesses</div><div class="client-note">Sales &amp; Business Data</div></div></div>
+    <div class="client-chip"><div class="client-ico">&#128722;</div><div><div class="client-name">Amazon Sellers</div><div class="client-note">Product Lists &amp; Inventory</div></div></div>
+    <div class="client-chip"><div class="client-ico">&#127978;</div><div><div class="client-name">Shop Owners</div><div class="client-note">Customer &amp; Stock Data</div></div></div>
+    <div class="client-chip"><div class="client-ico">&#128218;</div><div><div class="client-name">Teachers</div><div class="client-note">Student &amp; Grade Records</div></div></div>
+    <div class="client-chip"><div class="client-ico">&#127980;</div><div><div class="client-name">Agencies</div><div class="client-note">Bulk Data Processing</div></div></div>
+    <div class="client-chip"><div class="client-ico">&#128188;</div><div><div class="client-name">Small Business</div><div class="client-note">All Excel Needs</div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT (FORMSPREE) -->
+<section id="contact">
+  <span class="stag">Get In Touch</span>
+  <h2 class="stitle">Contact <span class="c">Me</span></h2>
+  <div class="sdivider"></div>
+  <div class="contact-grid">
+    <div>
+      <p class="atext" style="margin-bottom:28px;">Have messy Excel data? Need a clean spreadsheet fast? Send me a message and I will get back to you <strong>within 1 hour.</strong> First consultation is free!</p>
+      <div class="contact-items">
+        <div class="ci"><div class="ci-ico">&#128231;</div><div><div class="ci-lbl">Email</div><div class="ci-val">sangeetadhikari178@gmail.com</div></div></div>
+        <div class="ci"><div class="ci-ico">&#128188;</div><div><div class="ci-lbl">Freelance Platform</div><div class="ci-val"><a href="https://www.fiverr.com/s/EgGZkeq" target="_blank" style="color:var(--cyan);text-decoration:none;font-weight:700;">View My Fiverr Profile &#8599;</a></div></div></div>
+        <div class="ci"><div class="ci-ico">&#128205;</div><div><div class="ci-lbl">Location</div><div class="ci-val">Gonda District, Uttar Pradesh, India</div></div></div>
+        <div class="ci"><div class="ci-ico">&#127769;</div><div><div class="ci-lbl">Working Hours</div><div class="ci-val">Night Shift &middot; 2 Hours Daily</div></div></div>
+        <div class="ci"><div class="ci-ico">&#9889;</div><div><div class="ci-lbl">Response Time</div><div class="ci-val" style="color:var(--green)">Within 1 Hour &#10003;</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div id="contactForm">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" id="cf_name" class="form-input" placeholder="e.g. Rahul Kumar">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="cf_email" class="form-input" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Package Interested In</label>
+          <select id="cf_package" class="form-select">
+            <option value="">Select a package...</option>
+            <option value="$15 Basic Clean Package">$15 Basic Clean Package</option>
+            <option value="Custom Package">Custom Package</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">What do you need?</label>
+          <input type="text" id="cf_service" class="form-input" placeholder="e.g. Clean 5,000 rows of customer data">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea id="cf_message" class="form-textarea" placeholder="Describe your data problem — file size, issues, deadline..."></textarea>
+        </div>
+        <button type="button" class="btn-cyan" style="width:100%;justify-content:center;border:none;cursor:pointer;" onclick="sendContactForm()">&#9993; Send Message &mdash; Reply in 1 Hour</button>
+        <div class="form-success" id="formSuccess" style="display:none;">&#10003; Your email client has opened! Please press Send to deliver your message.</div>
+        <div id="formError" style="display:none;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);border-radius:8px;padding:14px 18px;color:var(--red);font-size:13px;text-align:center;margin-top:12px;">&#9888; Please fill Name and Message before sending.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SANGEET.XLS</div>
+  <div class="footer-copy">&copy; 2025 <strong>Sangeet Adhikari</strong> &mdash; Excel Data Cleaning Specialist &middot; Gonda, UP &middot; Available on Fiverr &middot; Serving clients worldwide</div>
+  <div class="social-row">
+    <a href="#" class="soc">&#128188;</a>
+    <a href="#" class="soc">&#128240;</a>
+    <a href="#" class="soc">&#128038;</a>
+  </div>
+</footer>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- MODAL: Excel Data Cleaning -->
+<div id="modal-cleaning" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-cleaning')">&times;</button>
+    <div class="modal-tag">Service Examples</div>
+    <h3 class="modal-title">&#129529; Excel Data Cleaning</h3>
+    <p class="modal-subtitle">4 real project examples showing exact Before &amp; After data transformations.</p>
+
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">E-Commerce Customer List Cleanup</span><span class="proj-rows-badge">10,000 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Email</td></tr><tr><td class="red-c">&nbsp;RAHUL SHARMA&nbsp;</td><td class="red-c">rahul@gmai</td></tr><tr><td class="red-c">rahul sharma</td><td class="red-c">RAHUL@GMAIL</td></tr><tr><td class="red-c">&nbsp;PRIYA SINGH&nbsp;</td><td class="red-c">priya@yahoocom</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Email</td></tr><tr><td class="grn-c">Rahul Sharma</td><td class="grn-c">rahul@gmail.com</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Duplicate removed</td><td></td></tr><tr><td class="grn-c">Priya Singh</td><td class="grn-c">priya@yahoo.com</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>1,847 duplicates removed</strong>, all emails fixed, names standardized to proper case.</div>
+    </div>
+
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Employee HR Database Cleaning</span><span class="proj-rows-badge">3,500 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Dept</td><td class="th-c">Salary</td><td class="th-c">Joined</td></tr><tr><td class="red-c">SALES dept</td><td class="red-c">45000</td><td class="red-c">01/05/2023</td></tr><tr><td class="red-c">sales</td><td class="red-c">Forty-Five K</td><td class="red-c">5-1-23</td></tr><tr><td class="red-c">&nbsp;IT&nbsp;</td><td class="red-c">62000</td><td class="red-c">15-Mar-22</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Dept</td><td class="th-c">Salary</td><td class="th-c">Joined</td></tr><tr><td class="grn-c">Sales</td><td class="grn-c">45000</td><td class="grn-c">01-05-2023</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Merged &amp; fixed</td><td class="grn-c">45000</td><td class="grn-c">01-05-2023</td></tr><tr><td class="grn-c">IT</td><td class="grn-c">62000</td><td class="grn-c">15-03-2022</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>All date formats unified</strong>, department names standardized, salary text values converted to numbers.</div>
+    </div>
+
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Product Catalog Data Cleanup</span><span class="proj-rows-badge">5,200 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">SKU</td><td class="th-c">Product</td><td class="th-c">Price</td></tr><tr><td class="red-c">SKU001</td><td class="red-c">BLUE T-SHIRT SIZE L</td><td class="red-c">$12</td></tr><tr><td class="red-c">sku001</td><td class="red-c">Blue T-Shirt Size L</td><td class="red-c">12</td></tr><tr><td class="red-c">SKU&nbsp;003</td><td class="red-c">RED shoes&nbsp;&nbsp;</td><td class="red-c">$25.00</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">SKU</td><td class="th-c">Product</td><td class="th-c">Price</td></tr><tr><td class="grn-c">SKU001</td><td class="grn-c">Blue T-Shirt Size L</td><td class="grn-c">12.00</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Duplicate removed</td><td></td><td></td></tr><tr><td class="grn-c">SKU003</td><td class="grn-c">Red Shoes</td><td class="grn-c">25.00</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>620 duplicate SKUs removed</strong>, product names standardized, prices converted to uniform number format.</div>
+    </div>
+
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Sales Report Monthly Cleanup</span><span class="proj-rows-badge">8,000 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Status</td></tr><tr><td class="red-c">north</td><td class="red-c">INR 25000</td><td class="red-c">PENDING</td></tr><tr><td class="red-c">&nbsp;SOUTH&nbsp;</td><td class="red-c">25,000</td><td class="red-c">pending</td></tr><tr><td class="red-c">East Region</td><td class="red-c">INR&nbsp;18000</td><td class="red-c">Compl</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Status</td></tr><tr><td class="grn-c">North</td><td class="grn-c">25000</td><td class="grn-c">Pending</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Duplicate removed</td><td></td><td></td></tr><tr><td class="grn-c">East</td><td class="grn-c">18000</td><td class="grn-c">Completed</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>Region names standardized</strong>, "INR" prefix removed from numbers, status values made uniform.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Data Entry -->
+<div id="modal-entry" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-entry')">&times;</button>
+    <div class="modal-tag">Service Examples</div>
+    <h3 class="modal-title">&#128221; Data Entry</h3>
+    <p class="modal-subtitle">4 real project examples showing accurate data entry work Before &amp; After.</p>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Amazon Product Listing Entry</span><span class="proj-rows-badge">500 products</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (PDF)</div><table class="proj-tbl"><tr><td class="th-c">Raw PDF Data</td></tr><tr><td class="red-c">Product: Blue T-Shirt, Size: L, Price: $12, Stock: 50</td></tr><tr><td class="red-c">Product: Red Shoes, Size: 9, Price: $25, Stock: 30</td></tr><tr><td class="red-c">Product: Black Bag, Size: M, Price: $18, Stock: 20</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Product</td><td class="th-c">Size</td><td class="th-c">Price</td><td class="th-c">Stock</td></tr><tr><td class="grn-c">Blue T-Shirt</td><td class="grn-c">L</td><td class="grn-c">$12.00</td><td class="grn-c">50</td></tr><tr><td class="grn-c">Red Shoes</td><td class="grn-c">9</td><td class="grn-c">$25.00</td><td class="grn-c">30</td></tr><tr><td class="grn-c">Black Bag</td><td class="grn-c">M</td><td class="grn-c">$18.00</td><td class="grn-c">20</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>500 products</strong> entered accurately into structured Excel format with consistent formatting, delivered in 20 hours.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Student Grade Record Entry</span><span class="proj-rows-badge">1,200 students</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (Paper)</div><table class="proj-tbl"><tr><td class="th-c">Handwritten Form</td></tr><tr><td class="red-c">Name: Rahul Kumar, Roll: 101, Marks: 78, Grade: B</td></tr><tr><td class="red-c">Name: Priya Singh, Roll: 102, Marks: 92, Grade: A</td></tr><tr><td class="red-c">Name: Amit Roy, Roll: 103, Marks: 65, Grade: C</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Roll</td><td class="th-c">Marks</td><td class="th-c">Grade</td></tr><tr><td class="grn-c">Rahul Kumar</td><td class="grn-c">101</td><td class="grn-c">78</td><td class="grn-c">B</td></tr><tr><td class="grn-c">Priya Singh</td><td class="grn-c">102</td><td class="grn-c">92</td><td class="grn-c">A</td></tr><tr><td class="grn-c">Amit Roy</td><td class="grn-c">103</td><td class="grn-c">65</td><td class="grn-c">C</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>1,200 student records</strong> accurately entered, zero errors, submitted to teacher 2 hours before deadline.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Business Contact List Entry</span><span class="proj-rows-badge">800 contacts</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (Business Cards)</div><table class="proj-tbl"><tr><td class="th-c">Business Card Info</td></tr><tr><td class="red-c">John Smith, CEO, ABC Corp, john@abccorp.com, +1-555-1234</td></tr><tr><td class="red-c">Sara Lee, Manager, XYZ Ltd, sara@xyz.com, +1-555-5678</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Role</td><td class="th-c">Email</td><td class="th-c">Phone</td></tr><tr><td class="grn-c">John Smith</td><td class="grn-c">CEO</td><td class="grn-c">john@abccorp.com</td><td class="grn-c">+1-555-1234</td></tr><tr><td class="grn-c">Sara Lee</td><td class="grn-c">Manager</td><td class="grn-c">sara@xyz.com</td><td class="grn-c">+1-555-5678</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>800 contacts</strong> entered in 18 hours with all fields structured, consistent, and ready for CRM import.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Invoice Data Entry</span><span class="proj-rows-badge">350 invoices</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (Scanned PDFs)</div><table class="proj-tbl"><tr><td class="th-c">Invoice Data (PDF)</td></tr><tr><td class="red-c">Invoice #1024, Date: 12/01/2024, Client: ABC Co, Amount: $4,500</td></tr><tr><td class="red-c">Invoice #1025, Date: 15/01/2024, Client: XYZ Ltd, Amount: $2,800</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Inv #</td><td class="th-c">Date</td><td class="th-c">Client</td><td class="th-c">Amount</td></tr><tr><td class="grn-c">1024</td><td class="grn-c">12-01-2024</td><td class="grn-c">ABC Co</td><td class="grn-c">4500.00</td></tr><tr><td class="grn-c">1025</td><td class="grn-c">15-01-2024</td><td class="grn-c">XYZ Ltd</td><td class="grn-c">2800.00</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>350 invoices</strong> accurately entered, ready for accounting software, delivered within 24 hours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PDF to Excel -->
+<div id="modal-pdf" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-pdf')">&times;</button>
+    <div class="modal-tag">Service Examples</div>
+    <h3 class="modal-title">&#128196; PDF to Excel</h3>
+    <p class="modal-subtitle">4 real project examples showing PDF table extraction and Excel conversion.</p>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Bank Statement PDF Conversion</span><span class="proj-rows-badge">12 pages</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF FORMAT</div><table class="proj-tbl"><tr><td class="red-c">Date &nbsp;&nbsp; Description &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount</td></tr><tr><td class="red-c">01 Jan &nbsp; Opening Balance &nbsp;&nbsp; 10,000</td></tr><tr><td class="red-c">03 Jan &nbsp; ATM Withdrawal &nbsp;&nbsp;&nbsp; -500</td></tr><tr><td class="red-c">05 Jan &nbsp; Online Transfer &nbsp;&nbsp;&nbsp; -1,200</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL FORMAT</div><table class="proj-tbl"><tr><td class="th-c">Date</td><td class="th-c">Description</td><td class="th-c">Amount</td></tr><tr><td class="grn-c">01-01-2024</td><td class="grn-c">Opening Balance</td><td class="grn-c">10000</td></tr><tr><td class="grn-c">03-01-2024</td><td class="grn-c">ATM Withdrawal</td><td class="grn-c">-500</td></tr><tr><td class="grn-c">05-01-2024</td><td class="grn-c">Online Transfer</td><td class="grn-c">-1200</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>12 pages of bank statement</strong> converted to structured Excel, all columns aligned, sortable and filterable.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Product Catalog PDF to Excel</span><span class="proj-rows-badge">8 pages</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF TABLE</div><table class="proj-tbl"><tr><td class="red-c">Item &nbsp;&nbsp;&nbsp; Size &nbsp;&nbsp; Color &nbsp; Price</td></tr><tr><td class="red-c">T-Shirt &nbsp; L &nbsp;&nbsp;&nbsp;&nbsp; Blue &nbsp;&nbsp; $12</td></tr><tr><td class="red-c">Jeans &nbsp;&nbsp;&nbsp; 32 &nbsp;&nbsp;&nbsp;&nbsp; Black &nbsp; $35</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL COLUMNS</div><table class="proj-tbl"><tr><td class="th-c">Item</td><td class="th-c">Size</td><td class="th-c">Color</td><td class="th-c">Price</td></tr><tr><td class="grn-c">T-Shirt</td><td class="grn-c">L</td><td class="grn-c">Blue</td><td class="grn-c">12.00</td></tr><tr><td class="grn-c">Jeans</td><td class="grn-c">32</td><td class="grn-c">Black</td><td class="grn-c">35.00</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>320 products</strong> from 8 PDF pages converted to Excel with clean column separation and uniform pricing format.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Financial Report Table Extraction</span><span class="proj-rows-badge">20 pages</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF REPORT</div><table class="proj-tbl"><tr><td class="red-c">Q1 Revenue: 1,20,000 | Q2: 1,45,000</td></tr><tr><td class="red-c">Q3 Revenue: 98,000 &nbsp;| Q4: 1,75,000</td></tr><tr><td class="red-c">Total Annual: 5,38,000</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL TABLE</div><table class="proj-tbl"><tr><td class="th-c">Quarter</td><td class="th-c">Revenue</td></tr><tr><td class="grn-c">Q1</td><td class="grn-c">120000</td></tr><tr><td class="grn-c">Q2</td><td class="grn-c">145000</td></tr><tr><td class="grn-c">Q3</td><td class="grn-c">98000</td></tr><tr><td class="grn-c">Q4</td><td class="grn-c">175000</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>20 pages of financial data</strong> extracted into clean Excel rows, numbers ready for chart and formula use.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Government Form Data Extraction</span><span class="proj-rows-badge">50 forms</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF FORMS</div><table class="proj-tbl"><tr><td class="red-c">Name: Rahul Kumar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Age: 28</td></tr><tr><td class="red-c">District: Gonda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State: UP</td></tr><tr><td class="red-c">Category: OBC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Applied: Yes</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL ROWS</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Age</td><td class="th-c">District</td><td class="th-c">Cat.</td></tr><tr><td class="grn-c">Rahul Kumar</td><td class="grn-c">28</td><td class="grn-c">Gonda</td><td class="grn-c">OBC</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>50 government forms</strong> converted into one structured Excel database in 16 hours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Text to Columns -->
+<div id="modal-split" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-split')">&times;</button>
+    <div class="modal-tag">Service Examples</div>
+    <h3 class="modal-title">&#9986; Text to Columns &amp; Split Data</h3>
+    <p class="modal-subtitle">4 real examples showing data splitting for organized column structure.</p>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Full Name Split to First &amp; Last</span><span class="proj-rows-badge">5,000 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (1 Column)</div><table class="proj-tbl"><tr><td class="th-c">Full Name</td></tr><tr><td class="red-c">Rahul Kumar Sharma</td></tr><tr><td class="red-c">Priya Gupta</td></tr><tr><td class="red-c">Amit Singh Verma</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (3 Columns)</div><table class="proj-tbl"><tr><td class="th-c">First</td><td class="th-c">Middle</td><td class="th-c">Last</td></tr><tr><td class="grn-c">Rahul</td><td class="grn-c">Kumar</td><td class="grn-c">Sharma</td></tr><tr><td class="grn-c">Priya</td><td class="grn-c">&mdash;</td><td class="grn-c">Gupta</td></tr><tr><td class="grn-c">Amit</td><td class="grn-c">Singh</td><td class="grn-c">Verma</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>5,000 full names</strong> accurately split into separate First, Middle, and Last name columns.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Address Split to City, State, PIN</span><span class="proj-rows-badge">2,000 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Full Address</td></tr><tr><td class="red-c">Gonda, Uttar Pradesh, 271001</td></tr><tr><td class="red-c">Lucknow, UP, 226001</td></tr><tr><td class="red-c">Mumbai, Maharashtra, 400001</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">City</td><td class="th-c">State</td><td class="th-c">PIN</td></tr><tr><td class="grn-c">Gonda</td><td class="grn-c">Uttar Pradesh</td><td class="grn-c">271001</td></tr><tr><td class="grn-c">Lucknow</td><td class="grn-c">UP</td><td class="grn-c">226001</td></tr><tr><td class="grn-c">Mumbai</td><td class="grn-c">Maharashtra</td><td class="grn-c">400001</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>2,000 addresses</strong> cleanly split using comma delimiter, ready for region-based filtering.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Date-Time Column Split</span><span class="proj-rows-badge">7,500 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Timestamp</td></tr><tr><td class="red-c">2024-01-15 09:30:00</td></tr><tr><td class="red-c">2024-01-15 14:45:22</td></tr><tr><td class="red-c">2024-01-16 08:00:00</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Date</td><td class="th-c">Time</td></tr><tr><td class="grn-c">15-01-2024</td><td class="grn-c">09:30 AM</td></tr><tr><td class="grn-c">15-01-2024</td><td class="grn-c">02:45 PM</td></tr><tr><td class="grn-c">16-01-2024</td><td class="grn-c">08:00 AM</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>7,500 timestamps</strong> split into separate Date and Time columns for easier reporting and filtering.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Product SKU Code Split</span><span class="proj-rows-badge">3,000 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">SKU Code</td></tr><tr><td class="red-c">TSHIRT-BLU-L-001</td></tr><tr><td class="red-c">SHOES-RED-42-002</td></tr><tr><td class="red-c">BAG-BLK-M-003</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Type</td><td class="th-c">Color</td><td class="th-c">Size</td><td class="th-c">ID</td></tr><tr><td class="grn-c">TSHIRT</td><td class="grn-c">BLU</td><td class="grn-c">L</td><td class="grn-c">001</td></tr><tr><td class="grn-c">SHOES</td><td class="grn-c">RED</td><td class="grn-c">42</td><td class="grn-c">002</td></tr><tr><td class="grn-c">BAG</td><td class="grn-c">BLK</td><td class="grn-c">M</td><td class="grn-c">003</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>3,000 SKU codes</strong> split into 4 separate attribute columns using dash delimiter.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Conditional Formatting -->
+<div id="modal-format" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-format')">&times;</button>
+    <div class="modal-tag">Service Examples</div>
+    <h3 class="modal-title">&#127912; Conditional Formatting</h3>
+    <p class="modal-subtitle">4 real examples showing data visualization through color-coded formatting rules.</p>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Sales KPI Dashboard Highlighting</span><span class="proj-rows-badge">Monthly report</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (No Formatting)</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Target</td></tr><tr><td>North</td><td>85000</td><td>100000</td></tr><tr><td>South</td><td>112000</td><td>100000</td></tr><tr><td>East</td><td>45000</td><td>100000</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Color Coded)</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Status</td></tr><tr><td>North</td><td class="yel-c">85,000 &#9651;</td><td class="yel-c">Near Target</td></tr><tr><td>South</td><td class="grn-c">1,12,000 &#9650;</td><td class="grn-c">Exceeded!</td></tr><tr><td>East</td><td class="red-c">45,000 &#9660;</td><td class="red-c">Below Target</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: Management could instantly see <strong>which regions met targets</strong> using red/yellow/green color rules without reading every number.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Duplicate Row Detection</span><span class="proj-rows-badge">8,000 rows</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Can't Find Dups)</div><table class="proj-tbl"><tr><td class="th-c">Email</td><td class="th-c">Name</td></tr><tr><td>rahul@gmail.com</td><td>Rahul</td></tr><tr><td>priya@gmail.com</td><td>Priya</td></tr><tr><td>rahul@gmail.com</td><td>Rahul K</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Duplicates Highlighted)</div><table class="proj-tbl"><tr><td class="th-c">Email</td><td class="th-c">Name</td></tr><tr><td class="red-c">rahul@gmail.com &#9679;</td><td>Rahul</td></tr><tr><td class="grn-c">priya@gmail.com</td><td>Priya</td></tr><tr><td class="red-c">rahul@gmail.com &#9679;</td><td>Rahul K</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>All 1,200 duplicate rows</strong> highlighted in red using COUNTIF-based conditional formatting rule.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Inventory Stock Level Alerts</span><span class="proj-rows-badge">Product list</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Plain Numbers)</div><table class="proj-tbl"><tr><td class="th-c">Product</td><td class="th-c">Stock</td></tr><tr><td>T-Shirt Blue</td><td>5</td></tr><tr><td>Red Shoes</td><td>45</td></tr><tr><td>Black Bag</td><td>0</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Alert Colors)</div><table class="proj-tbl"><tr><td class="th-c">Product</td><td class="th-c">Stock</td><td class="th-c">Alert</td></tr><tr><td>T-Shirt Blue</td><td class="yel-c">5</td><td class="yel-c">Low Stock</td></tr><tr><td>Red Shoes</td><td class="grn-c">45</td><td class="grn-c">OK</td></tr><tr><td>Black Bag</td><td class="red-c">0</td><td class="red-c">OUT!</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: Inventory manager can instantly spot <strong>out-of-stock and low-stock</strong> products with color alerts.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Student Grade Classification</span><span class="proj-rows-badge">600 students</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (No Visual)</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Marks</td></tr><tr><td>Rahul</td><td>92</td></tr><tr><td>Priya</td><td>58</td></tr><tr><td>Amit</td><td>74</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Grade Colors)</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Marks</td><td class="th-c">Grade</td></tr><tr><td>Rahul</td><td class="grn-c">92 &#9650;</td><td class="grn-c">A+</td></tr><tr><td>Priya</td><td class="red-c">58 &#9660;</td><td class="red-c">D</td></tr><tr><td>Amit</td><td class="yel-c">74 &#9651;</td><td class="yel-c">B</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: <strong>600 student records</strong> formatted with color-coded grade bands so teachers can identify top and struggling students at a glance.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Merge Cells & Formatting -->
+<div id="modal-merge" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-merge')">&times;</button>
+    <div class="modal-tag">Service Examples</div>
+    <h3 class="modal-title">&#128279; Merge Cells &amp; Formatting</h3>
+    <p class="modal-subtitle">4 real examples showing spreadsheet transformation from plain to professional.</p>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Monthly Sales Report Formatting</span><span class="proj-rows-badge">Company report</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Plain Data)</div><table class="proj-tbl"><tr><td>Jan</td><td>Feb</td><td>Mar</td></tr><tr><td>45000</td><td>52000</td><td>48000</td></tr><tr><td>North</td><td>South</td><td>East</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Professional)</div><table class="proj-tbl"><tr><td class="grn-c" colspan="3" style="text-align:center;font-weight:700">&#10064; QUARTERLY SALES REPORT &#10064;</td></tr><tr><td class="th-c">January</td><td class="th-c">February</td><td class="th-c">March</td></tr><tr><td class="grn-c">&#8377;45,000</td><td class="grn-c">&#8377;52,000</td><td class="grn-c">&#8377;48,000</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: Plain data transformed into a <strong>professional report</strong> with merged header, borders, currency symbols, and consistent alignment.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Invoice Template Design</span><span class="proj-rows-badge">Template</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (No Structure)</div><table class="proj-tbl"><tr><td class="red-c">Company Name here</td></tr><tr><td class="red-c">Invoice# Date Bill To Amount Due</td></tr><tr><td class="red-c">item qty price total</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Clean Invoice)</div><table class="proj-tbl"><tr><td class="grn-c" colspan="2" style="font-weight:700">&#127981; COMPANY NAME</td></tr><tr><td class="th-c">Invoice #</td><td class="th-c">Date</td></tr><tr><td class="th-c">Item</td><td class="th-c">Price</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: Professional <strong>invoice template</strong> created with merged headers, proper borders, print-ready layout.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Student Marksheet Formatting</span><span class="proj-rows-badge">School sheet</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Unformatted)</div><table class="proj-tbl"><tr><td class="red-c">name rollno math sci eng total</td></tr><tr><td class="red-c">rahul 1 78 82 90 250</td></tr><tr><td class="red-c">priya 2 92 88 95 275</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Official Format)</div><table class="proj-tbl"><tr><td class="grn-c" colspan="3" style="text-align:center;font-weight:700">ANNUAL MARKSHEET 2024</td></tr><tr><td class="th-c">Name</td><td class="th-c">Subjects</td><td class="th-c">Total</td></tr><tr><td class="grn-c">Rahul</td><td class="grn-c">Math/Sci/Eng</td><td class="grn-c">250/300</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: Raw data formatted into <strong>official-looking marksheet</strong> with merged title, subject headers, and percentage column.</div>
+    </div>
+    <div class="proj-ex">
+      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Business Dashboard Layout</span><span class="proj-rows-badge">Dashboard</span></div>
+      <div class="proj-ba">
+        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Raw Cells)</div><table class="proj-tbl"><tr><td class="red-c">metric value</td></tr><tr><td class="red-c">total sales 540000</td></tr><tr><td class="red-c">customers 1240</td></tr><tr><td class="red-c">orders 3400</td></tr></table></div>
+        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
+        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Dashboard)</div><table class="proj-tbl"><tr><td class="grn-c" style="font-weight:700">&#128202; BUSINESS OVERVIEW</td><td></td></tr><tr><td class="th-c">Total Sales</td><td class="grn-c">&#8377;5,40,000</td></tr><tr><td class="th-c">Customers</td><td class="blu-c">1,240</td></tr><tr><td class="th-c">Orders</td><td class="yel-c">3,400</td></tr></table></div>
+      </div>
+      <div class="proj-result">&#128200; Result: Plain metrics transformed into a <strong>visual business dashboard</strong> with color-coded KPIs, merged sections, and clean layout.</div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+// ===== EXCEL DEMO WIDGET (About section) — real practice-file data, tab switch + download =====
+function xlSwitchTab(tab) {
+  var isRaw = tab === 'raw';
+  document.getElementById('xlTabRaw').classList.toggle('active', isRaw);
+  document.getElementById('xlTabClean').classList.toggle('active', !isRaw);
+  document.getElementById('xlBodyRaw').style.display   = isRaw ? '' : 'none';
+  document.getElementById('xlBodyClean').style.display = isRaw ? 'none' : '';
+  document.getElementById('xlFbarRaw').style.display   = isRaw ? '' : 'none';
+  document.getElementById('xlFbarClean').style.display = isRaw ? 'none' : '';
+}
+
+// Base64 of the real Excel_Data_Cleaning_Practice.xlsx file, so the download
+// works even when this page is opened as a single local HTML file.
+var XLSX_DEMO_B64 = "UEsDBBQABgAIAAAAIQASGN7dZAEAABgFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADElM9uwjAMxu+T9g5VrlMb4DBNE4XD/hw3pLEHyBpDI9Ikig2Dt58bYJqmDoRA2qVRG/v7fnFjD8frxmYriGi8K0W/6IkMXOW1cfNSvE+f8zuRISmnlfUOSrEBFOPR9dVwugmAGWc7LEVNFO6lxKqGRmHhAzjemfnYKOLXOJdBVQs1Bzno9W5l5R2Bo5xaDTEaPsJMLS1lT2v+vCWJYFFkD9vA1qsUKgRrKkVMKldO/3LJdw4FZ6YYrE3AG8YQstOh3fnbYJf3yqWJRkM2UZFeVMMYcm3lp4+LD+8XxWGRDko/m5kKtK+WDVegwBBBaawBqLFFWotGGbfnPuCfglGmpX9hkPZ8SfhEjsE/cRDfO5DpeX4pksyRgyNtLOClf38SPeZcqwj6jSJ36MUBfmof4uD7O4k+IHdyhNOrsG/VNjsPLASRDHw3a9el/3bkKXB22aGdMxp0h7dMc230BQAA//8DAFBLAwQUAAYACAAAACEAtVUwI/QAAABMAgAACwAIAl9yZWxzLy5yZWxzIKIEAiigAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKySTU/DMAyG70j8h8j31d2QEEJLd0FIuyFUfoBJ3A+1jaMkG92/JxwQVBqDA0d/vX78ytvdPI3qyCH24jSsixIUOyO2d62Gl/pxdQcqJnKWRnGs4cQRdtX11faZR0p5KHa9jyqruKihS8nfI0bT8USxEM8uVxoJE6UchhY9mYFaxk1Z3mL4rgHVQlPtrYawtzeg6pPPm3/XlqbpDT+IOUzs0pkVyHNiZ9mufMhsIfX5GlVTaDlpsGKecjoieV9kbMDzRJu/E/18LU6cyFIiNBL4Ms9HxyWg9X9atDTxy515xDcJw6vI8MmCix+o3gEAAP//AwBQSwMEFAAGAAgAAAAhADSyL/lzAwAA6ggAAA8AAAB4bC93b3JrYm9vay54bWykVmtvm0oQ/X6l/gfEdwLL2yik4mHUSEkVuWlyK0WKNrA2qwDLXZbYUdX/fmcBO3ZdVW6K7IV9nT0zc2bg/OOmrpQXwjvKmlBFZ4aqkCZnBW1Wofr1NtN8VekEbgpcsYaE6ivp1I8XH/45XzP+/MTYswIATReqpRBtoOtdXpIad2esJQ3MLBmvsYAuX+ldywkuupIQUVe6aRiuXmPaqCNCwE/BYMslzUnK8r4mjRhBOKmwAPpdSdtui1bnp8DVmD/3rZazugWIJ1pR8TqAqkqdB5erhnH8VIHZG+QoGw4/F/7IgMbcngRTR0fVNOesY0txBtD6SPrIfmToCB24YHPsg9OQbJ2TFypjuGPF3XeycndY7hsYMv4aDYG0Bq0E4Lx3ojk7bqZ6cb6kFbkbpavgtv2MaxmpSlUq3Il5QQUpQtWDLluTgwHet3FPK5g1vZllqvrFTs43HDoQ+6gShDdYkIQ1AqQ2Uf9bWQ3YSclAxMqC/NdTTiB3QEJgDrQ4D/BTd4NFqfS8CtUkePjagYUPHW5W5CFl66ZikEMPe+LDx0r/A/nhXFqvg8Ujq/H5Z+uBHA+2ErsRXIHny/QK3PwFv4DTIbTFlJOX4FVkPTY5D9Dj9ziaR25sOlrmWplmp76vRZ7na7PMTyzkJfbMN36AMdwNcoZ7UU7xlNChakPwjqau8WY7g4ygp8Ubje/GdGny/lOznfshDZaV646SdfcWedlVNve0Kdg6VDVkQOV7Peyuh8l7WogSpGOZDmTIOPaJ0FUJjJFpy0FQuGQWqgeM0pFRBpcmmwNG+h6loUYCteGuNIOuF2ytpFhgKMeygko3QwnigTyFXxZIWrW/Xq5VkorgBkr53ia0t2lQvr49LcdVfsMVeRuCOEOGOZOwZCOuOjHcQZYUrIodPzasmanZGYKwopmhxbFra06aWY6H0mTuZDKs8tUQbCTi8p0Z7+vDboJFD6kis2ToB7LNptHd4HIcmDx2kAXBIpWmTLt/t/AL+KsiJy7O7k5cmHy+vr0+ce3V/PbxPjt1cXQdp9Hp66PFIvp2O/93e4T+S4fqEPP9gKfInhnWPNIsK7E128s8zc8MR7Nsz04cO54jw3sLeLXOX94Xb9PWtx8Wyf5LeSoLMv4SPJi+WJSOiGkKcm+oZANxSX+Q7A7t4n8AAAD//wMAUEsDBBQABgAIAAAAIQBKqaZh+gAAAEcDAAAaAAgBeGwvX3JlbHMvd29ya2Jvb2sueG1sLnJlbHMgogQBKKAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8ks1qxDAMhO+FvoPRvXGS/lDKOnsphb222wcwsRKHTWxjqT95+5qU7jawpJfQoyQ08zHMZvs59OIdI3XeKSiyHAS62pvOtQpe909X9yCItTO69w4VjEiwrS4vNs/Ya05PZLtAIqk4UmCZw4OUVFscNGU+oEuXxsdBcxpjK4OuD7pFWeb5nYy/NaCaaYqdURB35hrEfgzJ+W9t3zRdjY++fhvQ8RkLyYkLk6COLbKCafxeFlkCBXmeoVyT4cPHA1lEPnEcVySnS7kEU/wzzGIyt2vCkNURzQvHVD46pTNbLyVzsyoMj33q+rErNM0/9nJW/+oLAAD//wMAUEsDBBQABgAIAAAAIQAFM+l7uwUAAK4dAAAYAAAAeGwvd29ya3NoZWV0cy9zaGVldDEueG1snJJLj9owFIX3lfofLO8TxyEwIUoY0TKjmV3V1944N8QitlPbDKCq/703QUBVNmgkW/LzO/fYp3w86I68gfPKmoryOKEEjLS1MpuK/vj+HOWU+CBMLTproKJH8PRx8fFDubdu61uAQJBgfEXbEPqCMS9b0MLHtgeDO411WgScug3zvQNRj5d0x9IkmTEtlKEnQuHuYdimURJWVu40mHCCOOhEwPp9q3p/pml5D04Lt931kbS6R8RadSocRyglWhavG2OdWHfo+8AzIcnBYUuxT84y4/qNklbSWW+bECOZnWq+tT9ncybkhXTr/y4Mz5iDNzV84BWVvq8kPr2w0its8k7Y7AIbnssVO1VX9Hc2fVrxZPYQfc6zZZQ9LD9F8+k0jZ6WOZ/nE56n6eoPXZS1wh8eXBEHTUWXvHhJE8oW5Rignwr2/p8xCWL9DTqQAVCEUzLkc23tdjj4iksJIv14YED6X/9B2YW6KK/js8LzmOIvjtTQiF0Xvtr9C6hNG1AqizN0N8SjqI8r8BJziXLxBGv9CwAA//8AAAD//5SZ647aMBSEXwXlAQonN2AFSM11XwNRpP7aVgvatm/f2N0keGai4n/V6sN2xnNu7uH2/Xq9N+f7+XR4//Fr9X5MLFndfp7fbsO/XnbJ6rfl58vLtz/N9Xa5vt2PyeZLlpwOF4d+dewxyZPV8Pfb8NeP0+aw/jgd1pdPomLCQqJmIg2JhoksJFom8pDomChComeiDIlXJrYTsR7UmyRMIyR07DHJHiTcgYRM7EFCJgzuoREIXEQrELiJTiBwFf2IODNkxWYDB3kVS8x3Fag4aPK0ER0bqmhwv5VAkKkVAy5oBANIK5DZKT5yOoHAvfcj4pTMU1ZSLDEbI1ByCNCnlXRsqGSKMc2IGXxfLZYBvzUCAb+1AgG/dQKB2O9HxAnpHImWFEvM5gmELCKEdCwICT6pBII6CgR80ggEEkTLSAYidAKBC+tHxBtyxzqKJeYLDXQsI3R0bKhjBh6oBAIeqAUCCaIRCAY2I4YpUiCYIkfEp8iSdRQHWSg02wgdHfsfHQWCOgoEdRQI6sgI6SgQ1HFElnQUB1nQcehznk6QjgUdsWKPyPqzC6rFbyBEG0ZyCNGWETPYuhMM1pUR8WFsbD9xkjkTBGG8j5DNsaFsOYROJRC48poRM1RSLAMubhlJsa4IBOvKiPi6IlodcZCFumKbCCU9DFJiZRGMYR2v1UJQf5qJGb3cql+hCxUD19RPjA/fPftQLFLMIREY0aKGln99/GPLXUCpq/yCocYF2LVWDLioUQyacWJGiTv1KxpXxq/w8mVCPvGZs01C+WIGFuMOvgDXVIoBj9SKwVAWTIlZUTFwnZ1gLMX2ZoK8oluhKH95udDgWMzw4uHQbCW2OIrB2qwYLM6KweqsGJxfBIO1qJ8YX2lEglQbzTYJLRozwxh39CVYqxLMFqxVKwanGMXgGKMYrDeCSbHgTIyvOGIkVBstTNcWM8t4OHToFudrwVhKOZNnhC0O2GozsF8rN8MnnydGmmkdb1EV8+LASxaNmWqMm/wtWZSZHVlUMGRRwZBFmaGWSJw5p6oeDDdiSBSL7OZYCGM+Zrwx7vZ3ED+VYsDGtWAMlWjUQpRFnxhy1GbYrk+Mt6gq9OLLF+Ycixl0PAxPkzjpKAZfJwWzx+dJxeD7pGJw+hYMZ9HHAagQA5DaaMmiMSOQ8UCwJ4uKCQe/oFYLUaEXm5FFBUOFnpmCetHHSSjLReckNlrIomnMKOTh0KJ7zKKCGe4cX9DdrvCAvME8KlfCRKogekbn3TLsRqd1fNiLVyJ5GrTpev7/nb8AAAD//wAAAP//silITE/1TSxKz8wrVshJTSuxVTLQM1dSKMpMz4CxS/ILwKKmSgpJ+SUl+bkwXkZqYkpqEYhnrKSQlp9fAuPo29nol+cXZRdnpKaW2AEAAAD//wMAUEsDBBQABgAIAAAAIQCKb0KY3AUAACcbAAAYAAAAeGwvd29ya3NoZWV0cy9zaGVldDIueG1snJTbjtsgEIbvK/UdEPcxPmQ3iRVnVXUV7faqqrbtNcHjGAWMC+Skqu/eMYmTSJEqdy2bH4PnmxkYPH86aEV2YJ00TUGTKKYEGmFK2awL+v1tOZpS4jxvSq5MAwU9gqNPi48f5ntjN64G8AQJjSto7X2bM+ZEDZq7yLTQ4ExlrOYeX+2audYCL4ORViyN40emuWzoiZDbIQxTVVLAsxFbDY0/QSwo7jF+V8vW9TQthuA0t5ttOxJGt4hYSSX9MUAp0SJ/XTfG8pXCvA/JmAtysHin+GS9mzB+50lLYY0zlY+QzE4x36c/YzPGxYV0n/8gTDJmFnay28ArKn1fSMnDhZVeYdk7YY8XWLdcNt/KsqC/4/M1Qk26Jr42/dwfupiXEne4y4pYqAr6Kclfkhlli3kooB8S9u6mT7p6XBmz6SZe0U+MCAcKRFcZhKPs4DMoVdAvYyzpXwGKXQSyC/G239OXoYK/WlJCxbfKfzP7F5Dr2uNxGUfICiWQl8dncAJrEl1HWYcVRiEDW6Ilni1cUM0PQfey9DWap1ESz7LJAyUrcH4pOyQlYuu80T/P35xJJwauY2Cg9oxJNJ0+TpLpf1Aw5kBB7SnodmAIGGwwRr0x/kfMk7MB6sUgyrI0zpJ0eOb4GwpuUa+UdEjaLOzDXwAAAP//AAAA//+UmF1u2zAQhK8S+AC1Vn+2AttAJUrKNQzXQJ+SIjbS9vYljYbcmZWK8q3ot0uHw+Fy7MPt+/V6d+f7+XR4f/v59H7cyObp9uP8evP/et5vnn5Jfb48f/vtrrfL9fV+3BRfqs3pcAmlX0Pto8P//83/78epOGw/Toft5W9FbysEKwZbUWKFsxUVVoy2osaKyVY0WDHbihYrXmzFLlZsvXpRwjJDQl8bxduTeJp1JJtmQqo7gCT4CJC0ngCSzHPY13FTPg66aoqCPvYFmtMJgDZVhja+NmojdF49wILOagAqJIEDSq0jwHTCD8dPAOm85rC3T33q0uoDzelAQZ86Qx9fG/Up+eZpKAXtY4BWlgcgOWQESA6ZANIdnMPWPuUJ7mH7QHM6bpCnyZDH1yZ56JR7gKwOQDplB5Cu5ahhRRucAJLoc9hZNM/eqgPN6VBAnTZDHV8b1anoHHuAdI4DQLqWDiBfLQ2FRw9AHj1hZ3H0tFYd+NiVsbzLUMfXJnV4LmsoBSkwQCv5w2lYkz9GWFf4bgHl0RP2Ft0jVh/43GQ9cI9/7f/75fe1UZ+aTrIHSNsYNBQhbzloJThqWLI8AHn0hK3F0bPwcsHHroyeLkMeX5vk4dGjoRR0kgO00mBy2Mr6QCutOwEkW85hb/F6ddY+urlJtgX7SJEhUCiOCjU0C3ukZK8BKfnAIWWJgJq7O2GziYhhh1GmysqE7encUaeshO2Lk05kh16AspOQ8iQC2vIoQkrnMwHlQTUHmmTaLcik/+x25S2TnBQdiqNMLb9mSPk5Q8rvGVJ+0JByWAQqPLIfG4wze2Eo4eKpHd2UE6hFJ9CWHNED3ZEjBqQcGZFyZkTKkxtoyaM70DS7F1I1Lr7ytUNycnUojm7a8RcPoFLwFzNsJsM4pGSYEZfmgAS04vz42GG009Ktg12t2SknYIvOpDtjJ033xk5AjZ2AGjtBBDd20rTmly78zWk4LeRs2NQ+LY63Lidpiw6ne/J3j5TDJFDhzOyw2Uynf+ZtXNpMJ52466W3Dna1ErklJ3OH4vRbCIdupObW6d6Ofw+B3o5/EEFqbp1e2U4nHbybheCNi6/ZKSd6iw6rnbET5mtz7aDZPHZAjZ2AmsdO08ZEJ53Aq3ohE8Dia9MpJ4OLDq2dmU4YpY1OiM18QmwGFGDjKE3tHNdZvF74qgv7koIttU0/6f4BAAD//wAAAP//silITE/1TSxKz8wrVshJTSuxVTLQMzdVUijKTM+Ac0ryC2yVDJUUkvJLSvJzwcyM1MSU1CKQaqDitPz8EhhH385Gvzy/KLs4IzW1xA4AAAD//wMAUEsDBBQABgAIAAAAIQDppiW4ZgYAAFMbAAATAAAAeGwvdGhlbWUvdGhlbWUxLnhtbOxZzW4bNxC+F+g7EHtPLNmSYhmRA0uW4jZxYthKihypXWqXEXe5ICk7uhXJsUCBomnRS4HeeijaBkiAXtKncZuiTYG8QofkSlpaVGwnBvoXHWwt9+P8z3CGunrtQcrQIRGS8qwVVC9XAkSykEc0i1vBnX7v0nqApMJZhBnPSCuYEBlc23z/vat4QyUkJQj2Z3IDt4JEqXxjZUWGsIzlZZ6TDN4NuUixgkcRr0QCHwHdlK2sViqNlRTTLEAZToHs7eGQhgT1Nclgc0q8y+AxU1IvhEwcaNLE2WGw0aiqEXIiO0ygQ8xaAfCJ+FGfPFABYlgqeNEKKuYTrGxeXcEbxSamluwt7euZT7Gv2BCNVg1PEQ9mTKu9WvPK9oy+ATC1iOt2u51udUbPAHAYgqZWljLNWm+92p7SLIHs10XanUq9UnPxJfprCzI32+12vVnIYokakP1aW8CvVxq1rVUHb0AWX1/A19pbnU7DwRuQxTcW8L0rzUbNxRtQwmg2WkBrh/Z6BfUZZMjZjhe+DvD1SgGfoyAaZtGlWQx5ppbFWorvc9EDgAYyrGiG1CQnQxxCFHdwOhAUawZ4g+DSG7sUyoUlzQvJUNBctYIPcwwZMaf36vn3r54/Ra+ePzl++Oz44U/Hjx4dP/zR0nI27uAsLm98+e1nf379Mfrj6TcvH3/hx8sy/tcfPvnl58/9QMiguUQvvnzy27MnL7769PfvHnvgWwIPyvA+TYlEt8gR2ucp6GYM40pOBuJ8O/oJps4OnABtD+muShzgrQlmPlybuMa7K6B4+IDXx/cdWQ8SMVbUw/lGkjrAXc5ZmwuvAW5oXiUL98dZ7GcuxmXcPsaHPt4dnDmu7Y5zqJrToHRs30mII+Yew5nCMcmIQvodHxHi0e4epY5dd2kouORDhe5R1MbUa5I+HTiBNN+0Q1Pwy8SnM7jasc3uXdTmzKf1Njl0kZAQmHmE7xPmmPE6Hiuc+kj2ccrKBr+JVeIT8mAiwjKuKxV4OiaMo25EpPTtuS1A35LTb2CoV16377JJ6iKFoiMfzZuY8zJym486CU5zr8w0S8rYD+QIQhSjPa588F3uZoh+Bj/gbKm771LiuPv0QnCHxo5I8wDRb8aiqNpO/U1p9rpizChU43fFeHo6bcHR5EuJnRMleBnuX1h4t/E42yMQ64sHz7u6+67uBv/5urssl89abecFFprkeV9suuR0aZM8pIwdqAkjN6XpkyUcFlEPFk0Db6a42dCUJ/C1KO4OLhbY7EGCq4+oSg4SnEOPXTUjXywL0rFEOZcw25llM3ySE7TNOEmhzTaTYV3PDLYeSKx2eWSX18qz4YyMmRRjM39OGa1pAmdltnbl7ZhVrVRLzeaqVjWimVLnqDZTGXy4qBoszqwJXQiC3gWs3IARXcsOswlmJNJ2t3Pz1C2a9YW6SCY4IoWPtN6LPqoaJ01jZRpGHh/pOe8UH5W4NTXZt+B2FieV2dWWsJt67228NB1u517SeXsiHVlWTk6WoaNW0Kyv1gMU4rwVDGGsha9pDl6XuvHDLIa7oVAJG/anJrMJ17k3m/6wrMJNhbX7gsJOHciFVNtYJjY0zKsiBFhmhnAj/2odzHpRCthIfwMp1tYhGP42KcCOrmvJcEhCVXZ2acXcURhAUUr5WBFxkERHaMDGYh+D+3Wogj4RlXA7YSqCfoCrNG1t88otzkXSlS+wDM6uY5YnuCi3OkWnmWzhJo9nMpgnK60RD3Tzym6UO78qJuUvSJVyGP/PVNHnCVwXrEXaAyHc5AqMdL62Ai5UwqEK5QkNewIuuUztgGiB61h4DUEF98nmvyCH+r/NOUvDpDVMfWqfxkhQOI9UIgjZg7Jkou8UYtXi7LIkWUHIRFRJXJlbsQfkkLC+roENfbYHKIFQN9WkKAMGdzL+3OcigwaxbnL+qZ2PTebztge6O7Atlt1/xl6kVir6paOg6T37TE81KwevOdjPedTairWg8Wr9zEdtDpc+SP+B84+KkNkfJ/SB2uf7UFsR/NZg2ysEUX3JNh5IF0hbHgfQONlFG0yalG1Yiu72wtsouJEuOt0ZX8jSN+l0z2nsWXPmsnNy8fXd5/mMXVjYsXW50/WYGpL2ZIrq9mg6yBjHmF+1yj888cF9cPQ2XPGPmZL2av8BXPHBlGF/JIDkt841Wzf/AgAA//8DAFBLAwQUAAYACAAAACEAMQqp3DwDAABRCAAADQAAAHhsL3N0eWxlcy54bWy0Vt1u2zYUvh/QdyCUYhfFFEqK5NqupLSOI6BAWwxICgxYi4CWKIcof1SKSuUNvelb9XX2JDuUZFtekrXL0BuLPDz8zs/3kXR82gqObqiumZKJ4x97DqIyVwWT68R5e5m5UwfVhsiCcCVp4mxo7Zymj36Ka7Ph9OKaUoMAQtaJc21MNce4zq+pIPWxqqiElVJpQQxM9RrXlaakqO0mwXHgeRMsCJNOjzAX+feACKI/NJWbK1ERw1aMM7PpsBwk8vnLtVSarDik2vohyVHrT3SAWr0N0llvxREs16pWpTkGXKzKkuX0drozPMMk3yMB8sOQ/Ah7wUHtrX4gUog1vWGWPieNZSMyYWqUq0YaoHNnQv3KywKMk9BBPStnqoA+XaHfH//15asbet7s/Tv0BB39cnTkXaFntxbeufcu/fyxUeaZ239OT7vdz6+Qg9MYD1mlcankPrkA+mgZmn+Q6pPM7FKfsfVK4/oPdEM4WHyLkSuuNDKgLEi4s0giaO9xRjhbaWbdSiIY3/TmwBo6MQ5+goE0uoT6CP3vynodxLoTGffe3aeGQIzzXZsDaLM1pDEo0lAtM5igYXy5qSBlCYenD935fcN7rcnGD6LRBtwFTOOV0gUc1jHBvSmNOS0N1KLZ+tp+jargd6WMAUGnccHIWknCLR/bHcMAyskp5xf2QP9WHmC35Ug4cDXYJlgN2SEUMgx7vH5i8cdoPfYINoJm/XdY1JY7/Pt2+/cmtduNSFXxjdXaoKIDrOFkfKvEf6C9acSK6qy75u5C/a62/aj6Oi6g+yOKDwjeUYWs6hPnjS2Dw8kc2o1WDeOGyTvIBcyi3cvFs2o19ubthLSLAuUXtCQNN5e7xcTZj1/TgjVitvP6ld0o00Ekzn78yqran9gYtDWvargg4IsazRLnz/PF09nyPAvcqbeYuuEJjdxZtFi6UXi2WC6zmRd4Z59H9///uP275woE7IfzmsMboYdihxIv9rbEGU369LvzDGmPc58FE+9F5HtuduL5bjghU3c6OYncLPKD5SRcnEdZNMo9euAr4WHf798bm3w0N0xQzuSWqy1DYyuQBNN/KQJvmcD7/wLp3wAAAP//AwBQSwMEFAAGAAgAAAAhAJcgJWZ0AwAAVw0AABQAAAB4bC9zaGFyZWRTdHJpbmdzLnhtbJxX204bMRB9r9R/sPZ92QuES5UEIm6FEBoltBKPQ+KyJrv21vam5e873lXVyuPAqigvzDiec+ZyPBme/qpKtuXaCCVHUbaXRozLlVoL+TyKvj5cxccRMxbkGkol+Sh65SY6HX/8MDTGMvyuNKOosLb+lCRmVfAKzJ6quUTPd6UrsPivfk5MrTmsTcG5rcokT9PDpAIhI7ZSjbSjKD/KI9ZI8aPh550lywfReGjEeGjHl1VdqlfO2c3FMLHjYeLMneseKu7bLvHq0jfOC4TvG8+FffVtF7wGbSsure9ZQgmanL9VQmKy2AVYimQ2T9PMv2cBRVOyZQGYH9+nne/s2THYW6nKd58cHx0ODvbzLKWwy0IEEHPjG/M0P4jTLM4GJHEObh6MmeIfITJrqicgQT8vAhH34/Q4pqgvXcR9/zxUwr6TA4eHIL1rVhupfvrX3TwEAOVxOogzQqkFdOCfv+cFsG88UC+Jnh5QCcUpyLrRfpwrIUGuSBthxbI4PYqzk2DFSB0XqhCWXTe1pf3lXD0AkxR0XYNZC6fs0EdmlBR9MkPAY6A8ztwnSPbIt34TGzBsJkyhCdt2XFyrEHgYJY3TE/wEoxz71lqplzfo3CuxJtFnoDfcojaE5wGHkGS5bT8CaaJfGokCQ0YZnKNHNQmdZVPXShOFaxstQ2kIFpmO71RokGyOykf0duNcPaBRskXF1/AE67BuHca0mC5rFPKMcwlsoYhiV87xPrQAXVVugM4UZg3lbT/OguWkfbxsNDcFe4Q1bMnYtL4e4EiFsAqStGA3TOkO5c2o8kph+6SGzGY3T1mck4epLQ7JzAXHZ3bjs1+31h7sCfBOIlE1SKu38alEildgU8CxJiL8RzRoOdts4juWhoMQkZmpAsfjDshwVM7RgyaBPXmmItcps+vAkJRlRDBNvzcrI3TmDd2gut7fpaO0GlN4EppNSrI1bJyjR0oIna7yA3zOyaudTHzTV7lR8qf0zXPt2mGJUl34rgnuImzaVED6ZO6eBHaLayz5jpui8HVLl3zyuLjwu7m/7UUAgU1i617FnVe6xf2TqWGFCz1u5obrLY/GjL2Rh/ni5nFydj2b3NztnX+ZeRTCF/7NHet13iUTufiHxy2ZnTtxV4dgIQyUdP+dtNUJl+c/SLYV/Qdygj+Mxr8BAAD//wMAUEsDBBQABgAIAAAAIQCGM+FFTwEAAGkCAAARAAgBZG9jUHJvcHMvY29yZS54bWwgogQBKKAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMklFPgzAUhd9N/A+k79CyRaYNsETNnlxiIkbjW9PesWZQmrbK+PcW2JBFH3zsPed+Oeem6fpYV8EXGCsblaE4IigAxRshVZmh12IT3qLAOqYEqxoFGerAonV+fZVyTXlj4Nk0GoyTYANPUpZynaG9c5pibPkeamYj71Be3DWmZs4/TYk14wdWAl4QkuAaHBPMMdwDQz0R0Qkp+ITUn6YaAIJjqKAG5SyOoxj/eB2Y2v65MCgzZy1dp32nU9w5W/BRnNxHKydj27ZRuxxi+Pwxft8+vQxVQ6n6W3FAeSo45QaYa0ze99fdsUrxbNgfsGLWbf2tdxLEfZdbpkoAFzCxlwdmZIp/ezx3qDHCQQQ+GB1rnJW35cNjsUH5giySkKzC+LaIV5QQepN89BEu9vug46A+BfkP8a6ICV0mlMQz4hmQD7kvP0f+DQAA//8DAFBLAwQUAAYACAAAACEAI3VeSI0BAAAiAwAAEAAIAWRvY1Byb3BzL2FwcC54bWwgogQBKKAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACckkFv2zAMhe8D+h8E3Ru52VAMgayiSFf0sGLBknZnVaZjoYpkiKyb7NePttHUWQ8DdiP56OdPT9JX+10QHWT0KZbyYlZIAdGlysdtKR82t+dfpUCysbIhRSjlAVBembNPepVTC5k8oGCLiKVsiNqFUuga2FmcsRxZqVPeWeI2b1Wqa+/gJrmXHURS86K4VLAniBVU5+3RUI6Oi47+17RKrufDx82hZWCjr9s2eGeJT2nuvcsJU03i295B0GoqaqZbg3vJng6m0Gra6rWzAZZsbGobELR6H+g7sH1oK+szGt3RogNHKQv0vzm2uRRPFqHHKWVns7eRGKtfG5uhDi1SNr9SfsYGgFArXhiHQzndndb+i5kPC1ycLvYGIwgLp4gbTwHwR72ymf5FPDCMvCPOz/QqbizZKeGRtRfEMoCNHMiHMwyxMM1f///u4zM+tJvEX8NbvqdDvW5shoqv5Jj/caDvONocepNlY+MWqredj0L/Gh7HJ28uLmfF54IvejLT6v1xmz8AAAD//wMAUEsBAi0AFAAGAAgAAAAhABIY3t1kAQAAGAUAABMAAAAAAAAAAAAAAAAAAAAAAFtDb250ZW50X1R5cGVzXS54bWxQSwECLQAUAAYACAAAACEAtVUwI/QAAABMAgAACwAAAAAAAAAAAAAAAACdAwAAX3JlbHMvLnJlbHNQSwECLQAUAAYACAAAACEANLIv+XMDAADqCAAADwAAAAAAAAAAAAAAAADCBgAAeGwvd29ya2Jvb2sueG1sUEsBAi0AFAAGAAgAAAAhAEqppmH6AAAARwMAABoAAAAAAAAAAAAAAAAAYgoAAHhsL19yZWxzL3dvcmtib29rLnhtbC5yZWxzUEsBAi0AFAAGAAgAAAAhAAUz6Xu7BQAArh0AABgAAAAAAAAAAAAAAAAAnAwAAHhsL3dvcmtzaGVldHMvc2hlZXQxLnhtbFBLAQItABQABgAIAAAAIQCKb0KY3AUAACcbAAAYAAAAAAAAAAAAAAAAAI0SAAB4bC93b3Jrc2hlZXRzL3NoZWV0Mi54bWxQSwECLQAUAAYACAAAACEA6aYluGYGAABTGwAAEwAAAAAAAAAAAAAAAACfGAAAeGwvdGhlbWUvdGhlbWUxLnhtbFBLAQItABQABgAIAAAAIQAxCqncPAMAAFEIAAANAAAAAAAAAAAAAAAAADYfAAB4bC9zdHlsZXMueG1sUEsBAi0AFAAGAAgAAAAhAJcgJWZ0AwAAVw0AABQAAAAAAAAAAAAAAAAAnSIAAHhsL3NoYXJlZFN0cmluZ3MueG1sUEsBAi0AFAAGAAgAAAAhAIYz4UVPAQAAaQIAABEAAAAAAAAAAAAAAAAAQyYAAGRvY1Byb3BzL2NvcmUueG1sUEsBAi0AFAAGAAgAAAAhACN1XkiNAQAAIgMAABAAAAAAAAAAAAAAAAAAySgAAGRvY1Byb3BzL2FwcC54bWxQSwUGAAAAAAsACwDGAgAAjCsAAAAA";
+
+function xlDownloadFile() {
+  try {
+    var byteChars = atob(XLSX_DEMO_B64);
+    var byteNumbers = new Array(byteChars.length);
+    for (var i = 0; i < byteChars.length; i++) {
+      byteNumbers[i] = byteChars.charCodeAt(i);
+    }
+    var byteArray = new Uint8Array(byteNumbers);
+    var blob = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    var url  = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'Excel_Data_Cleaning_Practice.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  } catch (e) {
+    alert('Download failed in this browser. Please take a screenshot or contact me on Fiverr for the file.');
+  }
+}
+// ===== CONTACT FORM - MAILTO (works on local file + any device) =====
+function sendContactForm() {
+  var name    = document.getElementById('cf_name').value.trim();
+  var email   = document.getElementById('cf_email').value.trim();
+  var pkg     = document.getElementById('cf_package').value;
+  var service = document.getElementById('cf_service').value.trim();
+  var message = document.getElementById('cf_message').value.trim();
+
+  document.getElementById('formError').style.display   = 'none';
+  document.getElementById('formSuccess').style.display = 'none';
+
+  if (!name || !message) {
+    document.getElementById('formError').style.display = 'block';
+    return;
+  }
+
+  var subject = pkg === 'Custom Package'
+    ? 'Custom Package - Excel Data Cleaning'
+    : pkg === '$15 Basic Clean Package'
+      ? '$15 Package - Excel Data Cleaning'
+      : 'New Inquiry - Excel Data Cleaning';
+
+  var body =
+    'Hi Sangeet,' +
+    '\n\nI am contacting you from your portfolio.' +
+    '\n\n--- CLIENT DETAILS ---' +
+    '\nName    : ' + name +
+    '\nEmail   : ' + (email || 'Not provided') +
+    '\nPackage : ' + (pkg  || 'Not selected') +
+    '\nService : ' + (service || 'Not specified') +
+    '\n\n--- MESSAGE ---\n' + message +
+    '\n\n---\nSent from portfolio contact form.';
+
+  var mailtoLink = 'mailto:sangeetadhikari178@gmail.com'
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body='    + encodeURIComponent(body);
+
+  window.location.href = mailtoLink;
+  setTimeout(function(){
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 500);
+}
+
+// Modal open/close
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Click outside modal box to close
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+// ESC key to close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+});
+
+// Contact form — mailto based (works on local file + hosted)
+function sendContactForm() {
+  var name    = document.getElementById('cf_name').value.trim();
+  var email   = document.getElementById('cf_email').value.trim();
+  var pkg     = document.getElementById('cf_package').value;
+  var service = document.getElementById('cf_service').value.trim();
+  var message = document.getElementById('cf_message').value.trim();
+
+  document.getElementById('formError').style.display   = 'none';
+  document.getElementById('formSuccess').style.display = 'none';
+
+  if (!name || !message) {
+    document.getElementById('formError').style.display = 'block';
+    return;
+  }
+
+  // Subject based on package selected
+  var subject = pkg === 'Custom Package'
+    ? 'Custom Package - Excel Data Cleaning'
+    : pkg === '$15 Basic Clean Package'
+      ? '$15 Package - Excel Data Cleaning'
+      : 'New Inquiry - Excel Data Cleaning';
+
+  var body =
+    'Hi Sangeet,' +
+    '\n\nI am contacting you from your portfolio.' +
+    '\n\n--- CLIENT DETAILS ---' +
+    '\nName    : ' + name +
+    '\nEmail   : ' + (email || 'Not provided') +
+    '\nPackage : ' + (pkg || 'Not selected') +
+    '\nService : ' + (service || 'Not specified') +
+    '\n\n--- MESSAGE ---\n' + message +
+    '\n\n---\nSent from portfolio contact form.';
+
+  var mailtoLink = 'mailto:sangeetadhikari178@gmail.com'
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body='    + encodeURIComponent(body);
+
+  window.location.href = mailtoLink;
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Nav highlight
+const secs = document.querySelectorAll('section[id]');
+const nlinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+  nlinks.forEach(a => { a.style.color = a.getAttribute('href') === '#'+cur ? 'var(--cyan)' : ''; });
+});
+
+// Scroll fade-in
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.svc-card, .fn-card, .why-card, .proc-step, .client-chip, .globe-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(28px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
