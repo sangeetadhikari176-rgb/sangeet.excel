@@ -122,9 +122,9 @@ section:nth-child(even){background:var(--bg2)}
 .xl-download:hover{background:rgba(12,242,255,.18);transform:translateY(-1px)}
 .xl-download svg{width:12px;height:12px;stroke:var(--cyan);fill:none;stroke-width:2;flex-shrink:0}
 
-/* SERVICES — clickable cards */
+/* SERVICES */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.svc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:30px 26px;transition:all .3s;position:relative;overflow:hidden;cursor:pointer}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:30px 26px;transition:all .3s;position:relative;overflow:hidden}
 .svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));transform:scaleX(0);transition:transform .4s;transform-origin:left}
 .svc-card:hover{border-color:rgba(12,242,255,.45);transform:translateY(-6px);box-shadow:0 16px 44px rgba(12,242,255,.12)}
 .svc-card:hover::before{transform:scaleX(1)}
@@ -137,10 +137,6 @@ section:nth-child(even){background:var(--bg2)}
 .tv{background:rgba(123,97,255,.08);color:var(--violet);border:1px solid rgba(123,97,255,.2)}
 .tg{background:rgba(0,217,126,.08);color:var(--green);border:1px solid rgba(0,217,126,.2)}
 .ty{background:rgba(255,184,0,.08);color:var(--gold);border:1px solid rgba(255,184,0,.2)}
-.svc-hint{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(12,242,255,.5);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:12px;padding-top:12px;border-top:1px solid rgba(12,242,255,.08)}
-.svc-hint svg{width:14px;height:14px;stroke:rgba(12,242,255,.5);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.svc-card:hover .svc-hint{color:var(--cyan)}
-.svc-card:hover .svc-hint svg{stroke:var(--cyan)}
 
 /* BEFORE AFTER */
 .ba-wrap{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:center}
@@ -321,36 +317,6 @@ footer{position:relative;z-index:1;background:#020609;border-top:1px solid var(-
 .social-row{display:flex;gap:12px}
 .soc{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:all .3s}
 .soc:hover{background:var(--cyan);border-color:var(--cyan);transform:translateY(-3px)}
-
-/* ============================================================
-   SERVICE MODAL SYSTEM
-   ============================================================ */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);align-items:flex-start;justify-content:center;padding:30px 20px;overflow-y:auto}
-.modal-overlay.open{display:flex}
-.modal-box{background:#070e1a;border:1px solid rgba(12,242,255,.25);border-radius:16px;width:100%;max-width:860px;position:relative;padding:36px;margin:auto}
-.modal-close-btn{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;line-height:1}
-.modal-close-btn:hover{background:var(--red);border-color:var(--red);color:#fff}
-.modal-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:8px}
-.modal-tag::before{content:'◆ ';color:var(--violet)}
-.modal-title{font-family:'Orbitron',sans-serif;font-size:24px;color:var(--white);margin-bottom:6px}
-.modal-subtitle{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.7}
-.proj-ex{background:#060f1c;border:1px solid rgba(12,242,255,.1);border-radius:10px;margin-bottom:18px;overflow:hidden}
-.proj-ex-hd{padding:12px 18px;background:rgba(12,242,255,.04);border-bottom:1px solid rgba(12,242,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.proj-ex-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:2px}
-.proj-ex-name{font-size:14px;font-weight:700;color:var(--white)}
-.proj-rows-badge{font-size:10px;padding:3px 10px;border-radius:12px;background:rgba(255,184,0,.1);color:var(--gold);border:1px solid rgba(255,184,0,.25);font-weight:700;font-family:'JetBrains Mono',monospace}
-.proj-ba{display:grid;grid-template-columns:1fr 32px 1fr;align-items:center;padding:14px}
-.proj-side{background:#040b16;border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
-.proj-side-lbl{padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
-.proj-before .proj-side-lbl{color:var(--red);background:rgba(255,77,109,.07);border-bottom:1px solid rgba(255,77,109,.1)}
-.proj-after .proj-side-lbl{color:var(--green);background:rgba(0,217,126,.07);border-bottom:1px solid rgba(0,217,126,.1)}
-.proj-tbl{width:100%;border-collapse:collapse}
-.proj-tbl td{padding:6px 11px;font-family:'JetBrains Mono',monospace;font-size:11px;border-bottom:1px solid rgba(255,255,255,.03)}
-.proj-tbl .th-c{color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.mini-arrow{display:flex;align-items:center;justify-content:center}
-.mini-arr-btn{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:11px;color:#04090f;font-weight:900}
-.proj-result{padding:10px 14px;font-size:11px;color:var(--muted);background:rgba(0,217,126,.04);border-top:1px solid rgba(0,217,126,.08);display:flex;align-items:center;gap:8px}
-.proj-result strong{color:var(--green)}
 
 /* RESPONSIVE */
 @media(max-width:1000px){
@@ -556,63 +522,57 @@ footer{position:relative;z-index:1;background:#020609;border-top:1px solid var(-
   <span class="stag">What I Do</span>
   <h2 class="stitle">My <span class="c">Services</span></h2>
   <div class="sdivider"></div>
-  <p class="sdesc">Click any service card to see real project examples with Before &amp; After data comparisons.</p>
+<section id="services">
+  <span class="stag">What I Do</span>
+  <h2 class="stitle">My <span class="c">Services</span></h2>
+  <div class="sdivider"></div>
+  <p class="sdesc">Here's what I can help you with &mdash; accurate, fast, and reliable Excel work every time.</p>
   <div class="svc-grid">
 
-    <div class="svc-card" onclick="openModal('modal-cleaning')">
+    <div class="svc-card">
       <div class="svc-ico">&#129529;</div>
       <div class="svc-name">Excel Data Cleaning</div>
       <div class="svc-desc">Remove duplicates, fix formatting, standardize text, handle blank rows and extra spaces &mdash; making your spreadsheet perfectly clean and consistent.</div>
       <div class="svc-tags"><span class="tag tc">Duplicate Removal</span><span class="tag tv">Blank Rows</span><span class="tag tg">Text Fix</span><span class="tag ty">Formatting</span></div>
-      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
     </div>
 
-    <div class="svc-card" onclick="openModal('modal-entry')">
+    <div class="svc-card">
       <div class="svc-ico">&#128221;</div>
       <div class="svc-name">Data Entry</div>
       <div class="svc-desc">Fast and accurate manual data entry into Excel. Organized row-by-row input with consistent formatting, proper alignment, and zero mistakes.</div>
       <div class="svc-tags"><span class="tag tc">Copy-Paste</span><span class="tag tv">Manual Entry</span><span class="tag tg">Fast Delivery</span><span class="tag ty">Accurate</span></div>
-      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
     </div>
 
-    <div class="svc-card" onclick="openModal('modal-pdf')">
+    <div class="svc-card">
       <div class="svc-ico">&#128196;</div>
       <div class="svc-name">PDF to Excel</div>
       <div class="svc-desc">Convert PDF files &mdash; tables, lists, invoices, reports &mdash; into clean, editable Excel spreadsheets with proper column structure and formatting.</div>
       <div class="svc-tags"><span class="tag tc">Tables</span><span class="tag tv">Invoices</span><span class="tag tg">Reports</span><span class="tag ty">Editable</span></div>
-      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
     </div>
 
-    <div class="svc-card" onclick="openModal('modal-split')">
+    <div class="svc-card">
       <div class="svc-ico">&#9986;</div>
       <div class="svc-name">Text to Columns &amp; Split Data</div>
       <div class="svc-desc">Split combined data into separate columns &mdash; First Name/Last Name, City/State, Date/Time &mdash; using Excel's tools and formula techniques.</div>
       <div class="svc-tags"><span class="tag tc">Split Name</span><span class="tag tv">Delimiter</span><span class="tag tg">Structured</span><span class="tag ty">Organized</span></div>
-      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
     </div>
 
-    <div class="svc-card" onclick="openModal('modal-format')">
+    <div class="svc-card">
       <div class="svc-ico">&#127912;</div>
       <div class="svc-name">Conditional Formatting</div>
       <div class="svc-desc">Highlight duplicates, blank cells, negative values, and important data with color-coded rules so your spreadsheet is visually clear and easy to read.</div>
       <div class="svc-tags"><span class="tag tc">Highlight Rules</span><span class="tag tv">Color Codes</span><span class="tag tg">Visual Clear</span><span class="tag ty">Alerts</span></div>
-      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
     </div>
 
-    <div class="svc-card" onclick="openModal('modal-merge')">
+    <div class="svc-card">
       <div class="svc-ico">&#128279;</div>
       <div class="svc-name">Merge Cells &amp; Formatting</div>
       <div class="svc-desc">Professional spreadsheet formatting &mdash; merge cells, align data, set consistent fonts, borders, column widths, and row heights for a polished look.</div>
       <div class="svc-tags"><span class="tag tc">Merge</span><span class="tag tv">Align</span><span class="tag tg">Borders</span><span class="tag ty">Professional</span></div>
-      <div class="svc-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Click to see project examples</div>
     </div>
 
   </div>
 </section>
-
-<!-- FUNCTIONS -->
-<section id="functions">
-  <span class="stag">Formula Skills</span>
   <h2 class="stitle">Excel <span class="c">Functions</span> I Use</h2>
   <div class="sdivider"></div>
   <p class="sdesc">These are the core Excel functions I use daily to clean and transform messy data into structured, usable spreadsheets.</p>
@@ -1006,286 +966,6 @@ footer{position:relative;z-index:1;background:#020609;border-top:1px solid var(-
 
 <!-- ==================== MODALS ==================== -->
 
-<!-- MODAL: Excel Data Cleaning -->
-<div id="modal-cleaning" class="modal-overlay">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('modal-cleaning')">&times;</button>
-    <div class="modal-tag">Service Examples</div>
-    <h3 class="modal-title">&#129529; Excel Data Cleaning</h3>
-    <p class="modal-subtitle">4 real project examples showing exact Before &amp; After data transformations.</p>
-
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">E-Commerce Customer List Cleanup</span><span class="proj-rows-badge">10,000 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Email</td></tr><tr><td class="red-c">&nbsp;RAHUL SHARMA&nbsp;</td><td class="red-c">rahul@gmai</td></tr><tr><td class="red-c">rahul sharma</td><td class="red-c">RAHUL@GMAIL</td></tr><tr><td class="red-c">&nbsp;PRIYA SINGH&nbsp;</td><td class="red-c">priya@yahoocom</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Email</td></tr><tr><td class="grn-c">Rahul Sharma</td><td class="grn-c">rahul@gmail.com</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Duplicate removed</td><td></td></tr><tr><td class="grn-c">Priya Singh</td><td class="grn-c">priya@yahoo.com</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>1,847 duplicates removed</strong>, all emails fixed, names standardized to proper case.</div>
-    </div>
-
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Employee HR Database Cleaning</span><span class="proj-rows-badge">3,500 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Dept</td><td class="th-c">Salary</td><td class="th-c">Joined</td></tr><tr><td class="red-c">SALES dept</td><td class="red-c">45000</td><td class="red-c">01/05/2023</td></tr><tr><td class="red-c">sales</td><td class="red-c">Forty-Five K</td><td class="red-c">5-1-23</td></tr><tr><td class="red-c">&nbsp;IT&nbsp;</td><td class="red-c">62000</td><td class="red-c">15-Mar-22</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Dept</td><td class="th-c">Salary</td><td class="th-c">Joined</td></tr><tr><td class="grn-c">Sales</td><td class="grn-c">45000</td><td class="grn-c">01-05-2023</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Merged &amp; fixed</td><td class="grn-c">45000</td><td class="grn-c">01-05-2023</td></tr><tr><td class="grn-c">IT</td><td class="grn-c">62000</td><td class="grn-c">15-03-2022</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>All date formats unified</strong>, department names standardized, salary text values converted to numbers.</div>
-    </div>
-
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Product Catalog Data Cleanup</span><span class="proj-rows-badge">5,200 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">SKU</td><td class="th-c">Product</td><td class="th-c">Price</td></tr><tr><td class="red-c">SKU001</td><td class="red-c">BLUE T-SHIRT SIZE L</td><td class="red-c">$12</td></tr><tr><td class="red-c">sku001</td><td class="red-c">Blue T-Shirt Size L</td><td class="red-c">12</td></tr><tr><td class="red-c">SKU&nbsp;003</td><td class="red-c">RED shoes&nbsp;&nbsp;</td><td class="red-c">$25.00</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">SKU</td><td class="th-c">Product</td><td class="th-c">Price</td></tr><tr><td class="grn-c">SKU001</td><td class="grn-c">Blue T-Shirt Size L</td><td class="grn-c">12.00</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Duplicate removed</td><td></td><td></td></tr><tr><td class="grn-c">SKU003</td><td class="grn-c">Red Shoes</td><td class="grn-c">25.00</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>620 duplicate SKUs removed</strong>, product names standardized, prices converted to uniform number format.</div>
-    </div>
-
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Sales Report Monthly Cleanup</span><span class="proj-rows-badge">8,000 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Status</td></tr><tr><td class="red-c">north</td><td class="red-c">INR 25000</td><td class="red-c">PENDING</td></tr><tr><td class="red-c">&nbsp;SOUTH&nbsp;</td><td class="red-c">25,000</td><td class="red-c">pending</td></tr><tr><td class="red-c">East Region</td><td class="red-c">INR&nbsp;18000</td><td class="red-c">Compl</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Status</td></tr><tr><td class="grn-c">North</td><td class="grn-c">25000</td><td class="grn-c">Pending</td></tr><tr><td style="color:#1a4a3a;font-size:10px;font-style:italic">Duplicate removed</td><td></td><td></td></tr><tr><td class="grn-c">East</td><td class="grn-c">18000</td><td class="grn-c">Completed</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>Region names standardized</strong>, "INR" prefix removed from numbers, status values made uniform.</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: Data Entry -->
-<div id="modal-entry" class="modal-overlay">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('modal-entry')">&times;</button>
-    <div class="modal-tag">Service Examples</div>
-    <h3 class="modal-title">&#128221; Data Entry</h3>
-    <p class="modal-subtitle">4 real project examples showing accurate data entry work Before &amp; After.</p>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Amazon Product Listing Entry</span><span class="proj-rows-badge">500 products</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (PDF)</div><table class="proj-tbl"><tr><td class="th-c">Raw PDF Data</td></tr><tr><td class="red-c">Product: Blue T-Shirt, Size: L, Price: $12, Stock: 50</td></tr><tr><td class="red-c">Product: Red Shoes, Size: 9, Price: $25, Stock: 30</td></tr><tr><td class="red-c">Product: Black Bag, Size: M, Price: $18, Stock: 20</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Product</td><td class="th-c">Size</td><td class="th-c">Price</td><td class="th-c">Stock</td></tr><tr><td class="grn-c">Blue T-Shirt</td><td class="grn-c">L</td><td class="grn-c">$12.00</td><td class="grn-c">50</td></tr><tr><td class="grn-c">Red Shoes</td><td class="grn-c">9</td><td class="grn-c">$25.00</td><td class="grn-c">30</td></tr><tr><td class="grn-c">Black Bag</td><td class="grn-c">M</td><td class="grn-c">$18.00</td><td class="grn-c">20</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>500 products</strong> entered accurately into structured Excel format with consistent formatting, delivered in 20 hours.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Student Grade Record Entry</span><span class="proj-rows-badge">1,200 students</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (Paper)</div><table class="proj-tbl"><tr><td class="th-c">Handwritten Form</td></tr><tr><td class="red-c">Name: Rahul Kumar, Roll: 101, Marks: 78, Grade: B</td></tr><tr><td class="red-c">Name: Priya Singh, Roll: 102, Marks: 92, Grade: A</td></tr><tr><td class="red-c">Name: Amit Roy, Roll: 103, Marks: 65, Grade: C</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Roll</td><td class="th-c">Marks</td><td class="th-c">Grade</td></tr><tr><td class="grn-c">Rahul Kumar</td><td class="grn-c">101</td><td class="grn-c">78</td><td class="grn-c">B</td></tr><tr><td class="grn-c">Priya Singh</td><td class="grn-c">102</td><td class="grn-c">92</td><td class="grn-c">A</td></tr><tr><td class="grn-c">Amit Roy</td><td class="grn-c">103</td><td class="grn-c">65</td><td class="grn-c">C</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>1,200 student records</strong> accurately entered, zero errors, submitted to teacher 2 hours before deadline.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Business Contact List Entry</span><span class="proj-rows-badge">800 contacts</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (Business Cards)</div><table class="proj-tbl"><tr><td class="th-c">Business Card Info</td></tr><tr><td class="red-c">John Smith, CEO, ABC Corp, john@abccorp.com, +1-555-1234</td></tr><tr><td class="red-c">Sara Lee, Manager, XYZ Ltd, sara@xyz.com, +1-555-5678</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Role</td><td class="th-c">Email</td><td class="th-c">Phone</td></tr><tr><td class="grn-c">John Smith</td><td class="grn-c">CEO</td><td class="grn-c">john@abccorp.com</td><td class="grn-c">+1-555-1234</td></tr><tr><td class="grn-c">Sara Lee</td><td class="grn-c">Manager</td><td class="grn-c">sara@xyz.com</td><td class="grn-c">+1-555-5678</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>800 contacts</strong> entered in 18 hours with all fields structured, consistent, and ready for CRM import.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Invoice Data Entry</span><span class="proj-rows-badge">350 invoices</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; SOURCE (Scanned PDFs)</div><table class="proj-tbl"><tr><td class="th-c">Invoice Data (PDF)</td></tr><tr><td class="red-c">Invoice #1024, Date: 12/01/2024, Client: ABC Co, Amount: $4,500</td></tr><tr><td class="red-c">Invoice #1025, Date: 15/01/2024, Client: XYZ Ltd, Amount: $2,800</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; ENTERED IN EXCEL</div><table class="proj-tbl"><tr><td class="th-c">Inv #</td><td class="th-c">Date</td><td class="th-c">Client</td><td class="th-c">Amount</td></tr><tr><td class="grn-c">1024</td><td class="grn-c">12-01-2024</td><td class="grn-c">ABC Co</td><td class="grn-c">4500.00</td></tr><tr><td class="grn-c">1025</td><td class="grn-c">15-01-2024</td><td class="grn-c">XYZ Ltd</td><td class="grn-c">2800.00</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>350 invoices</strong> accurately entered, ready for accounting software, delivered within 24 hours.</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: PDF to Excel -->
-<div id="modal-pdf" class="modal-overlay">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('modal-pdf')">&times;</button>
-    <div class="modal-tag">Service Examples</div>
-    <h3 class="modal-title">&#128196; PDF to Excel</h3>
-    <p class="modal-subtitle">4 real project examples showing PDF table extraction and Excel conversion.</p>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Bank Statement PDF Conversion</span><span class="proj-rows-badge">12 pages</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF FORMAT</div><table class="proj-tbl"><tr><td class="red-c">Date &nbsp;&nbsp; Description &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount</td></tr><tr><td class="red-c">01 Jan &nbsp; Opening Balance &nbsp;&nbsp; 10,000</td></tr><tr><td class="red-c">03 Jan &nbsp; ATM Withdrawal &nbsp;&nbsp;&nbsp; -500</td></tr><tr><td class="red-c">05 Jan &nbsp; Online Transfer &nbsp;&nbsp;&nbsp; -1,200</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL FORMAT</div><table class="proj-tbl"><tr><td class="th-c">Date</td><td class="th-c">Description</td><td class="th-c">Amount</td></tr><tr><td class="grn-c">01-01-2024</td><td class="grn-c">Opening Balance</td><td class="grn-c">10000</td></tr><tr><td class="grn-c">03-01-2024</td><td class="grn-c">ATM Withdrawal</td><td class="grn-c">-500</td></tr><tr><td class="grn-c">05-01-2024</td><td class="grn-c">Online Transfer</td><td class="grn-c">-1200</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>12 pages of bank statement</strong> converted to structured Excel, all columns aligned, sortable and filterable.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Product Catalog PDF to Excel</span><span class="proj-rows-badge">8 pages</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF TABLE</div><table class="proj-tbl"><tr><td class="red-c">Item &nbsp;&nbsp;&nbsp; Size &nbsp;&nbsp; Color &nbsp; Price</td></tr><tr><td class="red-c">T-Shirt &nbsp; L &nbsp;&nbsp;&nbsp;&nbsp; Blue &nbsp;&nbsp; $12</td></tr><tr><td class="red-c">Jeans &nbsp;&nbsp;&nbsp; 32 &nbsp;&nbsp;&nbsp;&nbsp; Black &nbsp; $35</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL COLUMNS</div><table class="proj-tbl"><tr><td class="th-c">Item</td><td class="th-c">Size</td><td class="th-c">Color</td><td class="th-c">Price</td></tr><tr><td class="grn-c">T-Shirt</td><td class="grn-c">L</td><td class="grn-c">Blue</td><td class="grn-c">12.00</td></tr><tr><td class="grn-c">Jeans</td><td class="grn-c">32</td><td class="grn-c">Black</td><td class="grn-c">35.00</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>320 products</strong> from 8 PDF pages converted to Excel with clean column separation and uniform pricing format.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Financial Report Table Extraction</span><span class="proj-rows-badge">20 pages</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF REPORT</div><table class="proj-tbl"><tr><td class="red-c">Q1 Revenue: 1,20,000 | Q2: 1,45,000</td></tr><tr><td class="red-c">Q3 Revenue: 98,000 &nbsp;| Q4: 1,75,000</td></tr><tr><td class="red-c">Total Annual: 5,38,000</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL TABLE</div><table class="proj-tbl"><tr><td class="th-c">Quarter</td><td class="th-c">Revenue</td></tr><tr><td class="grn-c">Q1</td><td class="grn-c">120000</td></tr><tr><td class="grn-c">Q2</td><td class="grn-c">145000</td></tr><tr><td class="grn-c">Q3</td><td class="grn-c">98000</td></tr><tr><td class="grn-c">Q4</td><td class="grn-c">175000</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>20 pages of financial data</strong> extracted into clean Excel rows, numbers ready for chart and formula use.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Government Form Data Extraction</span><span class="proj-rows-badge">50 forms</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; PDF FORMS</div><table class="proj-tbl"><tr><td class="red-c">Name: Rahul Kumar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Age: 28</td></tr><tr><td class="red-c">District: Gonda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State: UP</td></tr><tr><td class="red-c">Category: OBC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Applied: Yes</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; EXCEL ROWS</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Age</td><td class="th-c">District</td><td class="th-c">Cat.</td></tr><tr><td class="grn-c">Rahul Kumar</td><td class="grn-c">28</td><td class="grn-c">Gonda</td><td class="grn-c">OBC</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>50 government forms</strong> converted into one structured Excel database in 16 hours.</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: Text to Columns -->
-<div id="modal-split" class="modal-overlay">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('modal-split')">&times;</button>
-    <div class="modal-tag">Service Examples</div>
-    <h3 class="modal-title">&#9986; Text to Columns &amp; Split Data</h3>
-    <p class="modal-subtitle">4 real examples showing data splitting for organized column structure.</p>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Full Name Split to First &amp; Last</span><span class="proj-rows-badge">5,000 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (1 Column)</div><table class="proj-tbl"><tr><td class="th-c">Full Name</td></tr><tr><td class="red-c">Rahul Kumar Sharma</td></tr><tr><td class="red-c">Priya Gupta</td></tr><tr><td class="red-c">Amit Singh Verma</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (3 Columns)</div><table class="proj-tbl"><tr><td class="th-c">First</td><td class="th-c">Middle</td><td class="th-c">Last</td></tr><tr><td class="grn-c">Rahul</td><td class="grn-c">Kumar</td><td class="grn-c">Sharma</td></tr><tr><td class="grn-c">Priya</td><td class="grn-c">&mdash;</td><td class="grn-c">Gupta</td></tr><tr><td class="grn-c">Amit</td><td class="grn-c">Singh</td><td class="grn-c">Verma</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>5,000 full names</strong> accurately split into separate First, Middle, and Last name columns.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Address Split to City, State, PIN</span><span class="proj-rows-badge">2,000 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Full Address</td></tr><tr><td class="red-c">Gonda, Uttar Pradesh, 271001</td></tr><tr><td class="red-c">Lucknow, UP, 226001</td></tr><tr><td class="red-c">Mumbai, Maharashtra, 400001</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">City</td><td class="th-c">State</td><td class="th-c">PIN</td></tr><tr><td class="grn-c">Gonda</td><td class="grn-c">Uttar Pradesh</td><td class="grn-c">271001</td></tr><tr><td class="grn-c">Lucknow</td><td class="grn-c">UP</td><td class="grn-c">226001</td></tr><tr><td class="grn-c">Mumbai</td><td class="grn-c">Maharashtra</td><td class="grn-c">400001</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>2,000 addresses</strong> cleanly split using comma delimiter, ready for region-based filtering.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Date-Time Column Split</span><span class="proj-rows-badge">7,500 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">Timestamp</td></tr><tr><td class="red-c">2024-01-15 09:30:00</td></tr><tr><td class="red-c">2024-01-15 14:45:22</td></tr><tr><td class="red-c">2024-01-16 08:00:00</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Date</td><td class="th-c">Time</td></tr><tr><td class="grn-c">15-01-2024</td><td class="grn-c">09:30 AM</td></tr><tr><td class="grn-c">15-01-2024</td><td class="grn-c">02:45 PM</td></tr><tr><td class="grn-c">16-01-2024</td><td class="grn-c">08:00 AM</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>7,500 timestamps</strong> split into separate Date and Time columns for easier reporting and filtering.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Product SKU Code Split</span><span class="proj-rows-badge">3,000 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE</div><table class="proj-tbl"><tr><td class="th-c">SKU Code</td></tr><tr><td class="red-c">TSHIRT-BLU-L-001</td></tr><tr><td class="red-c">SHOES-RED-42-002</td></tr><tr><td class="red-c">BAG-BLK-M-003</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER</div><table class="proj-tbl"><tr><td class="th-c">Type</td><td class="th-c">Color</td><td class="th-c">Size</td><td class="th-c">ID</td></tr><tr><td class="grn-c">TSHIRT</td><td class="grn-c">BLU</td><td class="grn-c">L</td><td class="grn-c">001</td></tr><tr><td class="grn-c">SHOES</td><td class="grn-c">RED</td><td class="grn-c">42</td><td class="grn-c">002</td></tr><tr><td class="grn-c">BAG</td><td class="grn-c">BLK</td><td class="grn-c">M</td><td class="grn-c">003</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>3,000 SKU codes</strong> split into 4 separate attribute columns using dash delimiter.</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: Conditional Formatting -->
-<div id="modal-format" class="modal-overlay">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('modal-format')">&times;</button>
-    <div class="modal-tag">Service Examples</div>
-    <h3 class="modal-title">&#127912; Conditional Formatting</h3>
-    <p class="modal-subtitle">4 real examples showing data visualization through color-coded formatting rules.</p>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Sales KPI Dashboard Highlighting</span><span class="proj-rows-badge">Monthly report</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (No Formatting)</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Target</td></tr><tr><td>North</td><td>85000</td><td>100000</td></tr><tr><td>South</td><td>112000</td><td>100000</td></tr><tr><td>East</td><td>45000</td><td>100000</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Color Coded)</div><table class="proj-tbl"><tr><td class="th-c">Region</td><td class="th-c">Sales</td><td class="th-c">Status</td></tr><tr><td>North</td><td class="yel-c">85,000 &#9651;</td><td class="yel-c">Near Target</td></tr><tr><td>South</td><td class="grn-c">1,12,000 &#9650;</td><td class="grn-c">Exceeded!</td></tr><tr><td>East</td><td class="red-c">45,000 &#9660;</td><td class="red-c">Below Target</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: Management could instantly see <strong>which regions met targets</strong> using red/yellow/green color rules without reading every number.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Duplicate Row Detection</span><span class="proj-rows-badge">8,000 rows</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Can't Find Dups)</div><table class="proj-tbl"><tr><td class="th-c">Email</td><td class="th-c">Name</td></tr><tr><td>rahul@gmail.com</td><td>Rahul</td></tr><tr><td>priya@gmail.com</td><td>Priya</td></tr><tr><td>rahul@gmail.com</td><td>Rahul K</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Duplicates Highlighted)</div><table class="proj-tbl"><tr><td class="th-c">Email</td><td class="th-c">Name</td></tr><tr><td class="red-c">rahul@gmail.com &#9679;</td><td>Rahul</td></tr><tr><td class="grn-c">priya@gmail.com</td><td>Priya</td></tr><tr><td class="red-c">rahul@gmail.com &#9679;</td><td>Rahul K</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>All 1,200 duplicate rows</strong> highlighted in red using COUNTIF-based conditional formatting rule.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Inventory Stock Level Alerts</span><span class="proj-rows-badge">Product list</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Plain Numbers)</div><table class="proj-tbl"><tr><td class="th-c">Product</td><td class="th-c">Stock</td></tr><tr><td>T-Shirt Blue</td><td>5</td></tr><tr><td>Red Shoes</td><td>45</td></tr><tr><td>Black Bag</td><td>0</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Alert Colors)</div><table class="proj-tbl"><tr><td class="th-c">Product</td><td class="th-c">Stock</td><td class="th-c">Alert</td></tr><tr><td>T-Shirt Blue</td><td class="yel-c">5</td><td class="yel-c">Low Stock</td></tr><tr><td>Red Shoes</td><td class="grn-c">45</td><td class="grn-c">OK</td></tr><tr><td>Black Bag</td><td class="red-c">0</td><td class="red-c">OUT!</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: Inventory manager can instantly spot <strong>out-of-stock and low-stock</strong> products with color alerts.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Student Grade Classification</span><span class="proj-rows-badge">600 students</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (No Visual)</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Marks</td></tr><tr><td>Rahul</td><td>92</td></tr><tr><td>Priya</td><td>58</td></tr><tr><td>Amit</td><td>74</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Grade Colors)</div><table class="proj-tbl"><tr><td class="th-c">Name</td><td class="th-c">Marks</td><td class="th-c">Grade</td></tr><tr><td>Rahul</td><td class="grn-c">92 &#9650;</td><td class="grn-c">A+</td></tr><tr><td>Priya</td><td class="red-c">58 &#9660;</td><td class="red-c">D</td></tr><tr><td>Amit</td><td class="yel-c">74 &#9651;</td><td class="yel-c">B</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: <strong>600 student records</strong> formatted with color-coded grade bands so teachers can identify top and struggling students at a glance.</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: Merge Cells & Formatting -->
-<div id="modal-merge" class="modal-overlay">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('modal-merge')">&times;</button>
-    <div class="modal-tag">Service Examples</div>
-    <h3 class="modal-title">&#128279; Merge Cells &amp; Formatting</h3>
-    <p class="modal-subtitle">4 real examples showing spreadsheet transformation from plain to professional.</p>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 01</span><span class="proj-ex-name">Monthly Sales Report Formatting</span><span class="proj-rows-badge">Company report</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Plain Data)</div><table class="proj-tbl"><tr><td>Jan</td><td>Feb</td><td>Mar</td></tr><tr><td>45000</td><td>52000</td><td>48000</td></tr><tr><td>North</td><td>South</td><td>East</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Professional)</div><table class="proj-tbl"><tr><td class="grn-c" colspan="3" style="text-align:center;font-weight:700">&#10064; QUARTERLY SALES REPORT &#10064;</td></tr><tr><td class="th-c">January</td><td class="th-c">February</td><td class="th-c">March</td></tr><tr><td class="grn-c">&#8377;45,000</td><td class="grn-c">&#8377;52,000</td><td class="grn-c">&#8377;48,000</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: Plain data transformed into a <strong>professional report</strong> with merged header, borders, currency symbols, and consistent alignment.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 02</span><span class="proj-ex-name">Invoice Template Design</span><span class="proj-rows-badge">Template</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (No Structure)</div><table class="proj-tbl"><tr><td class="red-c">Company Name here</td></tr><tr><td class="red-c">Invoice# Date Bill To Amount Due</td></tr><tr><td class="red-c">item qty price total</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Clean Invoice)</div><table class="proj-tbl"><tr><td class="grn-c" colspan="2" style="font-weight:700">&#127981; COMPANY NAME</td></tr><tr><td class="th-c">Invoice #</td><td class="th-c">Date</td></tr><tr><td class="th-c">Item</td><td class="th-c">Price</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: Professional <strong>invoice template</strong> created with merged headers, proper borders, print-ready layout.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 03</span><span class="proj-ex-name">Student Marksheet Formatting</span><span class="proj-rows-badge">School sheet</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Unformatted)</div><table class="proj-tbl"><tr><td class="red-c">name rollno math sci eng total</td></tr><tr><td class="red-c">rahul 1 78 82 90 250</td></tr><tr><td class="red-c">priya 2 92 88 95 275</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Official Format)</div><table class="proj-tbl"><tr><td class="grn-c" colspan="3" style="text-align:center;font-weight:700">ANNUAL MARKSHEET 2024</td></tr><tr><td class="th-c">Name</td><td class="th-c">Subjects</td><td class="th-c">Total</td></tr><tr><td class="grn-c">Rahul</td><td class="grn-c">Math/Sci/Eng</td><td class="grn-c">250/300</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: Raw data formatted into <strong>official-looking marksheet</strong> with merged title, subject headers, and percentage column.</div>
-    </div>
-    <div class="proj-ex">
-      <div class="proj-ex-hd"><span class="proj-ex-num">PROJECT 04</span><span class="proj-ex-name">Business Dashboard Layout</span><span class="proj-rows-badge">Dashboard</span></div>
-      <div class="proj-ba">
-        <div class="proj-side proj-before"><div class="proj-side-lbl">&#10060; BEFORE (Raw Cells)</div><table class="proj-tbl"><tr><td class="red-c">metric value</td></tr><tr><td class="red-c">total sales 540000</td></tr><tr><td class="red-c">customers 1240</td></tr><tr><td class="red-c">orders 3400</td></tr></table></div>
-        <div class="mini-arrow"><div class="mini-arr-btn">&rarr;</div></div>
-        <div class="proj-side proj-after"><div class="proj-side-lbl">&#10003; AFTER (Dashboard)</div><table class="proj-tbl"><tr><td class="grn-c" style="font-weight:700">&#128202; BUSINESS OVERVIEW</td><td></td></tr><tr><td class="th-c">Total Sales</td><td class="grn-c">&#8377;5,40,000</td></tr><tr><td class="th-c">Customers</td><td class="blu-c">1,240</td></tr><tr><td class="th-c">Orders</td><td class="yel-c">3,400</td></tr></table></div>
-      </div>
-      <div class="proj-result">&#128200; Result: Plain metrics transformed into a <strong>visual business dashboard</strong> with color-coded KPIs, merged sections, and clean layout.</div>
-    </div>
-  </div>
-</div>
-
 <!-- JS -->
 <script>
 // ===== EXCEL DEMO WIDGET (About section) — real practice-file data, tab switch + download =====
@@ -1324,6 +1004,7 @@ function xlDownloadFile() {
     alert('Download failed in this browser. Please take a screenshot or contact me on Fiverr for the file.');
   }
 }
+
 // ===== CONTACT FORM - MAILTO (works on local file + any device) =====
 function sendContactForm() {
   var name    = document.getElementById('cf_name').value.trim();
@@ -1366,31 +1047,6 @@ function sendContactForm() {
     document.getElementById('formSuccess').style.display = 'block';
   }, 500);
 }
-
-// Modal open/close
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-  document.body.style.overflow = '';
-}
-// Click outside modal box to close
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === this) closeModal(this.id);
-  });
-});
-// ESC key to close
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay.open').forEach(m => {
-      m.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  }
-});
 
 // Contact form — mailto based (works on local file + hosted)
 function sendContactForm() {
