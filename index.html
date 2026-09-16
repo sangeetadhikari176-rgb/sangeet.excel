@@ -372,21 +372,563 @@ footer{position:relative;z-index:1;background:#020609;border-top:1px solid var(-
   .mini-arrow{display:none}
 }
 </style>
+
+<!-- ==================== 3D DEPTH LAYER (v14) ==================== -->
+<style>
+/*======================================================================
+  3D DEPTH LAYER
+  Purely visual: adds real perspective, depth, parallax and a WebGL-free
+  3D background. No text, data, link, price or file content is changed.
+======================================================================*/
+:root{
+  --d3-ease:cubic-bezier(.22,1,.36,1);
+  --d3-ink:#061321;
+  --d3-ink2:#04101c;
+}
+html{background:var(--bg)}
+
+/* ---------- 3D BACKGROUND CANVAS ---------- */
+#bg3d{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;display:block;
+}
+/* soft vignette so the 3D scene sinks into the page */
+.d3-vignette{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,transparent 48%,rgba(2,6,11,.30) 82%,rgba(2,6,11,.72) 100%);
+}
+
+/* ---------- GLOBAL STAGE ---------- */
+/* the banded section backgrounds become glass so the 3D scene stays visible */
+section:nth-child(even){background:linear-gradient(180deg,rgba(7,14,26,.80),rgba(7,14,26,.66))}
+section.hero{background:transparent}
+section{perspective:1800px;perspective-origin:50% 42%;overflow-x:clip}
+footer{perspective:1000px}
+
+/* ---------- NAV IN 3D ---------- */
+nav{
+  transform-style:preserve-3d;
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 -1px 0 rgba(12,242,255,.10),inset 0 1px 0 rgba(255,255,255,.04);
+  transition:box-shadow .4s,background .4s;
+}
+nav.d3-deep{box-shadow:0 26px 55px -20px rgba(0,0,0,1),inset 0 -1px 0 rgba(12,242,255,.22),inset 0 1px 0 rgba(255,255,255,.06)}
+.nav-links{perspective:700px}
+.nav-links li{transform-style:preserve-3d}
+.nav-links a{display:inline-block;transform-style:preserve-3d;transition:color .3s,transform .45s var(--d3-ease),text-shadow .45s}
+.nav-links a:hover{transform:translateZ(30px) rotateX(-14deg);text-shadow:0 8px 18px rgba(12,242,255,.55)}
+.logo{display:inline-block;transform-style:preserve-3d;transition:transform .6s var(--d3-ease),filter .6s;
+  filter:drop-shadow(0 6px 12px rgba(12,242,255,.25))}
+nav:hover .logo{transform:perspective(600px) rotateY(-16deg) rotateX(6deg) translateZ(18px)}
+
+/* ---------- HERO IN 3D ---------- */
+.hero{perspective:1700px;perspective-origin:50% 46%}
+.hero-flex{transform-style:preserve-3d;transition:transform .9s var(--d3-ease)}
+.hero-content{transform-style:preserve-3d;transform:translateZ(30px)}
+.hero-pill{transform:translateZ(48px);box-shadow:0 14px 26px -12px rgba(12,242,255,.5),inset 0 1px 0 rgba(255,255,255,.08)}
+.hero-name{
+  transform-style:preserve-3d;transform:translateZ(80px);
+  text-shadow:
+    1px 1px 0 var(--d3-ink),2px 2px 0 var(--d3-ink),3px 3px 0 var(--d3-ink2),
+    4px 4px 0 var(--d3-ink2),5px 5px 0 #030b14,6px 6px 0 #02080f,
+    0 20px 40px rgba(0,0,0,.8),0 0 60px rgba(12,242,255,.16);
+}
+/* gradient-clipped text: extrude with chained drop-shadows instead of
+   text-shadow (a text-shadow shows THROUGH the transparent fill) */
+.hero-name .gradient-name{
+  transform:translateZ(26px);text-shadow:none;
+  filter:drop-shadow(1px 1px 0 #061321) drop-shadow(1px 1px 0 #051020)
+         drop-shadow(1px 1px 0 #040d1a) drop-shadow(1px 1px 0 #030a15)
+         drop-shadow(0 16px 26px rgba(0,0,0,.65));
+}
+.hero-role{transform:translateZ(40px)}
+.hero-sub{transform:translateZ(26px)}
+.hero-stats{perspective:1100px;transform-style:preserve-3d}
+.hero-btns{perspective:900px;transform-style:preserve-3d}
+.hero-glow{transform:translateX(-50%) translateZ(-340px) scale(1.3)}
+.hero-glow2{transform:translateZ(-300px) scale(1.25)}
+
+/* stat boxes = little 3D blocks */
+.stat-box{
+  position:relative;transform-style:preserve-3d;
+  transition:transform .45s var(--d3-ease),box-shadow .45s,border-color .45s;
+  box-shadow:0 14px 28px -14px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.06),inset 0 -8px 16px rgba(0,0,0,.35);
+}
+.stat-box::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(150deg,rgba(255,255,255,.10),transparent 55%);
+}
+.stat-box:hover{border-color:rgba(12,242,255,.45);box-shadow:0 30px 54px -18px rgba(12,242,255,.35),inset 0 1px 0 rgba(255,255,255,.10)}
+.stat-val{transform:translateZ(26px);text-shadow:0 6px 16px rgba(12,242,255,.45)}
+.stat-lbl{transform:translateZ(14px)}
+
+/* hero photo card floats in space */
+.hero-photo-card{transform-style:preserve-3d;transition:transform .8s var(--d3-ease);animation:d3Drift 11s ease-in-out infinite}
+@keyframes d3Drift{
+  0%,100%{transform:rotateY(-4deg) rotateX(1.5deg) translateZ(0)}
+  50%{transform:rotateY(4deg) rotateX(-1.5deg) translateZ(18px)}
+}
+.hero-photo-frame{
+  transform-style:preserve-3d;transition:box-shadow .5s;
+  box-shadow:0 46px 90px -34px rgba(0,0,0,.98),0 0 0 1px rgba(12,242,255,.20),0 0 70px rgba(12,242,255,.12),inset 0 1px 0 rgba(255,255,255,.10);
+}
+.hero-photo-badge{transform:translateZ(50px);box-shadow:0 16px 30px -14px rgba(0,0,0,.9)}
+.hero-photo-glow{transform:translateZ(-160px) scale(1.4)}
+
+/* floating formula chips orbit in 3D */
+.fcell{
+  transform-style:preserve-3d;
+  animation:d3Float 8s ease-in-out infinite;
+  box-shadow:0 14px 26px -12px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.07);
+}
+@keyframes d3Float{
+  0%,100%{transform:translate3d(0,0,0) rotateY(0deg) rotateX(0deg)}
+  25%{transform:translate3d(4px,-10px,20px) rotateY(16deg) rotateX(7deg)}
+  50%{transform:translate3d(0,-16px,34px) rotateY(0deg) rotateX(-5deg)}
+  75%{transform:translate3d(-4px,-8px,18px) rotateY(-16deg) rotateX(6deg)}
+}
+
+/* ---------- SECTION HEADINGS IN 3D ---------- */
+.stitle{
+  transform-style:preserve-3d;
+  text-shadow:1px 1px 0 var(--d3-ink),2px 2px 0 var(--d3-ink2),3px 3px 0 #040d18,
+              4px 4px 0 #030a13,0 10px 20px rgba(0,0,0,.5);
+}
+.stitle .c{
+  text-shadow:none;
+  filter:drop-shadow(1px 1px 0 #061321) drop-shadow(1px 1px 0 #051020)
+         drop-shadow(1px 1px 0 #040d1a) drop-shadow(0 10px 18px rgba(0,0,0,.5));
+}
+.logo,.footer-logo,.price-amt{ text-shadow:none }
+.stag{transform:translateZ(14px)}
+.sdivider{box-shadow:0 0 22px rgba(12,242,255,.55),0 4px 10px rgba(0,0,0,.6)}
+
+/* ---------- GENERIC 3D CARD STAGE ---------- */
+.svc-grid,.fn-grid,.why-grid,.clients-grid,.contact-items,.price-grid,
+.dock-row,.proc-grid,.about-grid,.contact-grid,#contactForm{perspective:1500px}
+
+.svc-card,.fn-card,.why-card,.client-chip,.ci,.dock-card,.price-card,
+.proc-step,.xldemo,.also-can{transform-style:preserve-3d}
+
+.svc-card,.fn-card,.why-card,.client-chip,.ci,.dock-card,.price-card{
+  position:relative;
+  transition:transform .45s var(--d3-ease),box-shadow .45s,border-color .35s;
+}
+/* moving light glare driven by --gx/--gy from the tilt engine */
+.svc-card::after,.fn-card::after,.why-card::after,.client-chip::after,
+.ci::after,.dock-card::after,.price-card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
+  background:radial-gradient(420px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.10),rgba(255,255,255,.03) 26%,transparent 52%);
+  opacity:0;transition:opacity .35s;
+}
+.svc-card:hover::after,.fn-card:hover::after,.why-card:hover::after,
+.client-chip:hover::after,.ci:hover::after,.dock-card:hover::after,
+.price-card:hover::after{opacity:1}
+
+/* ---------- SERVICES ---------- */
+.svc-card{
+  overflow:visible;
+  box-shadow:0 22px 44px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.svc-card::before{border-radius:10px 10px 0 0}
+.svc-card:hover{border-color:rgba(12,242,255,.45);box-shadow:0 40px 70px -26px rgba(12,242,255,.28),inset 0 1px 0 rgba(255,255,255,.09)}
+.svc-ico{transform:translateZ(60px);filter:drop-shadow(0 16px 18px rgba(0,0,0,.7))}
+.svc-name{transform:translateZ(38px)}
+.svc-desc{transform:translateZ(20px)}
+.svc-tags{transform:translateZ(32px)}
+.tag{box-shadow:0 4px 10px -4px rgba(0,0,0,.7)}
+
+/* ---------- FUNCTIONS ---------- */
+.fn-card{box-shadow:0 22px 44px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.04)}
+.fn-card:hover{box-shadow:0 40px 70px -26px rgba(12,242,255,.22)}
+.fn-title{transform:translateZ(26px)}
+.fn-code{transform:translateZ(48px);box-shadow:0 16px 30px -16px rgba(0,0,0,1),inset 0 2px 8px rgba(0,0,0,.75),inset 0 -1px 0 rgba(12,242,255,.10)}
+.fn-desc{transform:translateZ(16px)}
+.fn-result{transform:translateZ(34px);box-shadow:0 14px 26px -14px rgba(0,217,126,.35)}
+
+/* ---------- WHY ---------- */
+.why-card{box-shadow:0 22px 44px -26px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.04)}
+.why-card:hover{box-shadow:0 40px 72px -26px rgba(123,97,255,.28)}
+.why-ico{transform:translateZ(56px);filter:drop-shadow(0 14px 16px rgba(0,0,0,.7))}
+.why-name{transform:translateZ(34px)}
+.why-desc{transform:translateZ(16px)}
+
+/* ---------- PROCESS ---------- */
+.proc-grid{transform-style:preserve-3d}
+.proc-step{transition:transform .45s var(--d3-ease)}
+.proc-dot{
+  transform:translateZ(62px);
+  transition:transform .45s var(--d3-ease),background .35s,box-shadow .45s;
+  box-shadow:0 0 26px rgba(12,242,255,.28),0 22px 34px -16px rgba(0,0,0,1),
+             inset 0 8px 16px rgba(12,242,255,.12),inset 0 -12px 22px rgba(0,0,0,.7);
+}
+.proc-step:hover .proc-dot{transform:translateZ(96px) rotateX(-12deg) scale(1.08);box-shadow:0 0 44px rgba(12,242,255,.5),0 30px 44px -16px rgba(0,0,0,1)}
+.proc-num{transform:translateZ(30px)}
+.proc-title{transform:translateZ(24px)}
+.proc-desc{transform:translateZ(10px)}
+
+/* ---------- EXCEL DEMO PANEL ---------- */
+.xldemo{
+  transition:transform .5s var(--d3-ease),box-shadow .5s;
+  box-shadow:0 50px 90px -40px rgba(0,0,0,1),0 0 0 1px rgba(12,242,255,.12),0 0 70px rgba(12,242,255,.07);
+}
+.xlbar{box-shadow:0 6px 14px -6px rgba(0,0,0,.9)}
+.xl-row{transition:transform .3s var(--d3-ease),background .3s,box-shadow .3s}
+.xl-row:hover{transform:translateX(7px);box-shadow:-3px 0 0 var(--cyan) inset}
+.wc,.xl-download{box-shadow:0 3px 8px -3px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06)}
+.about-headshot{box-shadow:0 0 26px rgba(12,242,255,.4),0 18px 30px -16px rgba(0,0,0,.95)}
+.about-photo-row{perspective:800px}
+
+/* ---------- BEFORE & AFTER DOCK (3D cover-flow) ---------- */
+.dock-row{transform-style:preserve-3d;padding-top:56px;padding-bottom:46px}
+.dock-card{
+  transform-style:preserve-3d;
+  transition:transform .35s var(--d3-ease),box-shadow .35s,border-color .35s;
+  box-shadow:0 26px 46px -26px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.dock-card:hover{box-shadow:0 44px 70px -26px rgba(12,242,255,.3)}
+.dock-card-icon{transform:translateZ(52px);filter:drop-shadow(0 14px 16px rgba(0,0,0,.75))}
+.dock-card-title{transform:translateZ(32px)}
+.dock-card-meta{transform:translateZ(20px)}
+.dock-card-tap{transform:translateZ(26px)}
+
+/* ---------- PROJECT MODAL — 3D entrance ---------- */
+.pm-overlay{perspective:1500px}
+.pm-overlay.open .pm-box{animation:d3ModalIn .6s var(--d3-ease) both}
+@keyframes d3ModalIn{
+  from{opacity:0;transform:translateZ(-520px) rotateX(-20deg) translateY(50px)}
+  to{opacity:1;transform:translateZ(0) rotateX(0deg) translateY(0)}
+}
+.pm-box{box-shadow:0 60px 120px -40px rgba(0,0,0,1),0 0 0 1px rgba(12,242,255,.16),0 0 90px rgba(12,242,255,.08)}
+.pm-table tr{transition:transform .25s var(--d3-ease),background .25s}
+.pm-table tbody tr:hover{background:rgba(12,242,255,.05);transform:translateX(5px)}
+
+/* ---------- PRICING ---------- */
+.price-card{
+  overflow:visible;
+  box-shadow:0 40px 80px -36px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.price-card.featured{box-shadow:0 40px 80px -34px rgba(0,0,0,1),0 0 60px rgba(12,242,255,.12),inset 0 1px 0 rgba(255,255,255,.06)}
+.price-card.custom-pkg{box-shadow:0 40px 80px -34px rgba(0,0,0,1),0 0 60px rgba(123,97,255,.12),inset 0 1px 0 rgba(255,255,255,.06)}
+.price-badge{transform:translateZ(78px);box-shadow:0 18px 30px -14px rgba(0,0,0,.9)}
+.price-name{transform:translateZ(52px)}
+.price-amt{transform:translateZ(70px);filter:drop-shadow(0 16px 24px rgba(0,0,0,.7))}
+.price-sub{transform:translateZ(30px)}
+.price-features{transform:translateZ(22px)}
+.also-can{transform:translateZ(38px);box-shadow:0 18px 32px -18px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.04)}
+.price-btn-row{transform:translateZ(56px);perspective:900px}
+.also-tag{transform-style:preserve-3d;transition:transform .3s var(--d3-ease),background .25s,box-shadow .3s}
+.also-tag:hover{transform:translateZ(20px) translateY(-2px);box-shadow:0 12px 20px -10px rgba(12,242,255,.5)}
+
+/* ---------- CLIENTS ---------- */
+.client-chip{box-shadow:0 20px 38px -24px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.05)}
+.client-chip:hover{box-shadow:0 34px 56px -22px rgba(12,242,255,.28)}
+.client-ico{transform:translateZ(38px);filter:drop-shadow(0 10px 12px rgba(0,0,0,.7))}
+.client-name{transform:translateZ(22px)}
+.client-note{transform:translateZ(12px)}
+
+/* ---------- CONTACT ---------- */
+.ci{box-shadow:0 18px 34px -22px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.05)}
+.ci:hover{box-shadow:0 30px 50px -22px rgba(12,242,255,.28)}
+.ci-ico{transform:translateZ(34px);filter:drop-shadow(0 10px 12px rgba(0,0,0,.7))}
+.ci-lbl{transform:translateZ(16px)}
+.ci-val{transform:translateZ(24px)}
+.form-group{transform-style:preserve-3d;transition:transform .45s var(--d3-ease)}
+.form-group:focus-within{transform:translateZ(34px)}
+.form-input,.form-select,.form-textarea{
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.55),inset 0 -1px 0 rgba(255,255,255,.03);
+  transition:border-color .3s,box-shadow .3s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.45),0 0 0 2px rgba(12,242,255,.14),0 16px 30px -16px rgba(12,242,255,.45);
+}
+.form-label{transform:translateZ(10px)}
+
+/* ---------- 3D PRESSABLE BUTTONS ---------- */
+.btn-cyan,.btn-outline,.price-cta,.cta-fiverr,.cta-email,.xl-download,.pm-close{
+  transform-style:preserve-3d;
+  transition:transform .3s var(--d3-ease),box-shadow .3s,background .3s,color .3s,border-color .3s;
+}
+.btn-cyan{box-shadow:0 6px 0 #0796a8,0 18px 32px -10px rgba(12,242,255,.45)}
+.btn-cyan:hover{background:#7affff;transform:translateY(-4px) translateZ(26px) rotateX(-9deg);box-shadow:0 9px 0 #0796a8,0 28px 46px -12px rgba(12,242,255,.6)}
+.btn-cyan:active{transform:translateY(3px) translateZ(0) rotateX(0);box-shadow:0 2px 0 #0796a8,0 8px 16px -8px rgba(12,242,255,.4)}
+.btn-outline{box-shadow:0 5px 0 rgba(12,242,255,.18),0 16px 28px -14px rgba(0,0,0,.9)}
+.btn-outline:hover{background:rgba(12,242,255,.10);transform:translateY(-4px) translateZ(26px) rotateX(-9deg);box-shadow:0 8px 0 rgba(12,242,255,.22),0 26px 44px -14px rgba(12,242,255,.35)}
+.btn-outline:active{transform:translateY(3px) translateZ(0);box-shadow:0 2px 0 rgba(12,242,255,.18)}
+.cta-fiverr{box-shadow:0 6px 0 #12784a,0 18px 30px -12px rgba(29,191,115,.45)}
+.cta-fiverr:hover{transform:translateY(-4px) translateZ(24px) rotateX(-9deg);box-shadow:0 9px 0 #12784a,0 28px 44px -12px rgba(29,191,115,.6)}
+.cta-fiverr:active{transform:translateY(3px) translateZ(0);box-shadow:0 2px 0 #12784a}
+.cta-email{box-shadow:0 5px 0 rgba(12,242,255,.16),0 14px 26px -14px rgba(0,0,0,.9)}
+.cta-email:hover{background:rgba(12,242,255,.10);transform:translateY(-4px) translateZ(24px) rotateX(-9deg);box-shadow:0 8px 0 rgba(12,242,255,.2),0 26px 40px -14px rgba(12,242,255,.35)}
+.cta-email:active{transform:translateY(3px) translateZ(0);box-shadow:0 2px 0 rgba(12,242,255,.16)}
+.price-cta.cta-violet{box-shadow:0 5px 0 rgba(123,97,255,.3),0 16px 28px -14px rgba(0,0,0,.9)}
+.price-cta.cta-violet:hover{transform:translateY(-4px) translateZ(24px) rotateX(-9deg);box-shadow:0 8px 0 rgba(123,97,255,.35),0 26px 44px -14px rgba(123,97,255,.4)}
+.xl-download:hover{transform:translateY(-2px) translateZ(16px)}
+
+/* ---------- FOOTER ---------- */
+footer{box-shadow:0 -20px 50px -30px rgba(12,242,255,.25) inset}
+.footer-logo{display:inline-block;transform-style:preserve-3d;transition:transform .6s var(--d3-ease);
+  text-shadow:0 4px 10px rgba(0,0,0,.8)}
+footer:hover .footer-logo{transform:perspective(600px) rotateY(14deg) translateZ(16px)}
+.social-row{perspective:700px}
+.soc{transform-style:preserve-3d;transition:transform .6s var(--d3-ease),background .3s,border-color .3s,box-shadow .4s;
+  box-shadow:0 10px 20px -10px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.06)}
+.soc:hover{transform:translateY(-5px) translateZ(30px) rotateY(360deg);box-shadow:0 22px 34px -12px rgba(12,242,255,.55)}
+
+/* ---------- 3D SCROLL REVEAL ---------- */
+.d3-rev{opacity:0;transform:translate3d(0,52px,-190px) rotateX(16deg);
+  transition:opacity .75s var(--d3-ease),transform .95s var(--d3-ease)}
+.d3-rev.d3-in{opacity:1;transform:translate3d(0,0,0) rotateX(0deg)}
+.d3-rev-l{opacity:0;transform:translate3d(0,24px,-200px) rotateY(-20deg);
+  transition:opacity .75s var(--d3-ease),transform .95s var(--d3-ease)}
+.d3-rev-l.d3-in{opacity:1;transform:translate3d(0,0,0) rotateY(0deg)}
+.d3-rev-r{opacity:0;transform:translate3d(0,24px,-200px) rotateY(20deg);
+  transition:opacity .75s var(--d3-ease),transform .95s var(--d3-ease)}
+.d3-rev-r.d3-in{opacity:1;transform:translate3d(0,0,0) rotateY(0deg)}
+
+/* ---------- TOUCH / SMALL SCREENS ---------- */
+@media(max-width:1000px){
+  .svc-ico,.why-ico,.client-ico,.ci-ico,.dock-card-icon{transform:translateZ(28px)}
+  .price-amt{transform:translateZ(34px)}
+  .price-badge{transform:translateZ(40px)}
+  .proc-dot{transform:translateZ(30px)}
+  .hero-name{transform:translateZ(30px)}
+  .dock-row{padding-top:34px;padding-bottom:30px}
+}
+@media(max-width:1000px){
+  .hero-glow{transform:translateX(-50%) translateZ(-240px)}
+  .hero-glow2{transform:translateZ(-200px)}
+}
+@media(hover:none){
+  .hero-photo-card{animation-duration:14s}
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media(prefers-reduced-motion:reduce){
+  .hero-photo-card,.fcell{animation:none}
+  .d3-rev,.d3-rev-l,.d3-rev-r{opacity:1;transform:none;transition:none}
+  .pm-overlay.open .pm-box{animation:none}
+  #bg3d{opacity:.5}
+}
+</style>
+
+<!-- ============ RESPONSIVE / MOBILE COMPATIBILITY LAYER (v15) ============ -->
+<style>
+/*=====================================================================
+  Fixes horizontal overflow so NOTHING has to be swiped sideways.
+  Root cause addressed: grid/flex items default to min-width:auto, so a
+  wide child (the Excel widget, monospace tables, long emails) forces the
+  whole column wider than the screen. Everything here only changes
+  layout/wrapping - no text, data, link, price or file is altered.
+=====================================================================*/
+
+/* ---------- 1. GLOBAL OVERFLOW GUARD ---------- */
+html,body{max-width:100%;overflow-x:hidden}
+section{overflow-x:hidden}
+
+/* nav links must not park a heading underneath the fixed navbar */
+section[id]{scroll-margin-top:74px}
+
+/* grid & flex children may shrink below their content width */
+.about-grid>*,.contact-grid>*,.svc-grid>*,.fn-grid>*,.why-grid>*,
+.proc-grid>*,.price-grid>*,.clients-grid>*,.dock-row>*,
+.contact-items>*,.hero-flex>*,.hero-stats>*{min-width:0}
+.about-grid,.contact-grid,.svc-grid,.fn-grid,.why-grid,.proc-grid,
+.price-grid,.clients-grid,.contact-items,#contactForm{min-width:0;max-width:100%}
+
+/* long unbroken strings (emails / URLs) wrap instead of pushing width */
+.atext,.info-tbl td,.ci-val,.svc-desc,.fn-desc,.fn-result,.why-desc,
+.proc-desc,.price-features li,.client-note,.sdesc,.hero-sub,
+.dock-card-title,.also-tag,.pm-note{overflow-wrap:anywhere;word-break:break-word}
+
+/* media never exceeds its box */
+img,canvas,video,svg{max-width:100%;height:auto}
+
+/* ---------- 2. MOBILE NAV (hamburger) ---------- */
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;
+  background:none;border:0;cursor:pointer;padding:10px;z-index:1002}
+.nav-burger span{display:block;width:24px;height:2px;border-radius:2px;
+  background:var(--cyan);transition:transform .3s,opacity .3s}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+@media(max-width:1000px){
+  nav{padding:0 16px}
+  .nav-burger{display:flex}
+  .nav-links{
+    display:flex !important;flex-direction:column;gap:0;
+    position:fixed;top:62px;left:0;right:0;
+    background:rgba(4,9,15,.97);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    max-height:0;overflow:hidden;transition:max-height .35s ease;
+    perspective:none;z-index:1001
+  }
+  .nav-links.open{max-height:70vh;overflow-y:auto}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;width:100%;padding:15px 20px;font-size:12px;
+    border-bottom:1px solid rgba(12,242,255,.07);transform:none !important}
+}
+
+/* ---------- 3. FLATTEN 3D ON TOUCH ----------
+   perspective + translateZ visually magnifies elements, which can push
+   them past the screen edge on a narrow viewport. Depth is disabled where
+   there is no mouse to drive it anyway; shadows/colour stay intact.      */
+@media(max-width:1000px){
+  section,.hero,.nav-links,.svc-grid,.fn-grid,.why-grid,.clients-grid,
+  .contact-items,.price-grid,.dock-row,.proc-grid,.about-grid,
+  .contact-grid,#contactForm,.hero-stats,.hero-btns,.price-btn-row,
+  .social-row,footer{perspective:none !important}
+
+  .hero-content,.hero-pill,.hero-name,.hero-name .gradient-name,.hero-role,
+  .hero-sub,.stat-val,.stat-lbl,.stag,.svc-ico,.svc-name,.svc-desc,.svc-tags,
+  .fn-title,.fn-code,.fn-desc,.fn-result,.why-ico,.why-name,.why-desc,
+  .proc-dot,.proc-num,.proc-title,.proc-desc,.dock-card-icon,.dock-card-title,
+  .dock-card-meta,.dock-card-tap,.price-badge,.price-name,.price-amt,
+  .price-sub,.price-features,.also-can,.price-btn-row,.client-ico,
+  .client-name,.client-note,.ci-ico,.ci-lbl,.ci-val,.form-label,
+  .hero-photo-badge,.hero-photo-card,.hero-flex,.xldemo{
+    transform:none !important;animation:none !important}
+
+  /* keep the scroll-reveal readable, just without the Z-flight */
+  .d3-rev,.d3-rev-l,.d3-rev-r{transform:translate3d(0,26px,0) !important}
+  .d3-rev.d3-in,.d3-rev-l.d3-in,.d3-rev-r.d3-in{transform:none !important}
+
+  .fcell{display:none}                /* floating formula chips: decorative */
+  #bg3d{opacity:.45}
+  /* decorative glow gradients kept inside the viewport */
+  .hero-glow{width:min(100%,420px);height:340px;left:50%}
+  .hero-glow2{width:min(70%,260px);height:260px;left:0}
+  .hero-photo-glow{inset:-10px}
+}
+
+/* ---------- 4. EXCEL WIDGET (About) ---------- */
+@media(max-width:700px){
+  .xldemo{max-width:100%;overflow:hidden}
+  .xlbar{flex-wrap:wrap;gap:8px;padding:10px 12px}
+  .xlbar-fname{font-size:9.5px;margin-left:0;flex:1 1 100%;order:3;
+    overflow-wrap:anywhere}
+  .xl-download{margin-left:0;font-size:9px;padding:5px 9px}
+  .xl-head,.xl-row{grid-template-columns:24px repeat(3,1fr)}
+  .xl-hc{font-size:8px;padding:6px 3px;letter-spacing:0}
+  .xl-c{font-size:8.5px;padding:6px 3px;overflow-wrap:anywhere;line-height:1.35}
+  .xl-note{font-size:8.5px;padding:6px 5px}
+  .fbar{font-size:9px;padding:7px 9px;overflow-wrap:anywhere}
+  .xl-tab{padding:7px 10px;font-size:10px}
+}
+
+/* ---------- 5. FUNCTION CODE SNIPPETS ---------- */
+@media(max-width:1000px){
+  /* wrap instead of forcing a sideways scroll inside the code box */
+  .fn-code{white-space:normal !important;overflow-x:visible !important;
+    word-break:break-word;overflow-wrap:anywhere;line-height:1.7}
+}
+@media(max-width:700px){
+  .fn-code{font-size:12px;padding:11px 12px}
+  .fn-result{font-size:11px;overflow-wrap:anywhere}
+  .fn-card{padding:20px 16px}
+}
+
+/* ---------- 6. PROJECT VIEWER: TABLE -> STACKED CARDS ---------- */
+@media(max-width:760px){
+  .pm-overlay{padding:10px}
+  .pm-box{max-height:92vh}
+  .pm-topbar{padding:10px 12px;gap:8px}
+  .pm-fname{font-size:10px;min-width:0;flex:1 1 100%;order:3;
+    overflow-wrap:anywhere}
+  .pm-tab{padding:9px 12px;font-size:10.5px;letter-spacing:.5px}
+  .pm-body{max-height:58vh}
+
+  /* no sideways swiping: every row becomes a label/value card */
+  .pm-table{min-width:0;width:100%;display:block}
+  .pm-table thead{display:none}
+  .pm-table tbody{display:block;width:100%}
+  .pm-table tr{display:block;width:auto;margin:10px 8px;
+    border:1px solid rgba(12,242,255,.14);
+    border-radius:8px;overflow:hidden;background:rgba(12,242,255,.02)}
+  .pm-body{overflow-x:hidden}
+  .pm-table td{display:flex;justify-content:space-between;align-items:flex-start;
+    gap:12px;white-space:normal;text-align:right;overflow-wrap:anywhere;
+    font-size:11px;padding:8px 11px}
+  .pm-table td::before{content:attr(data-label);flex:0 0 38%;text-align:left;
+    color:var(--muted);font-weight:700;font-size:9.5px;text-transform:uppercase;
+    letter-spacing:.5px;white-space:normal}
+  .pm-table td.rn{background:rgba(12,242,255,.06);font-weight:700;
+    color:var(--cyan);text-align:right}
+  .pm-note{font-size:10px;padding:9px 12px}
+}
+
+/* ---------- 7. LAYOUT POLISH ON PHONES ---------- */
+@media(max-width:700px){
+  section{padding:54px 14px}
+  .hero{padding:86px 14px 44px}
+
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat-box{min-width:0;padding:12px 8px}
+  .stat-val{font-size:22px}
+  .stat-lbl{font-size:8.5px;letter-spacing:1px}
+
+  .about-photo-row{flex-wrap:wrap;justify-content:center;text-align:center}
+  .info-tbl td{font-size:12px;padding:10px 4px}
+  .info-tbl td:first-child{width:42%;font-size:10px}
+
+  .dock-row{gap:12px;padding:18px 0 10px}
+  .dock-card{width:calc(50% - 6px);height:auto;min-height:118px;padding:16px 8px}
+  .dock-card-icon{font-size:26px}
+  .dock-card-title{font-size:11px;padding:0 4px}
+
+  .price-card{padding:28px 18px}
+  .price-amt{font-size:48px}
+  .price-name{font-size:19px}
+  .price-features li{font-size:12.5px}
+  .also-tag{font-size:9.5px}
+
+  .ci{padding:14px 14px;gap:12px}
+  .ci-val{font-size:13px}
+
+  .client-chip{padding:14px 16px;width:100%}
+  .clients-grid{flex-direction:column}
+
+  footer{padding:22px 14px}
+  .footer-copy{font-size:11px;overflow-wrap:anywhere}
+}
+
+@media(max-width:380px){
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .dock-card{width:100%}
+  .xl-c,.xl-hc{font-size:8px}
+  .hero-photo-glow{inset:0}
+  .hero-photo-card{width:200px}
+}
+
+/* ---------- 8. ACCESSIBILITY / TOUCH TARGETS ---------- */
+@media(max-width:1000px){
+  .nav-links a,.xl-tab,.pm-tab,.dock-card,.btn-cyan,.btn-outline,
+  .price-cta,.xl-download{min-height:42px;display:flex;align-items:center;
+    justify-content:center}
+  .nav-links a{justify-content:flex-start}
+  .xl-tab,.pm-tab{justify-content:center}
+}
+</style>
+
 </head>
 <body>
+
+<!-- 3D background stage (visual only) -->
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="d3-vignette" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">SANGEET.XLS</a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#functions">Functions</a></li>
     <li><a href="#before-after">Before &amp; After</a></li>
-    
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
@@ -994,12 +1536,48 @@ function sendContactForm() {
   document.getElementById('formSuccess').style.display = 'block';
 }
 
-// Smooth scroll
+// Mobile hamburger menu
+(function initMobileNav(){
+  var burger = document.getElementById('navBurger');
+  var links  = document.getElementById('navLinks');
+  if (!burger || !links) return;
+  function setOpen(open){
+    burger.classList.toggle('open', open);
+    links.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  burger.addEventListener('click', function(e){
+    e.stopPropagation();
+    setOpen(!links.classList.contains('open'));
+  });
+  links.addEventListener('click', function(e){
+    if (e.target.tagName === 'A') setOpen(false);
+  });
+  document.addEventListener('click', function(e){
+    if (!links.classList.contains('open')) return;
+    if (!links.contains(e.target) && e.target !== burger) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+  window.addEventListener('resize', function(){
+    if (window.innerWidth > 1000) setOpen(false);
+  });
+})();
+
+// Smooth scroll (offset so the fixed navbar never covers the heading)
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
+    const t = document.querySelector(href);
+    if (!t) return;
     e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth' });
+    const nav = document.querySelector('nav');
+    const offset = (nav ? nav.getBoundingClientRect().height : 62) + 12;
+    const y = t.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
   });
 });
 
@@ -1145,8 +1723,11 @@ function renderProjectTable(cols, rows) {
   for (var c = 0; c < cols.length; c++) html += '<th>' + cols[c] + '</th>';
   html += '</tr></thead><tbody>';
   for (var r = 0; r < rows.length; r++) {
-    html += '<tr><td class="rn">' + (r + 1) + '</td>';
-    for (var c2 = 0; c2 < rows[r].length; c2++) html += '<td>' + rows[r][c2] + '</td>';
+    html += '<tr><td class="rn" data-label="Row">' + (r + 1) + '</td>';
+    for (var c2 = 0; c2 < rows[r].length; c2++) {
+      var lbl = (cols[c2] || '').toString().replace(/"/g, '&quot;');
+      html += '<td data-label="' + lbl + '">' + rows[r][c2] + '</td>';
+    }
     html += '</tr>';
   }
   html += '</tbody></table>';
@@ -1243,6 +1824,488 @@ document.addEventListener('keydown', function (e) {
   });
 })();
 
+</script>
+
+<!-- ==================== 3D ENGINE (v14) ==================== -->
+<script>
+/*======================================================================
+  3D DEPTH ENGINE — dependency-free, works offline as a single file.
+  1. Perspective-projected 3D background (canvas 2D, hand-rolled math)
+  2. Mouse-driven 3D tilt on every card
+  3. 3D cover-flow for the Before & After dock
+  4. 3D scroll reveal
+  Nothing here changes any text, data, link or file on the page.
+======================================================================*/
+(function () {
+  'use strict';
+
+  var mq       = window.matchMedia || function () { return { matches: false }; };
+  var REDUCED  = mq('(prefers-reduced-motion: reduce)').matches;
+  var TOUCH    = mq('(hover: none)').matches;
+  var SMALL    = window.innerWidth < 820;
+
+  /* ================================================================
+     1. 3D BACKGROUND SCENE
+     ================================================================ */
+  (function scene3d() {
+    var cv = document.getElementById('bg3d');
+    if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d');
+    if (!ctx) return;
+
+    var DPR = 1, W = 0, H = 0, CX = 0, CY = 0;
+    var F = 820, FAR = 2600, NEAR = 130;
+
+    // camera state (smoothed)
+    var yaw = 0, pitch = 0, tYaw = 0, tPitch = 0;
+    var camZ = 0, tCamZ = 0;
+    var cy = 1, sy = 0, cp = 1, sp = 0;
+
+    function resize() {
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      cv.width  = Math.max(1, Math.round(W * DPR));
+      cv.height = Math.max(1, Math.round(H * DPR));
+      CX = W / 2;
+      CY = H / 2;
+      F  = Math.max(640, Math.min(W, H) * 1.05);
+    }
+
+    // world -> screen (camera yaw + pitch, then perspective divide)
+    function proj(x, y, z) {
+      var x1 = x * cy - z * sy;
+      var z1 = x * sy + z * cy;
+      var y1 = y * cp - z1 * sp;
+      var z2 = y * sp + z1 * cp;
+      if (z2 < NEAR) return null;
+      var s = F / z2;
+      return { x: CX + x1 * s, y: CY + y1 * s, z: z2, s: s };
+    }
+
+    // loop a world z coordinate through the view frustum
+    function wrapZ(z0) {
+      var z = (z0 - camZ) % FAR;
+      if (z < 0) z += FAR;
+      return z + NEAR;
+    }
+
+    function fog(z, power) {
+      var a = 1 - z / (FAR + NEAR);
+      if (a <= 0) return 0;
+      return Math.pow(a, power || 2);
+    }
+
+    /* ---- floating spreadsheet panels ---- */
+    var TOKENS = ['=TRIM(A2)', '=PROPER(B3)', '=CLEAN(C4)', '=SUBSTITUTE()',
+                  '=VLOOKUP()', '=INDEX(MATCH())', '=IFERROR()', '=COUNTIF()',
+                  '=SUMIF()', '#N/A → Fixed', 'Duplicate → Removed',
+                  '.xlsx', 'Σ  Clean', 'A1:D5000', '=TEXT()', '✓ 0 Errors',
+                  'Ctrl + H', '=LEN(A2)'];
+    var PCOL = ['12,242,255', '123,97,255', '255,184,0', '0,217,126'];
+
+    var PANEL_N = REDUCED ? 0 : (SMALL ? 8 : 22);
+    var panels = [];
+    for (var i = 0; i < PANEL_N; i++) {
+      panels.push({
+        x:  (Math.random() - 0.5) * 2100,
+        y:  (Math.random() - 0.5) * 1250,
+        z0: (i / PANEL_N) * FAR + Math.random() * 90,
+        w:  (SMALL ? 110 : 150) + Math.random() * (SMALL ? 80 : 130),
+        h:  (SMALL ? 36 : 46) + Math.random() * 14,
+        ry0: (Math.random() - 0.5) * 0.5,
+        rx0: (Math.random() - 0.5) * 0.35,
+        spd: 0.12 + Math.random() * 0.22,
+        ph:  Math.random() * Math.PI * 2,
+        txt: TOKENS[i % TOKENS.length],
+        col: PCOL[i % PCOL.length]
+      });
+    }
+
+    /* ---- dust motes ---- */
+    var DUST_N = REDUCED ? 0 : (SMALL ? 70 : 220);
+    var dust = [];
+    for (i = 0; i < DUST_N; i++) {
+      dust.push({
+        x: (Math.random() - 0.5) * 3200,
+        y: (Math.random() - 0.5) * 1900,
+        z0: Math.random() * FAR,
+        r: 0.8 + Math.random() * 1.8,
+        col: PCOL[(Math.random() * PCOL.length) | 0]
+      });
+    }
+
+    function base() { ctx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+
+    /* ---- receding wireframe grid plane ---- */
+    function drawPlane(planeY, col, mul) {
+      base();
+      var STEP = 260, SPAN = 2600, k, z, p1, p2, a;
+      var rows = Math.ceil(FAR / STEP);
+
+      ctx.lineWidth = 1;
+      for (k = 0; k < rows; k++) {
+        z = wrapZ(k * STEP);
+        p1 = proj(-SPAN, planeY, z);
+        p2 = proj(SPAN, planeY, z);
+        if (!p1 || !p2) continue;
+        a = fog(z, 1.35) * mul;
+        if (a < 0.005) continue;
+        ctx.strokeStyle = 'rgba(' + col + ',' + a.toFixed(4) + ')';
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+
+      // rails running into the distance
+      for (var x = -SPAN; x <= SPAN; x += STEP) {
+        ctx.beginPath();
+        var started = false;
+        for (var t = 0; t <= 20; t++) {
+          z = NEAR + (FAR - NEAR) * (t / 20);
+          var p = proj(x, planeY, z);
+          if (!p) { started = false; continue; }
+          if (!started) { ctx.moveTo(p.x, p.y); started = true; }
+          else ctx.lineTo(p.x, p.y);
+        }
+        ctx.strokeStyle = 'rgba(' + col + ',' + (0.085 * mul).toFixed(4) + ')';
+        ctx.stroke();
+      }
+    }
+
+    /* ---- one floating 3D panel (true quad projection) ---- */
+    function drawPanel(p, t) {
+      var z = wrapZ(p.z0);
+      var a = fog(z, 1.05);
+      var near = (z - NEAR) / 1000;              // dissolve close-up panels
+      if (near < 1) a *= Math.max(0, near * near);
+      if (a < 0.012) return;
+
+      var ry = p.ry0 + Math.sin(t * p.spd + p.ph) * 0.85;
+      var rx = p.rx0 + Math.cos(t * p.spd * 0.7 + p.ph) * 0.3;
+
+      var c1 = Math.cos(ry), s1 = Math.sin(ry);
+      var c2 = Math.cos(rx), s2 = Math.sin(rx);
+      // local right / down vectors after rotY then rotX
+      var Ux = c1,        Uy = s1 * s2,  Uz = -s1 * c2;
+      var Vx = 0,         Vy = c2,       Vz = s2;
+
+      var hw = p.w / 2, hh = p.h / 2;
+      var bob = Math.sin(t * 0.45 + p.ph) * 26;
+      var cxw = p.x, cyw = p.y + bob, czw = z;
+
+      var tl = proj(cxw - hw * Ux - hh * Vx, cyw - hw * Uy - hh * Vy, czw - hw * Uz - hh * Vz);
+      var tr = proj(cxw + hw * Ux - hh * Vx, cyw + hw * Uy - hh * Vy, czw + hw * Uz - hh * Vz);
+      var bl = proj(cxw - hw * Ux + hh * Vx, cyw - hw * Uy + hh * Vy, czw - hw * Uz + hh * Vz);
+      if (!tl || !tr || !bl) return;
+
+      var ax = (tr.x - tl.x) / p.w, ay = (tr.y - tl.y) / p.w;
+      var bx = (bl.x - tl.x) / p.h, by = (bl.y - tl.y) / p.h;
+      if (ax * by - ay * bx <= 0) return;              // back face -> skip
+
+      ctx.setTransform(ax * DPR, ay * DPR, bx * DPR, by * DPR, tl.x * DPR, tl.y * DPR);
+
+      var r = 7;
+      ctx.beginPath();
+      ctx.moveTo(r, 0);
+      ctx.lineTo(p.w - r, 0);   ctx.quadraticCurveTo(p.w, 0, p.w, r);
+      ctx.lineTo(p.w, p.h - r); ctx.quadraticCurveTo(p.w, p.h, p.w - r, p.h);
+      ctx.lineTo(r, p.h);       ctx.quadraticCurveTo(0, p.h, 0, p.h - r);
+      ctx.lineTo(0, r);         ctx.quadraticCurveTo(0, 0, r, 0);
+      ctx.closePath();
+
+      ctx.fillStyle = 'rgba(' + p.col + ',' + (a * 0.085).toFixed(4) + ')';
+      ctx.fill();
+      ctx.lineWidth = 1.1;
+      ctx.strokeStyle = 'rgba(' + p.col + ',' + (a * 0.52).toFixed(4) + ')';
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(' + p.col + ',' + (a * 0.78).toFixed(4) + ')';
+      ctx.font = '600 19px "JetBrains Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(p.txt, 14, p.h / 2 + 1);
+    }
+
+    function drawDust(t) {
+      base();
+      for (var i = 0; i < dust.length; i++) {
+        var d = dust[i];
+        var z = wrapZ(d.z0);
+        var p = proj(d.x, d.y + Math.sin(t * 0.3 + i) * 14, z);
+        if (!p) continue;
+        var a = fog(z, 1.3) * 0.8;
+        var nf = (z - NEAR) / 500;
+        if (nf < 1) a *= Math.max(0, nf);
+        if (a < 0.01) continue;
+        ctx.fillStyle = 'rgba(' + d.col + ',' + a.toFixed(4) + ')';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, Math.max(0.4, d.r * p.s * 0.9), 0, 6.283);
+        ctx.fill();
+      }
+    }
+
+    function draw(t) {
+      base();
+      ctx.clearRect(0, 0, W, H);
+
+      drawPlane(460, '12,242,255', 1.0);     // floor
+      drawPlane(-520, '123,97,255', 0.62);   // ceiling
+      drawDust(t);
+
+      // far panels first so depth reads correctly
+      var order = panels.slice().sort(function (m, n) {
+        return wrapZ(n.z0) - wrapZ(m.z0);
+      });
+      for (var i = 0; i < order.length; i++) drawPanel(order[i], t);
+
+      base();
+    }
+
+    /* ---- input ---- */
+    if (!TOUCH) {
+      window.addEventListener('mousemove', function (e) {
+        tYaw   = (e.clientX / W - 0.5) * 0.30;
+        tPitch = (e.clientY / H - 0.5) * 0.20;
+      }, { passive: true });
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('scroll', function () {
+      tCamZ = window.pageYOffset * 0.75;
+    }, { passive: true });
+
+    resize();
+    tCamZ = window.pageYOffset * 0.75;
+    camZ = tCamZ;
+
+    if (REDUCED) { draw(0); return; }
+
+    var t0 = performance.now ? performance.now() : Date.now();
+    function loop(now) {
+      requestAnimationFrame(loop);
+      if (document.hidden) return;
+      var t = (now - t0) * 0.001;
+
+      yaw   += (tYaw - yaw) * 0.055;
+      pitch += (tPitch - pitch) * 0.055;
+      camZ  += (tCamZ + t * 26 - camZ) * 0.06;   // gentle forward drift
+      cy = Math.cos(yaw); sy = Math.sin(yaw);
+      cp = Math.cos(pitch); sp = Math.sin(pitch);
+
+      draw(t);
+    }
+    requestAnimationFrame(loop);
+  })();
+
+  /* ================================================================
+     2. MOUSE-DRIVEN 3D TILT ON CARDS
+     ================================================================ */
+  (function tilt3d() {
+    if (TOUCH || REDUCED) return;
+
+    var CFG = [
+      ['.svc-card',        12, 14, 44],
+      ['.fn-card',          9, 11, 34],
+      ['.why-card',        11, 13, 40],
+      ['.price-card',       7,  9, 40],
+      ['.client-chip',     13, 16, 32],
+      ['.ci',               9, 12, 26],
+      ['.stat-box',        14, 17, 34],
+      ['.proc-step',       10, 12, 30],
+      ['.xldemo',           5,  7, 26],
+      ['.hero-photo-card', 10, 13, 40]
+    ];
+    var SEL = CFG.map(function (c) { return c[0]; }).join(',');
+
+    function cfgFor(el) {
+      for (var i = 0; i < CFG.length; i++) {
+        if (el.matches(CFG[i][0])) return CFG[i];
+      }
+      return null;
+    }
+
+    var active = null, pending = null, ticking = false;
+
+    function clear(el) {
+      if (!el) return;
+      el.style.transform = '';
+      el.style.removeProperty('--gx');
+      el.style.removeProperty('--gy');
+    }
+
+    function apply() {
+      ticking = false;
+      if (!pending || !active) return;
+      var c = cfgFor(active);
+      if (!c) return;
+      var r  = active.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var px = (pending.x - r.left) / r.width  - 0.5;
+      var py = (pending.y - r.top)  / r.height - 0.5;
+      active.style.transform =
+        'rotateX(' + (-py * c[1]).toFixed(2) + 'deg) ' +
+        'rotateY(' + ( px * c[2]).toFixed(2) + 'deg) ' +
+        'translateZ(' + c[3] + 'px)';
+      active.style.setProperty('--gx', ((px + 0.5) * 100).toFixed(1) + '%');
+      active.style.setProperty('--gy', ((py + 0.5) * 100).toFixed(1) + '%');
+    }
+
+    document.addEventListener('mousemove', function (e) {
+      var el = (e.target && e.target.closest) ? e.target.closest(SEL) : null;
+      if (el !== active) { clear(active); active = el; }
+      if (!active) return;
+      pending = { x: e.clientX, y: e.clientY };
+      if (!ticking) { ticking = true; requestAnimationFrame(apply); }
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', function () { clear(active); active = null; }, true);
+    window.addEventListener('blur', function () { clear(active); active = null; });
+  })();
+
+  /* ================================================================
+     3. BEFORE & AFTER DOCK -> 3D COVER-FLOW
+     (registered after the original handler, so it wins)
+     ================================================================ */
+  (function dock3d() {
+    var row = document.getElementById('dockRow');
+    if (!row || TOUCH) return;
+    var cards = Array.prototype.slice.call(row.querySelectorAll('.dock-card'));
+    if (!cards.length) return;
+
+    row.addEventListener('mousemove', function (e) {
+      cards.forEach(function (card) {
+        var r = card.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width / 2);
+        var sigma = 130;
+        var g = Math.exp(-(dx * dx) / (2 * sigma * sigma));
+        var scale = 1 + 0.20 * g;
+        var rotY  = Math.max(-26, Math.min(26, -(dx / 16)));
+        var tz    = g * 130;
+        var rotX  = -g * 8;
+        card.style.transform =
+          'translateZ(' + tz.toFixed(1) + 'px) ' +
+          'rotateY(' + rotY.toFixed(1) + 'deg) ' +
+          'rotateX(' + rotX.toFixed(1) + 'deg) ' +
+          'scale(' + scale.toFixed(3) + ')';
+        card.style.zIndex = g > 0.25 ? 5 : 1;
+        card.style.setProperty('--gx', (50 - rotY * 1.4).toFixed(1) + '%');
+        card.style.setProperty('--gy', '20%');
+      });
+    }, { passive: true });
+
+    row.addEventListener('mouseleave', function () {
+      cards.forEach(function (card) {
+        card.style.transform = '';
+        card.style.zIndex = 1;
+      });
+    }, { passive: true });
+  })();
+
+  /* ================================================================
+     4. HERO PARALLAX
+     ================================================================ */
+  (function heroParallax() {
+    var hero = document.querySelector('.hero');
+    var flex = document.querySelector('.hero-flex');
+    if (!hero || !flex || TOUCH || REDUCED) return;
+
+    var raf = 0, mx = 0, my = 0;
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width  - 0.5;
+      my = (e.clientY - r.top)  / r.height - 0.5;
+      if (!raf) raf = requestAnimationFrame(function () {
+        raf = 0;
+        flex.style.transition = 'transform .25s linear';
+        flex.style.transform =
+          'rotateY(' + (mx * 7).toFixed(2) + 'deg) rotateX(' + (-my * 5).toFixed(2) + 'deg)';
+      });
+    }, { passive: true });
+
+    hero.addEventListener('mouseleave', function () {
+      flex.style.transition = '';
+      flex.style.transform = '';
+    }, { passive: true });
+  })();
+
+  /* ================================================================
+     5. 3D SCROLL REVEAL
+     (takes over from the original 2D fade-in observer)
+     ================================================================ */
+  (function reveal3d() {
+    // stop the original observer and wipe the inline styles it applied
+    try {
+      if (typeof io !== 'undefined' && io && typeof io.disconnect === 'function') io.disconnect();
+    } catch (err) { /* observer not reachable - fine */ }
+
+    var legacy = document.querySelectorAll('.svc-card,.fn-card,.why-card,.proc-step,.client-chip,.globe-card');
+    Array.prototype.forEach.call(legacy, function (el) {
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.transition = '';
+    });
+
+    if (REDUCED || !('IntersectionObserver' in window)) return;
+
+    var GROUPS = [
+      ['.svc-card',    'd3-rev'],
+      ['.fn-card',     'd3-rev'],
+      ['.why-card',    'd3-rev'],
+      ['.proc-step',   'd3-rev'],
+      ['.client-chip', 'd3-rev'],
+      ['.price-card',  'd3-rev'],
+      ['.dock-card',   'd3-rev'],
+      ['.ci',          'd3-rev-l'],
+      ['.form-group',  'd3-rev-r'],
+      ['.stitle',      'd3-rev'],
+      ['.sdesc',       'd3-rev'],
+      ['.xldemo',      'd3-rev-r']
+    ];
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        var delay = parseFloat(el.getAttribute('data-d3-delay') || '0');
+        setTimeout(function () {
+          el.classList.add('d3-in');
+          // drop the helper classes once the entrance is done so the
+          // hover / tilt transforms are free again
+          setTimeout(function () {
+            el.classList.remove('d3-rev', 'd3-rev-l', 'd3-rev-r', 'd3-in');
+            el.removeAttribute('data-d3-delay');
+          }, 1100);
+        }, delay);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+
+    GROUPS.forEach(function (g) {
+      var nodes = document.querySelectorAll(g[0]);
+      Array.prototype.forEach.call(nodes, function (el, i) {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.9 &&
+            el.closest('.hero')) return;            // above the fold: leave alone
+        el.classList.add(g[1]);
+        el.setAttribute('data-d3-delay', String((i % 6) * 80));
+        obs.observe(el);
+      });
+    });
+  })();
+
+  /* ================================================================
+     6. NAV DEPTH ON SCROLL
+     ================================================================ */
+  (function navDepth() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+    var on = false;
+    window.addEventListener('scroll', function () {
+      var want = window.pageYOffset > 40;
+      if (want !== on) { on = want; nav.classList.toggle('d3-deep', want); }
+    }, { passive: true });
+  })();
+
+})();
 </script>
 </body>
 </html>
